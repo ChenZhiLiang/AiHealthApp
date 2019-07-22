@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.MainActivity">
+
+
+    <com.app.aihealthapp.view.NoScrollViewPager
+        android:id="@+id/vpage_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tab_main">
+
+    </com.app.aihealthapp.view.NoScrollViewPager>
+
+
+
+    <com.app.aihealthapp.core.tablayout.CommonTabLayout
+        android:id="@+id/tab_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/dimen_4px"
+        app:tl_iconMargin="5dp"
+        app:tl_indicator_bounce_enable="false"
+        app:tl_indicator_color="@color/white"
+        app:tl_indicator_gravity="TOP"
+        app:tl_textSelectColor="@color/colorPrimaryDark"
+        app:tl_textUnselectColor="@color/text_color"
+        app:tl_textsize="12sp"
+        app:tl_underline_gravity="TOP" />
+
+
+
+</RelativeLayout>

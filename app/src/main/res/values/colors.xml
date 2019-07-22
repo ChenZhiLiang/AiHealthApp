@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <!--87%-->
+    <color name="default_text_color">#333333</color>
+    <!--54%-->
+    <color name="default_hint_color">#666666</color>
+    <color name="view_line">#EBEBEB</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+
+    <color name="blue">#2855f5</color>
+
+    <!--kprogresshud-->
+    <color name="kprogresshud_default_color">#b1000000</color>
+    <color name="kprogresshud_grey_color">#449E9E9E</color>
+    <color name="pickerview_bgColor_overlay">#60000000</color>
+
+    <color name="gray_btn_bg_pressed_color">#B6B6B6</color>
+    <color name="float_transparent">#00000000</color>
+    <color name="button_text_color">#FFFFFF</color>
+    <color name="text_color">#575757</color>
+
+</resources>

@@ -1,0 +1,23 @@
+package com.app.aihealthapp.confing;
+
+/**
+ * @Name：aihealthapp
+ * @Description：描述信息
+ * @Author：Chen
+ * @Date：2019/7/22 22:03
+ * 修改人：Chen
+ * 修改时间：2019/7/22 22:03
+ */
+public class AppConfig {
+
+    //存储token
+    public static final String TOKEN_FILE_NAME = "ut_data";
+    public static final String USER_INFO = "user_info";
+    public static final String TOKEN_NAME = "token";
+    public static final String WALLET_TOKEN = "wallet_token";
+
+    public static final String USER_NAME = "mobile";
+    public static final String USER_PASS = "passsword";
+    public static final String CAR_INFO = "car_info";
+    public static final String LOCATION = "map_location";
+}

@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">AiHealthApp</string>
+
+    <string name="loading">正在加载...</string>
+
+    <!--xrecyclerview-->
+    <string name="listview_header_hint_normal">下拉刷新</string>
+    <string name="listview_header_hint_release">释放立即刷新</string>
+    <string name="listview_loading">正在加载</string>
+    <string name="nomore_loading">我是有底线的</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="refresh_done">刷新完成</string>
+    <string name="loading_done">加载完成</string>
+    <string name="listview_header_last_time">上次更新时间：</string>
+
+    <!--AndPermission-->
+    <string name="permission_name_calendar">Calendar</string>
+    <string name="permission_name_camera">Camera</string>
+    <string name="permission_name_contacts">Contacts</string>
+    <string name="permission_name_location">Location</string>
+    <string name="permission_name_microphone">Microphone</string>
+    <string name="permission_name_phone">Phone</string>
+    <string name="permission_name_sensors">Body Sensors</string>
+    <string name="permission_name_sms">SMS</string>
+    <string name="permission_name_storage">Storage</string>
+
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
+    <string name="no">不</string>
+
+    <string name="title_dialog">提示</string>
+    <string name="message_permission_rationale">允许以下权限以便程序继续执行：\n\n%1$s</string>
+    <string name="message_permission_always_failed">我们需要以下权限，请在设置中为我们开启：\n\n%1$s</string>
+    <string name="qrcode">将条码放入框内，即可自动扫描</string>
+
+    <string name="toast_message">Toast message</string>
+
+</resources>

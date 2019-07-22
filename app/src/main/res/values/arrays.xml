@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--tab-->
+    <string-array name="tab">
+        <item>首页</item>
+        <item>附近</item>
+        <item>附近</item>
+        <!--<item>车主服务</item>-->
+        <item>我的</item>
+    </string-array>
+
+    <string-array name="home_menu">
+        <item>停车缴费</item>
+        <item>违章查询</item>
+        <item>车位月卡</item>
+        <item>免密支付</item>
+        <item>车位预约</item>
+        <item>车位共享</item>
+    </string-array>
+
+    <string-array name="head_check">
+        <item>相机</item>
+        <item>图库</item>
+    </string-array>
+
+    <string-array name="upload_idcard">
+        <item>拍照</item>
+        <item>我的相册</item>
+    </string-array>
+
+    <string-array name="domain">
+        <item>测试一</item>
+        <item>测试三</item>
+    </string-array>
+    <string-array name="sex">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="navigation">
+        <item>高德地图</item>
+        <item>百度地图</item>
+    </string-array>
+
+    <!--星座-->
+    <string-array name="star_sign">
+        <item>白羊座</item>
+        <item>金牛座</item>
+        <item>双子座</item>
+        <item>巨蟹座</item>
+        <item>狮子座</item>
+        <item>处女座</item>
+        <item>天秤座</item>
+        <item>天蝎座</item>
+        <item>射手座</item>
+        <item>摩羯座</item>
+        <item>水瓶座</item>
+        <item>双鱼座</item>
+    </string-array>
+
+    <string-array name="service_type">
+        <item>全部</item>
+        <!--<item>洗车</item>-->
+        <item>爱车保养</item>
+        <!--<item>优泊上门</item>-->
+       <!-- <item>自驾俱乐部</item>-->
+    </string-array>
+    <string-array name="service_distance">
+        <item>全部</item>
+        <item>离我最近</item>
+        <item>评分最高</item>
+    </string-array>
+</resources>

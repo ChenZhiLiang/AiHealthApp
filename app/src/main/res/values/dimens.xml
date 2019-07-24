@@ -18,6 +18,7 @@
 
 
     <!--宽高-->
+    <dimen name="dimen_0.5px">0.5dp</dimen>
     <dimen name="dimen_1px">1dp</dimen>
     <dimen name="dimen_2px">2dp</dimen>
     <dimen name="dimen_4px">4dp</dimen>

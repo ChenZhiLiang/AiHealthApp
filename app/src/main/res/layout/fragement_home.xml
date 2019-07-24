@@ -1,12 +1,393 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:background="@color/default_bg_color"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="测试测试"/>
+    <include layout="@layout/include_main_toolbar" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px"
+                android:layout_marginTop="@dimen/dimen_10px"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/image_wristband"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_24px"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:background="@mipmap/home_wristband" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:layout_toRightOf="@+id/image_wristband"
+                    android:text="添加手环，以获得更多健康信息"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="@dimen/text_12px" />
+
+                <Button
+                    android:id="@+id/btn_add_wristband"
+                    android:layout_width="@dimen/dimen_60px"
+                    android:layout_height="@dimen/dimen_24px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_10px"
+                    android:background="@drawable/frame_blue_true"
+                    android:text="去添加"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_10px" />
+            </RelativeLayout>
+
+            <com.app.aihealthapp.core.bgabanner.BGABanner
+                android:id="@+id/banner_home_adv"
+                style="@style/BannerDefaultStyle"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/dimen_10px"
+                app:banner_pointDrawable="@drawable/seletor_banner_point"
+                app:banner_transitionEffect="defaultEffect" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_10px">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_50px"
+                        android:layout_height="@dimen/dimen_50px"
+                        android:background="@mipmap/home_ydjb_icon"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10px"
+                        android:text="运动记步"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_14px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_10px">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_50px"
+                        android:layout_height="@dimen/dimen_50px"
+                        android:background="@mipmap/home_xycl_icon"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10px"
+                        android:text="血压测量"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_14px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_10px">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_50px"
+                        android:layout_height="@dimen/dimen_50px"
+                        android:background="@mipmap/home_xlcl_icon"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10px"
+                        android:text="心率测量"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_14px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_10px">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_50px"
+                        android:layout_height="@dimen/dimen_50px"
+                        android:background="@mipmap/home_xycl_icon"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10px"
+                        android:text="血氧测量"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_14px" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_10px"
+                android:background="@drawable/frame_gray"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_16px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="今日运动量"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="@dimen/text_16px" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_32px"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(步)"
+                            android:textColor="@color/default_hint_color"
+                            android:textSize="@dimen/text_12px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_8px"
+                            android:text="6000"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_18px"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="距离(米)"
+                            android:textColor="@color/default_hint_color"
+                            android:textSize="@dimen/text_12px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_8px"
+                            android:text="6000"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_18px" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="消耗卡路里(千卡)"
+                            android:textColor="@color/default_hint_color"
+                            android:textSize="@dimen/text_12px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_8px"
+                            android:text="128.9"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_18px" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10px"
+                android:layout_marginRight="@dimen/dimen_10px"
+                android:padding="@dimen/dimen_16px"
+                android:background="@drawable/frame_gray"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="今日健康数据"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="@dimen/text_16px" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_32px"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="血压/mmHg"
+                            android:textColor="@color/default_hint_color"
+                            android:textSize="@dimen/text_12px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_8px"
+                            android:text="6000"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_18px" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="心率/BBPM"
+                            android:textColor="@color/default_hint_color"
+                            android:textSize="@dimen/text_12px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_8px"
+                            android:text="6000"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_18px" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="血氧"
+                            android:textColor="@color/default_hint_color"
+                            android:textSize="@dimen/text_12px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_8px"
+                            android:text="128.9"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_18px" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px"
+                android:layout_marginTop="@dimen/dimen_10px"
+                android:layout_marginBottom="@dimen/dimen_10px"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:text="您的健康数据报告已生成，请查看！"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="@dimen/text_12px" />
+
+                <Button
+                    android:id="@+id/btn_look_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_24px"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="@dimen/dimen_10px"
+                    android:paddingRight="@dimen/dimen_10px"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_10px"
+                    android:background="@drawable/frame_blue_true"
+                    android:text="查看我的健康报告"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_10px" />
+            </RelativeLayout>
+
+            <include layout="@layout/layout_health_manage"/>
+            <include layout="@layout/layout_health_shop_area"/>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

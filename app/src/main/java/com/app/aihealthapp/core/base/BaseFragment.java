@@ -1,6 +1,7 @@
 package com.app.aihealthapp.core.base;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.eventbus.Event;
@@ -16,6 +18,7 @@ import com.app.aihealthapp.core.helper.EventBusHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.interfaces.BaseFragmentInterface;
 import com.app.aihealthapp.core.kprogresshud.KProgressHUD;
+import com.app.aihealthapp.util.StatusBarUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -47,6 +50,16 @@ public abstract class BaseFragment extends Fragment implements BaseFragmentInter
         mActivity = getActivity();
         View view = inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this,view);
+        // 通过注解绑定控件
+        ButterKnife.bind(mActivity);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            //透明状态栏
+//            mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            //透明导航栏
+//            mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            //设置状态栏字体颜色颜色为黑色
+//            StatusBarUtil.StatusBarLightMode(mActivity);
+//        }
         if (isRegisterEventBus()) {
             EventBusHelper.register(this);
         }

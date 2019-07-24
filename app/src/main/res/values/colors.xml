@@ -5,9 +5,11 @@
     <color name="colorAccent">#D81B60</color>
 
     <!--87%-->
-    <color name="default_text_color">#333333</color>
+    <color name="default_text_color">#00ccaa</color>
     <!--54%-->
-    <color name="default_hint_color">#666666</color>
+    <color name="default_hint_color">#717173</color>
+    <color name="default_bg_color">#f9f9f9</color>
+
     <color name="view_line">#EBEBEB</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -23,6 +25,6 @@
     <color name="gray_btn_bg_pressed_color">#B6B6B6</color>
     <color name="float_transparent">#00000000</color>
     <color name="button_text_color">#FFFFFF</color>
-    <color name="text_color">#575757</color>
+    <color name="text_color">#2a282b</color>
 
 </resources>

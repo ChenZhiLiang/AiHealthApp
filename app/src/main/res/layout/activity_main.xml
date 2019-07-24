@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.MainActivity"
+    android:fitsSystemWindows="true">
 
 
     <com.app.aihealthapp.view.NoScrollViewPager
@@ -28,8 +29,8 @@
         app:tl_indicator_bounce_enable="false"
         app:tl_indicator_color="@color/white"
         app:tl_indicator_gravity="TOP"
-        app:tl_textSelectColor="@color/colorPrimaryDark"
-        app:tl_textUnselectColor="@color/text_color"
+        app:tl_textSelectColor="@color/default_text_color"
+        app:tl_textUnselectColor="@color/default_hint_color"
         app:tl_textsize="12sp"
         app:tl_underline_gravity="TOP" />
 

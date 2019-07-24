@@ -4,10 +4,10 @@
     <!--tab-->
     <string-array name="tab">
         <item>首页</item>
-        <item>附近</item>
-        <item>附近</item>
-        <!--<item>车主服务</item>-->
-        <item>我的</item>
+        <item>健康管理</item>
+        <item>健康论坛</item>
+        <item>健康商城</item>
+        <item>个人中心</item>
     </string-array>
 
     <string-array name="home_menu">

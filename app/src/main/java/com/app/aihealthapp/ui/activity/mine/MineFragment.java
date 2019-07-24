@@ -1,4 +1,4 @@
-package com.app.aihealthapp.ui.activity;
+package com.app.aihealthapp.ui.activity.mine;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,21 +7,20 @@ import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
 
 /**
- * @Name：aihealthapp
- * @Description：描述信息
+ * @Name：AiHealth
+ * @Description：我的
  * @Author：Chen
- * @Date：2019/7/22 22:57
+ * @Date：2019/7/24 22:08
  * 修改人：Chen
- * 修改时间：2019/7/22 22:57
+ * 修改时间：2019/7/24 22:08
  */
-public class HomeFragment extends BaseFragment {
+public class MineFragment extends BaseFragment {
 
-    public static HomeFragment getInstance(String title) {
-        HomeFragment hf = new HomeFragment();
+    public static MineFragment getInstance(String title) {
+        MineFragment hf = new MineFragment();
         hf.mTitle = title;
         return hf;
     }
-
     @Override
     public void loadingData() {
 
@@ -29,7 +28,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragement_home;
+        return R.layout.fragment_mine;
     }
 
     @Override

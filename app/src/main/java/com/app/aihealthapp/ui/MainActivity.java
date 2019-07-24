@@ -2,10 +2,6 @@ package com.app.aihealthapp.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
@@ -14,7 +10,11 @@ import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.tablayout.CommonTabLayout;
 import com.app.aihealthapp.core.tablayout.listener.CustomTabEntity;
 import com.app.aihealthapp.core.tablayout.listener.OnTabSelectListener;
-import com.app.aihealthapp.ui.activity.HomeFragment;
+import com.app.aihealthapp.ui.activity.forum.ForumFragment;
+import com.app.aihealthapp.ui.activity.home.HomeFragment;
+import com.app.aihealthapp.ui.activity.manage.ManageFragment;
+import com.app.aihealthapp.ui.activity.mine.MineFragment;
+import com.app.aihealthapp.ui.activity.shop.ShopFragment;
 import com.app.aihealthapp.ui.bean.TabEntityBean;
 import com.app.aihealthapp.view.NoScrollViewPager;
 
@@ -33,13 +33,13 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
 
     private String[] mTitles;
     private int[] mIconUnselectIds = {
-            R.mipmap.tab_home_unselect, R.mipmap.tab_home_unselect,
-            R.mipmap.tab_home_unselect,
-            R.mipmap.tab_home_unselect};
+            R.mipmap.home_icon_normal, R.mipmap.management_icon_normal,
+            R.mipmap.forum_icon_normal, R.mipmap.mall_icon_normal,
+            R.mipmap.ming_icon_normal};
     private int[] mIconSelectIds = {
-            R.mipmap.tab_home_select, R.mipmap.tab_home_select,
-            R.mipmap.tab_home_select,
-            R.mipmap.tab_home_select};
+            R.mipmap.home_icon_select, R.mipmap.management_icon_select,
+            R.mipmap.forum_icon_select, R.mipmap.mall_icon_select,
+            R.mipmap.mind_icon_select};
 
 
     @Override
@@ -62,15 +62,16 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
     public void initData() {
         mTitles = getResources().getStringArray(R.array.tab);
         mFragments.add(HomeFragment.getInstance(mTitles[0]));
-        mFragments.add(HomeFragment.getInstance(mTitles[1]));
-        mFragments.add(HomeFragment.getInstance(mTitles[2]));
-        mFragments.add(HomeFragment.getInstance(mTitles[3]));
+        mFragments.add(ManageFragment.getInstance(mTitles[1]));
+        mFragments.add(ForumFragment.getInstance(mTitles[2]));
+        mFragments.add(ShopFragment.getInstance(mTitles[3]));
+        mFragments.add(MineFragment.getInstance(mTitles[4]));
 
         for (int i = 0; i < mTitles.length; i++) {
             mTabEntities.add(new TabEntityBean(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
         }
         mBaseFragmentPageAdapter = new BaseFragmentPageAdapter(getSupportFragmentManager(), mFragments);
-        vpageMain.setOffscreenPageLimit(4);
+        vpageMain.setOffscreenPageLimit(5);
         vpageMain.setNoScroll(true);//设置viewpage 是否可以左右滑动
         vpageMain.setAdapter(mBaseFragmentPageAdapter);
         tabMain.setTabData(mTabEntities);

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -93,7 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     /**
      * 初始化ToolBar
      */
-  /*  public void initToolBar() {
+    public void initToolBar() {
         toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             img_back = findViewById(R.id.img_back);
@@ -105,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
                 }
             });
         }
-    }*/
+    }
 
     public void setTitle(String title) {
         if (toolbar != null) {

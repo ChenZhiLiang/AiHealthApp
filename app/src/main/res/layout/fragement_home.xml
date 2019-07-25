@@ -11,7 +11,7 @@
     <include layout="@layout/include_main_toolbar" />
 
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -172,7 +172,8 @@
                 android:layout_margin="@dimen/dimen_10px"
                 android:background="@drawable/frame_gray"
                 android:orientation="vertical"
-                android:padding="@dimen/dimen_16px">
+                android:padding="@dimen/dimen_16px"
+                android:textStyle="bold">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -180,7 +181,8 @@
                     android:layout_gravity="center_horizontal"
                     android:text="今日运动量"
                     android:textColor="@color/default_text_color"
-                    android:textSize="@dimen/text_16px" />
+                    android:textSize="@dimen/text_14px"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -208,7 +210,8 @@
                             android:layout_marginTop="@dimen/dimen_8px"
                             android:text="6000"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_18px"
+                            android:textSize="@dimen/text_16px"
+                            android:textStyle="bold"
                             />
                     </LinearLayout>
 
@@ -232,7 +235,8 @@
                             android:layout_marginTop="@dimen/dimen_8px"
                             android:text="6000"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_18px" />
+                            android:textSize="@dimen/text_16px"
+                            android:textStyle="bold"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -255,7 +259,8 @@
                             android:layout_marginTop="@dimen/dimen_8px"
                             android:text="128.9"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_18px" />
+                            android:textSize="@dimen/text_16px"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -275,7 +280,8 @@
                     android:layout_gravity="center_horizontal"
                     android:text="今日健康数据"
                     android:textColor="@color/default_text_color"
-                    android:textSize="@dimen/text_16px" />
+                    android:textSize="@dimen/text_16px"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -303,7 +309,8 @@
                             android:layout_marginTop="@dimen/dimen_8px"
                             android:text="6000"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_18px" />
+                            android:textSize="@dimen/text_16px"
+                            android:textStyle="bold"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -326,13 +333,14 @@
                             android:layout_marginTop="@dimen/dimen_8px"
                             android:text="6000"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_18px" />
+                            android:textSize="@dimen/text_16px"
+                            android:textStyle="bold"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.5"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -349,7 +357,9 @@
                             android:layout_marginTop="@dimen/dimen_8px"
                             android:text="128.9"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_18px" />
+                            android:textSize="@dimen/text_16px"
+                            android:textStyle="bold"
+                            />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -387,7 +397,9 @@
 
             <include layout="@layout/layout_health_manage"/>
             <include layout="@layout/layout_health_shop_area"/>
+            <include layout="@layout/layout_health_shop"/>
+
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#323542"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/login_logo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="欢迎登录爱健康APP"
+        android:textSize="@dimen/text_16px"
+        android:textColor="@color/white"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/dimen_16px"
+        android:layout_marginRight="@dimen/dimen_32px"
+        android:layout_marginLeft="@dimen/dimen_32px"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@mipmap/login_phone_icon"
+        android:background="@null"
+        android:hint="请输入手机号码"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_14px"
+        android:textColorHint="@color/white"
+        android:paddingLeft="@dimen/dimen_10px"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/dimen_8px"
+        android:layout_marginLeft="@dimen/dimen_32px"
+        android:layout_marginRight="@dimen/dimen_32px"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/dimen_32px"
+        android:layout_marginRight="@dimen/dimen_32px"
+        android:layout_marginLeft="@dimen/dimen_32px"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@mipmap/login_password_icon"
+        android:background="@null"
+        android:hint="请输入密码"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_14px"
+        android:textColorHint="@color/white"
+        android:paddingLeft="@dimen/dimen_10px"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/dimen_8px"
+        android:layout_marginLeft="@dimen/dimen_32px"
+        android:layout_marginRight="@dimen/dimen_32px"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40px"
+        android:background="@drawable/frame_blue_true"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="@dimen/dimen_32px"
+        android:layout_marginLeft="@dimen/dimen_32px"
+        android:text="登录"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_14px"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dimen_32px"
+        android:layout_marginLeft="@dimen/dimen_32px"
+        android:layout_marginTop="@dimen/dimen_10px">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_10px"
+
+            android:text="忘记密码？"
+            android:textSize="@dimen/text_14px"
+            android:textColor="@color/default_text_color"/>
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dimen_10px"
+            android:text="免费注册"
+            android:textSize="@dimen/text_14px"
+            android:textColor="@color/default_text_color"/>
+    </RelativeLayout>
+</LinearLayout>

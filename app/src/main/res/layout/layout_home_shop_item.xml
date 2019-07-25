@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_frame_black"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/dimen_10px">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/shop"
+        android:scaleType="centerCrop"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="八珍养生膏--200g/袋"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_marginRight="@dimen/dimen_10px"
+        android:layout_marginTop="@dimen/dimen_10px"
+        android:maxEms="8"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="@dimen/text_14px"
+        android:textColor="@color/text_color"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="好吃营养美味好吃营养美味好吃营养美味好吃营养美味"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_marginRight="@dimen/dimen_10px"
+        android:layout_marginTop="@dimen/dimen_8px"
+        android:maxEms="12"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="@dimen/text_12px"
+        android:textColor="@color/default_hint_color"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_10px">
+
+        <TextView
+            android:id="@+id/tv_shop_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥ 300"
+            android:textSize="@dimen/text_14px"
+            android:textColor="@color/red"/>
+        <TextView
+            android:id="@+id/tv_shop_original_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_shop_price"
+            android:layout_marginTop="@dimen/dimen_4px"
+            android:text="¥ 400"
+            android:textSize="@dimen/text_12px"
+            android:textColor="@color/default_hint_color"/>
+
+        <Button
+            android:layout_width="@dimen/dimen_50px"
+            android:layout_height="@dimen/dimen_20px"
+            android:background="@drawable/frame_blue"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="立即购买"
+            android:textColor="@color/default_text_color"
+            android:textSize="@dimen/text_10px"/>
+    </RelativeLayout>
+</LinearLayout>

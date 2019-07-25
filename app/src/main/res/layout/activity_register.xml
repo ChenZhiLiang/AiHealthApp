@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/white">
+
+    <include layout="@layout/include_toolbar"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f8f8f8"
+        android:scrollbars="none">
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+      >
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10px"
+            android:padding="@dimen/dimen_10px"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/logo"
+                android:layout_marginLeft="@dimen/dimen_16px"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@+id/image_logo"
+                android:layout_marginLeft="@dimen/dimen_16px"
+                android:layout_centerVertical="true">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="爱健康"
+                android:textSize="@dimen/text_16px"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/image_logo"
+                android:layout_marginTop="@dimen/dimen_16px"
+                android:layout_below="@+id/tv_title"
+                android:text="这是广告语"
+                android:textSize="@dimen/text_14px"
+                android:textColor="@color/default_text_color"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="欢迎您注册爱健康app,请填写以下资料进行注册！"
+            android:textSize="@dimen/text_14px"
+            android:textColor="@color/default_text_color"
+            android:layout_margin="@dimen/dimen_16px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_frame_black"
+            android:padding="@dimen/dimen_10px"
+            android:layout_marginRight="@dimen/dimen_10px"
+            android:layout_marginLeft="@dimen/dimen_10px">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:text="手机"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="请输入手机号码"
+                    android:background="@null"
+                    android:layout_marginRight="@dimen/dimen_10px"
+                    android:paddingLeft="@dimen/dimen_10px"
+                    android:textSize="@dimen/text_14px"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view_line"
+                android:layout_marginLeft="@dimen/dimen_10px"
+                android:layout_marginRight="@dimen/dimen_10px"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:text="验证码"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dimen_10px"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/dimen_10px"
+                    android:textSize="@dimen/text_14px"
+                    android:text="获取验证码"
+                    android:textColor="@color/default_text_color"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view_line"
+                android:layout_marginLeft="@dimen/dimen_10px"
+                android:layout_marginRight="@dimen/dimen_10px"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:text="密码"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="请输入密码"
+                    android:background="@null"
+                    android:layout_marginRight="@dimen/dimen_10px"
+                    android:paddingLeft="@dimen/dimen_10px"
+                    android:textSize="@dimen/text_14px"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view_line"
+                android:layout_marginLeft="@dimen/dimen_10px"
+                android:layout_marginRight="@dimen/dimen_10px"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:text="确认密码"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="请再次输入密码"
+                    android:background="@null"
+                    android:layout_marginRight="@dimen/dimen_10px"
+                    android:paddingLeft="@dimen/dimen_10px"
+                    android:textSize="@dimen/text_14px"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view_line"
+                android:layout_marginLeft="@dimen/dimen_10px"
+                android:layout_marginRight="@dimen/dimen_10px"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:text="邀请码（选填）"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="请输入邀请码"
+                    android:background="@null"
+                    android:layout_marginRight="@dimen/dimen_10px"
+                    android:paddingLeft="@dimen/dimen_10px"
+                    android:textSize="@dimen/text_14px"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/dimen_10px">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="同意用户协议！"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_12px"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点击阅读《爱健康app用户协议》"
+                android:textColor="@color/default_text_color"
+                android:textSize="@dimen/text_12px"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40px"
+            android:background="@drawable/frame_blue_true"
+            android:layout_marginLeft="@dimen/dimen_16px"
+            android:layout_marginRight="@dimen/dimen_16px"
+            android:layout_marginTop="@dimen/dimen_32px"
+            android:layout_marginBottom="@dimen/dimen_32px"
+            android:text="注册"
+            android:textSize="@dimen/text_14px"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

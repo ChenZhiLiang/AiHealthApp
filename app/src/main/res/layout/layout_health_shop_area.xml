@@ -247,24 +247,22 @@
         android:layout_marginRight="@dimen/dimen_16px"/>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_shop_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_16px"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#f9f9f9"
-        android:layout_marginLeft="@dimen/dimen_16px"
-        android:layout_marginRight="@dimen/dimen_16px"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="@dimen/dimen_16px"
+        android:layout_marginTop="@dimen/dimen_16px"/>
+
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/dimen_30px"
         android:background="@drawable/frame_blue"
         android:paddingLeft="@dimen/dimen_16px"
         android:paddingRight="@dimen/dimen_16px"
-        android:layout_margin="@dimen/dimen_16px"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dimen_16px"
         android:text="进入健康商圈"
         android:textColor="@color/default_text_color"
         android:textSize="@dimen/text_12px"/>

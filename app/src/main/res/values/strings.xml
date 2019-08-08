@@ -26,7 +26,10 @@
 
     <string name="setting">设置</string>
     <string name="cancel">取消</string>
+    <string name="str_sure">确定</string>
+
     <string name="no">不</string>
+
 
     <string name="title_dialog">提示</string>
     <string name="message_permission_rationale">允许以下权限以便程序继续执行：\n\n%1$s</string>

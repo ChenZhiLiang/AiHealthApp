@@ -15,6 +15,7 @@ public class AppConfig {
     public static final String USER_INFO = "user_info";
     public static final String TOKEN_NAME = "token";
     public static final String WALLET_TOKEN = "wallet_token";
+        public static final String MAC_ADDRESS = "mac_address";//设备mac地址
 
     public static final String USER_NAME = "mobile";
     public static final String USER_PASS = "passsword";

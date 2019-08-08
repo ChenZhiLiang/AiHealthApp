@@ -52,6 +52,7 @@
             android:textColor="@color/default_hint_color"/>
 
         <Button
+            android:id="@+id/btn_ask"
             android:layout_width="@dimen/dimen_70px"
             android:layout_height="@dimen/dimen_24px"
             android:background="@drawable/frame_blue"

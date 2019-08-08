@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    android:gravity="center"
     >
+    <include layout="@layout/include_main_toolbar"/>
 
 
     <TextView

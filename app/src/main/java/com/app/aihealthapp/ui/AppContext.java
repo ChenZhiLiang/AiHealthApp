@@ -8,6 +8,7 @@ import android.os.Vibrator;
 import android.support.multidex.MultiDex;
 
 import com.app.aihealthapp.core.base.BaseApplication;
+import com.crrepa.ble.CRPBleClient;
 
 /**
  * Created by Administrator on 2017-11-02.
@@ -22,6 +23,7 @@ public class AppContext extends BaseApplication {
         super.onCreate();
         mInstance = this;
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        mBleClient = CRPBleClient.create(this);
     }
 
     @Override
@@ -29,6 +31,14 @@ public class AppContext extends BaseApplication {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
+
+    private CRPBleClient mBleClient;
+
+    public static CRPBleClient getBleClient(Context context) {
+        AppContext application = (AppContext) context.getApplicationContext();
+        return application.mBleClient;
+    }
+
 
     /**
      * 获得当前app运行的AppContext

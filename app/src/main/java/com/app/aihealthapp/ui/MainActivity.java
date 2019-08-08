@@ -1,5 +1,6 @@
 package com.app.aihealthapp.ui;
 
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
@@ -16,6 +17,7 @@ import com.app.aihealthapp.ui.activity.manage.ManageFragment;
 import com.app.aihealthapp.ui.activity.mine.MineFragment;
 import com.app.aihealthapp.ui.activity.shop.ShopFragment;
 import com.app.aihealthapp.ui.bean.TabEntityBean;
+import com.app.aihealthapp.util.PermissionUtils;
 import com.app.aihealthapp.view.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -121,4 +123,6 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
             super.onBackPressed();
         }
     }
+
+
 }

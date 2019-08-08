@@ -2,10 +2,13 @@ package com.app.aihealthapp.ui.activity.shop;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
 import com.app.aihealthapp.ui.activity.mine.MineFragment;
+
+import butterknife.BindView;
 
 /**
  * @Name：AiHealth
@@ -16,7 +19,8 @@ import com.app.aihealthapp.ui.activity.mine.MineFragment;
  * 修改时间：2019/7/24 22:22
  */
 public class ShopFragment extends BaseFragment {
-
+    @BindView(R.id.tv_title_bar)
+    TextView tv_title_bar;
     public static ShopFragment getInstance(String title) {
         ShopFragment hf = new ShopFragment();
         hf.mTitle = title;
@@ -34,6 +38,7 @@ public class ShopFragment extends BaseFragment {
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
+        tv_title_bar.setText("健康商城");
 
     }
 

@@ -10,6 +10,7 @@ public final class EventCode {
     public static final class Code {
         public static final int QR_LOGIN = 0x111111;//扫码登录
         public static final int LOOk_CHANG = 0x222222;
+        public static final int CONNECTED_SUCCESS = 0x33333;
 
     }
 }

@@ -86,6 +86,27 @@ public class SharedPreferenceHelper {
     }
 
     /**
+     * 设置设备mac地址
+     *
+     * @param context 上下文
+     * @param address   设备mac地址
+     */
+    public static void setMacAddress(Context context, String address) {
+        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.MAC_ADDRESS, address);
+    }
+
+
+    /**
+     * 获取用户 Token
+     *
+     * @param context 上下文
+     * @return token
+     */
+    public static String getMacAddress(Context context) {
+        return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.MAC_ADDRESS);
+    }
+
+    /**
      * 清除 Token
      *
      * @param context 上下文

@@ -63,6 +63,7 @@
             android:textColor="@color/default_hint_color"/>
 
         <Button
+            android:id="@+id/btn_buy"
             android:layout_width="@dimen/dimen_50px"
             android:layout_height="@dimen/dimen_20px"
             android:background="@drawable/frame_blue"

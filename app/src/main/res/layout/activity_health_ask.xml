@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/include_toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:background="@color/view_line"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50px"
+                android:drawableLeft="@mipmap/management_zx_caveat"
+                android:drawablePadding="@dimen/dimen_10px"
+                android:layout_marginLeft="@dimen/dimen_16px"
+                android:gravity="center_vertical"
+                android:text="急重症不适合在线咨询，请立即到就近医院就诊！！"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_14px"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:paddingTop="@dimen/dimen_16px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_16px"
+                    android:text="请输入问题"
+                    android:textSize="@dimen/text_16px"
+                    android:textColor="@color/text_color"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/view_line"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:padding="@dimen/dimen_10px"
+                    android:gravity="top"
+                    android:minLines="8"
+                    android:hint="请您详细描述您的症状、疾病、身体状况，否则可能无法获得医生的详细解答。请勿透露您的真实姓名和联系电话。"
+                    android:textSize="@dimen/text_12px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_10px"
+                    android:layout_gravity="end"
+                    android:text="0/300"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/view_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_10px"
+                    >
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ask"/>
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ask2"/>
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ask3"/>
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ask4"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_10px"
+                    android:text="请上传相关图片（检查单、病例、CT、患处、药品等），该图片只要您和当前医生可见，爱健康会确保您的隐私安全"
+                    android:textSize="@dimen/text_12px"
+                    android:textColor="@color/default_hint_color"/>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="@dimen/dimen_40px"
+                android:background="@drawable/frame_blue_true"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dimen_16px"
+                android:text="提交咨询"
+                android:textSize="@dimen/text_14px"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

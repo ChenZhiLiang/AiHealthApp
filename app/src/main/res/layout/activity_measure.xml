@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/default_text_color"
+    >
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48px"
+        android:fitsSystemWindows="true"
+        android:background="@color/default_text_color"
+        >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_20px"
+            android:paddingRight="@dimen/dimen_20px"
+            android:src="@mipmap/jpush_ic_richpush_actionbar_back" />
+
+        <TextView
+            android:id="@+id/tv_title_bar"
+            style="@style/WrapWrap"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18px"
+            android:text="血压测量"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:background="@color/white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/ll_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="@dimen/dimen_32px"
+                        android:text="2019年9月9日"
+                        android:textSize="@dimen/text_16px"
+                        android:textColor="@color/text_color"/>
+
+
+                    <RelativeLayout
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:background="@mipmap/measurement_bg"
+                        android:layout_gravity="center_horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_measure_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_above="@+id/view_center"
+                            android:layout_marginBottom="@dimen/dimen_10px"
+                            android:text="96%"
+                            android:textColor="@color/white"
+                            android:textSize="24sp"/>
+                        <TextView
+                            android:id="@+id/view_center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            />
+                        <TextView
+                            android:id="@+id/tv_measure_statue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_measure_value"
+                            android:layout_centerHorizontal="true"
+                            android:text="血氧状态"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_16px"/>
+                        <Button
+                            android:layout_width="@dimen/dimen_60px"
+                            android:layout_height="@dimen/dimen_24px"
+                            android:background="@drawable/frame_blue_write"
+                            android:layout_centerHorizontal="true"
+
+                            android:layout_marginTop="@dimen/dimen_10px"
+                            android:text="正常"
+                            android:layout_below="@+id/tv_measure_statue"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_14px"/>
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dimen_16px"
+                        android:text="标准范围"
+                        android:textSize="@dimen/text_16px"
+                        android:textColor="@color/default_text_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dimen_8px"
+                        android:text="94% - 97%"
+                        android:textSize="@dimen/text_14px"
+                        android:textColor="@color/default_hint_color"/>
+
+                    <Button
+                        android:layout_width="120dp"
+                        android:layout_height="@dimen/dimen_36px"
+                        android:background="@drawable/frame_blue"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dimen_16px"
+                        android:text="开始测量"
+                        android:textSize="@dimen/text_14px"
+                        android:textColor="@color/default_text_color"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="@dimen/dimen_32px"
+                    android:background="@color/view_line"
+                    android:orientation="vertical"
+                    android:padding="@dimen/text_16px"
+                    android:layout_below="@+id/ll_main">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="上次测量结果"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_16px" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16px"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="107/80"
+                                android:textColor="@color/default_hint_color"
+                                android:textSize="@dimen/text_14px" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:text="mmgH"
+                                android:textColor="@color/default_hint_color" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:text="血压"
+                                android:textColor="@color/default_text_color"
+                                android:textSize="@dimen/text_14px" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/default_text_color" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="95%"
+                                android:textColor="@color/default_hint_color"
+                                android:textSize="@dimen/text_14px" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:textColor="@color/default_hint_color" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:text="血氧"
+                                android:textColor="@color/default_text_color"
+                                android:textSize="@dimen/text_14px" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/default_text_color" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="80"
+                                android:textColor="@color/default_hint_color"
+                                android:textSize="@dimen/text_14px" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:text="BMP"
+                                android:textColor="@color/default_hint_color" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:text="心率"
+                                android:textColor="@color/default_text_color"
+                                android:textSize="@dimen/text_14px" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

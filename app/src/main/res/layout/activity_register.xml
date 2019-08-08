@@ -228,9 +228,12 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:button="@drawable/checkbox"
+                android:padding="@dimen/dimen_10px"
                 android:text="同意用户协议！"
                 android:textColor="@color/text_color"
-                android:textSize="@dimen/text_12px"/>
+                android:textSize="@dimen/text_12px"
+                android:clickable="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

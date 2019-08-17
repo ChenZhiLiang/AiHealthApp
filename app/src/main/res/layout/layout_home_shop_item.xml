@@ -7,13 +7,16 @@
     android:layout_margin="@dimen/dimen_10px">
 
     <ImageView
+        android:id="@+id/image_goods"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
         android:background="@mipmap/shop"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        />
 
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="八珍养生膏--200g/袋"
@@ -27,6 +30,7 @@
         android:textColor="@color/text_color"
         />
     <TextView
+        android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="好吃营养美味好吃营养美味好吃营养美味好吃营养美味"

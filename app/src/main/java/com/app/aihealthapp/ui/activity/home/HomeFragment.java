@@ -8,21 +8,34 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
+import com.app.aihealthapp.core.bgabanner.BGABanner;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
+import com.app.aihealthapp.core.helper.GlideHelper;
+import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.activity.mine.LoginActivity;
+import com.app.aihealthapp.ui.adapter.HealthManageAdapter;
+import com.app.aihealthapp.ui.adapter.HealthShopAdapter;
 import com.app.aihealthapp.ui.adapter.HomeShopAdapter;
 import com.app.aihealthapp.ui.adapter.HomeShopAreaAdapter;
+import com.app.aihealthapp.ui.bean.AdvListBean;
+import com.app.aihealthapp.ui.bean.HomeBean;
 import com.app.aihealthapp.ui.bean.HomeShopAreaBean;
 import com.app.aihealthapp.ui.bean.HomeShopBean;
+import com.app.aihealthapp.ui.bean.ShopListBean;
+import com.app.aihealthapp.ui.mvvm.view.HomeView;
+import com.app.aihealthapp.ui.mvvm.viewmode.HomeViewMode;
 import com.app.aihealthapp.view.MyGridView;
 import com.crrepa.ble.CRPBleClient;
 import com.crrepa.ble.conn.CRPBleConnection;
@@ -51,8 +64,11 @@ import static android.content.ContentValues.TAG;
  * 修改人：Chen
  * 修改时间：2019/7/22 22:57
  */
-public class HomeFragment extends BaseFragment implements CRPStepChangeListener,CRPBloodPressureChangeListener , CRPBloodOxygenChangeListener {
+public class HomeFragment extends BaseFragment implements HomeView,BGABanner.Adapter<ImageView,AdvListBean >,
+        BGABanner.Delegate<ImageView, AdvListBean>,CRPStepChangeListener,CRPBloodPressureChangeListener , CRPBloodOxygenChangeListener {
 
+    @BindView(R.id.banner_home_adv)
+    BGABanner banner_home_adv;
     @BindView(R.id.tv_title_bar)
     TextView tv_title_bar;
     @BindView(R.id.rt_bind_device)
@@ -86,23 +102,30 @@ public class HomeFragment extends BaseFragment implements CRPStepChangeListener,
     LinearLayout ll_blood_oxygen;
     @BindView(R.id.tv_blood_oxygen)
     TextView tv_blood_oxygen;
+    @BindView(R.id.rt_health_data)
+    RelativeLayout rt_health_data;
 
     @BindView(R.id.btn_ask)
     Button btn_ask;
+    @BindView(R.id.grid_health_manage)
+    MyGridView grid_health_manage;
+    @BindView(R.id.grid_shop_manage)
+    MyGridView grid_shop_manage;
     @BindView(R.id.recycler_shop_area)
     RecyclerView recycler_shop_area;
     @BindView(R.id.gridview_shop)
     MyGridView gridview_shop;
-    List<HomeShopAreaBean> datas  = new ArrayList<>();
-    List<HomeShopBean> items = new ArrayList<>();
-    private HomeShopAreaAdapter mHomeShopAreaAdapter;
-    private HomeShopAdapter mHomeShopAdapter;
     private CRPBleClient mCRPBleClient;
     private CRPBleDevice mBleDevice;
     private CRPBleConnection mBleConnection;
 
     private String mac_address;
 
+    private HomeViewMode mHomeViewMode;
+    private HealthManageAdapter mHealthManageAdapter;
+    private HealthShopAdapter mHealthShopAdapter;
+    private HomeShopAreaAdapter mHomeShopAreaAdapter;
+    private HomeShopAdapter mHomeShopAdapter;
 
     public static HomeFragment getInstance(String title) {
         HomeFragment hf = new HomeFragment();
@@ -118,51 +141,45 @@ public class HomeFragment extends BaseFragment implements CRPStepChangeListener,
     @Override
     public void initView(View view, Bundle savedInstanceState) {
         tv_title_bar.setText("首页");
+        banner_home_adv.setAdapter(this);
+        banner_home_adv.setDelegate(this);
+        mHomeViewMode = new HomeViewMode(this);
         configRecycleView(recycler_shop_area,new LinearLayoutManager(getContext()));
 
-        mHomeShopAreaAdapter = new HomeShopAreaAdapter(datas);
-        recycler_shop_area.setAdapter(mHomeShopAreaAdapter);
-
-        for (int i = 0;i<4;i++){
-            HomeShopBean mHomeShopBean = new HomeShopBean();
-            items.add(mHomeShopBean);
-        }
-        mHomeShopAdapter = new HomeShopAdapter(getActivity(),items);
-        gridview_shop.setAdapter(mHomeShopAdapter);
+//        for (int i = 0;i<4;i++){
+//            HomeShopBean mHomeShopBean = new HomeShopBean();
+//            items.add(mHomeShopBean);
+//        }
+//        mHomeShopAdapter = new HomeShopAdapter(getActivity(),items);
+//        gridview_shop.setAdapter(mHomeShopAdapter);
         mCRPBleClient = AppContext.getBleClient(AppContext.getContext());
         //判断设备mac地址是否为空
-        if (SharedPreferenceHelper.getMacAddress(AppContext.getContext())!=null){
-            mac_address = SharedPreferenceHelper.getMacAddress(AppContext.getContext());
-            mBleDevice = mCRPBleClient.getBleDevice(mac_address);
-            if (mBleDevice != null && mBleDevice.isConnected()) {
-                mBleConnection = mBleDevice.connect();
-                rt_bind_device.setVisibility(View.GONE);
-                ll_device_info.setVisibility(View.VISIBLE);
-                mBleConnection.setStepChangeListener(this);
-                mBleConnection.setBloodPressureChangeListener(this);
-                mBleConnection.setHeartRateChangeListener(mHeartRateChangListener);
-                mBleConnection.setBloodOxygenChangeListener(this);
-
-            }else {
-                rt_bind_device.setVisibility(View.VISIBLE);
-                ll_device_info.setVisibility(View.GONE);
-            }
-        }else {
-            rt_bind_device.setVisibility(View.GONE);
-            ll_device_info.setVisibility(View.GONE);
-
-        }
+//        if (SharedPreferenceHelper.getMacAddress(AppContext.getContext())!=null){
+//            mac_address = SharedPreferenceHelper.getMacAddress(AppContext.getContext());
+//            mBleDevice = mCRPBleClient.getBleDevice(mac_address);
+//            if (mBleDevice != null && mBleDevice.isConnected()) {
+//                mBleConnection = mBleDevice.connect();
+//                rt_bind_device.setVisibility(View.GONE);
+//                ll_device_info.setVisibility(View.VISIBLE);
+//                mBleConnection.setStepChangeListener(this);
+//                mBleConnection.setBloodPressureChangeListener(this);
+//                mBleConnection.setHeartRateChangeListener(mHeartRateChangListener);
+//                mBleConnection.setBloodOxygenChangeListener(this);
+//
+//            }else {
+//                rt_bind_device.setVisibility(View.VISIBLE);
+//                ll_device_info.setVisibility(View.GONE);
+//            }
+//        }else {
+//            rt_bind_device.setVisibility(View.GONE);
+//            ll_device_info.setVisibility(View.GONE);
+//
+//        }
     }
 
     @Override
     public void loadingData() {
-
-        for (int i = 0;i<2;i++){
-            HomeShopAreaBean mHomeShopAreaBean = new HomeShopAreaBean();
-            datas.add(mHomeShopAreaBean);
-        }
-        mHomeShopAreaAdapter.notifyDataSetChanged();
-
+        mHomeViewMode.getHomeDatas(true);
     }
 
     @Override
@@ -173,13 +190,18 @@ public class HomeFragment extends BaseFragment implements CRPStepChangeListener,
     @OnClick({R.id.btn_add_wristband,R.id.ll_syncStep,R.id.ll_blood_pressure,R.id.ll_heart_rate,R.id.ll_blood_oxygen,R.id.btn_ask})
     public void onClick(View v){
         if (v==btn_add_wristband){
-            if (!mCRPBleClient.isBluetoothEnable()){
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivity(enableBtIntent);
-                return;
+            if (isLogin()){
+                if (!mCRPBleClient.isBluetoothEnable()){
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivity(enableBtIntent);
+                    return;
+                }else {
+                    startActivity(new Intent(getContext(),BindDeviceActivity.class));
+                }
             }else {
-                startActivity(new Intent(getContext(),BindDeviceActivity.class));
+                startActivity(new Intent(getContext(), LoginActivity.class));
             }
+
 //            startActivity(new Intent(getActivity(), LoginActivity.class));
         }else if (v==btn_ask){
             startActivity(new Intent(getActivity(),HealthAskActivity.class));
@@ -214,19 +236,22 @@ public class HomeFragment extends BaseFragment implements CRPStepChangeListener,
     protected void receiveEvent(Event event) {
         super.receiveEvent(event);
         if (event.getCode()== EventCode.Code.CONNECTED_SUCCESS){
-            ToastyHelper.toastyNormal(getActivity(),"绑定成功");
-            String address = event.getEventMessage();
-            mBleDevice = mCRPBleClient.getBleDevice(address);
-            mBleConnection = mBleDevice.connect();
-            if (mBleDevice != null && mBleDevice.isConnected()) {
-                rt_bind_device.setVisibility(View.GONE);
-                ll_device_info.setVisibility(View.VISIBLE);
-                mBleConnection.setStepChangeListener(this);
-                mBleConnection.setBloodPressureChangeListener(this);
-                mBleConnection.setHeartRateChangeListener(mHeartRateChangListener);
-                mBleConnection.setBloodOxygenChangeListener(this);
+            mHomeViewMode.getHomeDatas(false);
 
-            }
+//            ToastyHelper.toastyNormal(getActivity(),"绑定成功");
+//            String address = event.getEventMessage();
+//            mBleDevice = mCRPBleClient.getBleDevice(address);
+//            mBleConnection = mBleDevice.connect();
+//            if (mBleDevice != null && mBleDevice.isConnected()) {
+//                rt_bind_device.setVisibility(View.GONE);
+//                ll_device_info.setVisibility(View.VISIBLE);
+//                mBleConnection.setStepChangeListener(this);
+//                mBleConnection.setBloodPressureChangeListener(this);
+//                mBleConnection.setHeartRateChangeListener(mHeartRateChangListener);
+//                mBleConnection.setBloodOxygenChangeListener(this);
+//            }
+        }else if (event.getCode()== EventCode.Code.LOGIN_SUCCESS){
+            mHomeViewMode.getHomeDatas(false);
         }
     }
 
@@ -325,6 +350,82 @@ public class HomeFragment extends BaseFragment implements CRPStepChangeListener,
                 ToastyHelper.toastyNormal(getActivity(),"测量成功");
             }
         });
+
+    }
+
+    @Override
+    public void HomeDatasResult(Object result) {
+
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+
+            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+            HomeBean  homeBean = GsonHelper.GsonToBean(data,HomeBean.class);
+            if (homeBean.getIs_bind_bracelet()==0){
+                rt_bind_device.setVisibility(View.VISIBLE);
+                ll_device_info.setVisibility(View.GONE);
+            }else {
+                rt_bind_device.setVisibility(View.GONE);
+                ll_device_info.setVisibility(View.VISIBLE);
+                if (homeBean.getHealth_data()==null){
+                    rt_health_data.setVisibility(View.GONE);
+                }else {
+                    rt_health_data.setVisibility(View.VISIBLE);
+                }
+            }
+
+            banner_home_adv.setData(homeBean.getAdv_list(), null);
+            //健康管理gridview
+            mHealthManageAdapter = new HealthManageAdapter(mActivity,homeBean.getArticle_cate_list());
+            grid_health_manage.setAdapter(mHealthManageAdapter);
+
+            // 健康商圈gridview
+            mHealthShopAdapter = new HealthShopAdapter(mActivity,homeBean.getGoods_cate_list());
+            grid_shop_manage.setAdapter(mHealthShopAdapter);
+
+            //
+//            mShopListBean = homeBean.getShop_list();
+//            mHomeShopAreaAdapter.notifyDataSetChanged();
+            //健康商圈列表
+            mHomeShopAreaAdapter = new HomeShopAreaAdapter(mActivity,homeBean.getShop_list());
+            recycler_shop_area.setAdapter(mHomeShopAreaAdapter);
+
+            //健康商城
+            mHomeShopAdapter = new HomeShopAdapter(getActivity(),homeBean.getGoods_list());
+            gridview_shop.setAdapter(mHomeShopAdapter);
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+        }
+    }
+
+
+    @Override
+    public void showProgress() {
+
+        hud.show();
+    }
+
+    @Override
+    public void hideProgress() {
+
+        hud.dismiss();
+    }
+
+    @Override
+    public void showLoadFailMsg(String err) {
+
+        ToastyHelper.toastyNormal(mActivity,err);
+    }
+
+    @Override
+    public void onBannerItemClick(BGABanner banner, ImageView itemView, AdvListBean model, int position) {
+        showLoadFailMsg("点击");
+
+    }
+
+    @Override
+    public void fillBannerItem(BGABanner banner, ImageView itemView, AdvListBean model, int position) {
+        GlideHelper.loadImageView(mActivity, model.getPic(), itemView);
 
     }
 }

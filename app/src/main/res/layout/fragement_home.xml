@@ -388,11 +388,13 @@
             </LinearLayout>
             </LinearLayout>
             <RelativeLayout
+                android:id="@+id/rt_health_data"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40px"
                 android:layout_marginTop="@dimen/dimen_10px"
                 android:layout_marginBottom="@dimen/dimen_10px"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

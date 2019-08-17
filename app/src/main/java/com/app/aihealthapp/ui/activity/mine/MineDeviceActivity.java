@@ -1,9 +1,22 @@
 package com.app.aihealthapp.ui.activity.mine;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
+import com.app.aihealthapp.core.helper.GsonHelper;
+import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.activity.home.BindDeviceActivity;
+import com.app.aihealthapp.ui.mvvm.view.MineDeviceView;
+import com.app.aihealthapp.ui.mvvm.viewmode.MineDeviceViewMode;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @Name：AiHealth
@@ -13,7 +26,11 @@ import com.app.aihealthapp.core.base.BaseActivity;
  * 修改人：Chen
  * 修改时间：2019/7/26 21:53
  */
-public class MineDeviceActivity extends BaseActivity {
+public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
+
+    @BindView(R.id.btn_bind)
+    Button btn_bind;
+    private MineDeviceViewMode mMineDeviceViewMode;
     @Override
     public int getLayoutId() {
         return R.layout.activity_mine_device;
@@ -33,11 +50,53 @@ public class MineDeviceActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        mMineDeviceViewMode = new MineDeviceViewMode(this);
     }
 
     @Override
     public void initData() {
+        mMineDeviceViewMode.getMineDeviceInfo();
+    }
 
+    @OnClick({R.id.btn_bind})
+    public void onClick(View v){
+        if (v==btn_bind){
+            if (!AppContext.getBleClient(AppContext.getContext()).isBluetoothEnable()){
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivity(enableBtIntent);
+                return;
+            }else {
+                startActivity(new Intent(this, BindDeviceActivity.class));
+            }
+
+        }
+    }
+    @Override
+    public void MineDeviceInfo(Object result) {
+
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+        }
+    }
+
+    @Override
+    public void showProgress() {
+
+        hud.show();
+    }
+
+    @Override
+    public void hideProgress() {
+
+        hud.dismiss();
+    }
+
+    @Override
+    public void showLoadFailMsg(String err) {
+
+        ToastyHelper.toastyNormal(this,err);
     }
 }

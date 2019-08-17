@@ -33,20 +33,29 @@
     </LinearLayout>
 
 
+    <com.app.aihealthapp.view.MyGridView
+        android:id="@+id/grid_shop_manage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10px"
+        android:numColumns="5"
+        android:scrollbars="none"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dimen_10px">
+        android:padding="@dimen/dimen_10px"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="@dimen/dimen_40px"
@@ -141,7 +150,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dimen_10px">
+        android:padding="@dimen/dimen_10px"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"

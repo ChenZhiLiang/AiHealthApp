@@ -1,6 +1,9 @@
 package com.app.aihealthapp.core.network.okhttp.request;
 
 
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
+import com.app.aihealthapp.ui.AppContext;
+
 import java.util.Map;
 
 import okhttp3.FormBody;
@@ -27,7 +30,13 @@ public class OkHttpRequest {
 				urlBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
 			}
 		}
-		return new Request.Builder().url(urlBuilder.substring(0, urlBuilder.length() - 1)).get().build();
+		String mToken = SharedPreferenceHelper.getUserToken(AppContext.getContext());
+
+		if (mToken == null) {
+			return new Request.Builder().url(urlBuilder.substring(0, urlBuilder.length() - 1)).get().build();
+		}else {
+			return new Request.Builder().addHeader("Authorization", "Bearer " + mToken).url(urlBuilder.substring(0, urlBuilder.length() - 1)).get().build();
+		}
 	}
 
 
@@ -47,7 +56,12 @@ public class OkHttpRequest {
 			}
 		}
 		FormBody mFormBody = mFormBodyBuild.build();
-		return new Request.Builder().url(url).post(mFormBody).build();
+		String mToken = SharedPreferenceHelper.getUserToken(AppContext.getContext());
+		if (mToken == null) {
+			return new Request.Builder().url(url).post(mFormBody).build();
+		}else {
+			return new Request.Builder().addHeader("Authorization", "Bearer " + mToken).url(url).post(mFormBody).build();
+		}
 	}
 
 }

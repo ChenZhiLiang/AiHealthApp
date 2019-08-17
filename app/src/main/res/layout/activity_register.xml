@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
@@ -83,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40px">
                 <TextView
+                    android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -92,9 +95,12 @@
                     android:textSize="@dimen/text_14px"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:id="@+id/edit_input_phone"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/tv_phone"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:inputType="phone"
                     android:hint="请输入手机号码"
                     android:background="@null"
                     android:layout_marginRight="@dimen/dimen_10px"
@@ -112,6 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40px">
                 <TextView
+                    android:id="@+id/tv_verify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -119,8 +126,22 @@
                     android:text="验证码"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px"/>
+                <EditText
+                    android:id="@+id/edit_input_verify"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_verify"
+                    android:layout_toLeftOf="@+id/tv_get_verify"
+                    android:inputType="number"
+                    android:hint="请输入验证码"
+                    android:background="@null"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px"/>
 
                 <TextView
+                    android:id="@+id/tv_get_verify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -142,6 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40px">
                 <TextView
+                    android:id="@+id/tv_pass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -151,9 +173,11 @@
                     android:textSize="@dimen/text_14px"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:id="@+id/edit_input_pass"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/tv_pass"
+                    android:layout_marginLeft="@dimen/dimen_10px"
                     android:hint="请输入密码"
                     android:background="@null"
                     android:layout_marginRight="@dimen/dimen_10px"
@@ -171,6 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40px">
                 <TextView
+                    android:id="@+id/tv_again_pass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -180,9 +205,11 @@
                     android:textSize="@dimen/text_14px"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:id="@+id/edit_input_again_pass"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/tv_again_pass"
+                    android:layout_marginLeft="@dimen/dimen_10px"
                     android:hint="请再次输入密码"
                     android:background="@null"
                     android:layout_marginRight="@dimen/dimen_10px"
@@ -200,6 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40px">
                 <TextView
+                    android:id="@+id/tv_invite_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -209,9 +237,12 @@
                     android:textSize="@dimen/text_14px"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:id="@+id/edit_input_invite_code"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/tv_invite_code"
+                    android:layout_marginLeft="@dimen/dimen_10px"
                     android:hint="请输入邀请码"
                     android:background="@null"
                     android:layout_marginRight="@dimen/dimen_10px"
@@ -226,6 +257,7 @@
             android:orientation="horizontal"
             android:layout_margin="@dimen/dimen_10px">
             <CheckBox
+                android:id="@+id/checkbox_agreed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/checkbox"
@@ -235,6 +267,7 @@
                 android:textSize="@dimen/text_12px"
                 android:clickable="true"/>
             <TextView
+                android:id="@+id/tv_protocol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="点击阅读《爱健康app用户协议》"
@@ -243,6 +276,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_40px"
             android:background="@drawable/frame_blue_true"

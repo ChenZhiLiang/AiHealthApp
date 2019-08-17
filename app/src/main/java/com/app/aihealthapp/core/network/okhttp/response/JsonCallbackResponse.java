@@ -20,9 +20,7 @@ import okhttp3.Response;
 public class JsonCallbackResponse implements Callback {
 
 	private static final String TAG = "JsonCallbackResponse";
-	private final String RESULT_CODE = "retcode";
-	private final String RESULT = "code";
-	private final String RESULT_STATUS = "status";
+	private final String RESULT_CODE = "ret";
 	private final String EMPTY_MSG_TEXT = "网络连接失败，请检查网络设置。";
 	private final String COOKIE_STORE = "Set-Cookie";
 
@@ -85,7 +83,7 @@ public class JsonCallbackResponse implements Callback {
 		}
 		try {
 			JSONObject result = new JSONObject(responseObj.toString());
-			if (result.has(RESULT_CODE)||result.has(RESULT_STATUS)||result.has(RESULT)) {
+			if (result.has(RESULT_CODE)) {
 				mResultCallback.onSuccess(result);
 			} else {
 				mResultCallback.onFailure(EMPTY_MSG_TEXT);

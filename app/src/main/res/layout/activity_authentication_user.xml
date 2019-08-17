@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
@@ -92,10 +94,13 @@
                         android:textSize="@dimen/text_14px"/>
 
                     <EditText
+                        android:id="@+id/edit_input_name"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:hint="请输入姓名"
+                        android:gravity="right|center_vertical"
+                        android:text="123"
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
                         android:paddingLeft="@dimen/dimen_10px"
@@ -121,9 +126,11 @@
                         android:textSize="@dimen/text_14px"/>
 
                     <EditText
+                        android:id="@+id/edit_input_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
+                        android:gravity="right|center_vertical"
                         android:hint="请输入昵称"
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
@@ -183,14 +190,27 @@
                         android:textSize="@dimen/text_14px"/>
 
                     <EditText
+                        android:id="@+id/edit_input_height"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:hint="m"
+                        android:gravity="right|center_vertical"
+                        android:layout_toLeftOf="@+id/tv_height"
+                        android:inputType="number"
+                        android:hint="请输入身高"
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
                         android:paddingLeft="@dimen/dimen_10px"
                         android:textSize="@dimen/text_14px"/>
+
+                    <TextView
+                        android:id="@+id/tv_height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:text="cm"
+                        android:textSize="@dimen/text_14px"
+                        />
                 </RelativeLayout>
 
                 <View
@@ -212,14 +232,26 @@
                         android:textSize="@dimen/text_14px"/>
 
                     <EditText
+                        android:id="@+id/edit_input_weight"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:hint="kg"
+                        android:layout_toLeftOf="@+id/tv_weight"
+                        android:gravity="right|center_vertical"
+                        android:inputType="number"
+                        android:hint="请输入体重"
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
                         android:paddingLeft="@dimen/dimen_10px"
                         android:textSize="@dimen/text_14px"/>
+                    <TextView
+                        android:id="@+id/tv_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:text="cm"
+                        android:textSize="@dimen/text_14px"
+                        />
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
@@ -240,9 +272,12 @@
                         android:textSize="@dimen/text_14px"/>
 
                     <EditText
+                        android:id="@+id/edit_input_card_no"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
+                        android:gravity="right|center_vertical"
+
                         android:hint="请输入身份证号"
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
@@ -268,9 +303,12 @@
                         android:textSize="@dimen/text_14px"/>
 
                     <EditText
+                        android:id="@+id/edit_input_bank_no"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
+                        android:gravity="right|center_vertical"
+
                         android:hint="请输入银行卡号"
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
@@ -296,9 +334,12 @@
                         android:textSize="@dimen/text_14px"/>
 
                     <EditText
+                        android:id="@+id/edit_input_bank_name"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
+                        android:gravity="right|center_vertical"
+
                         android:hint="请输入银行名称"
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
@@ -324,9 +365,11 @@
                         android:textSize="@dimen/text_14px"/>
 
                     <EditText
+                        android:id="@+id/edit_input_alipay_no"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
+                        android:gravity="right|center_vertical"
                         android:hint="请输入支付宝账号"
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
@@ -352,6 +395,7 @@
                         android:textSize="@dimen/text_14px"/>
 
                     <TextView
+                        android:id="@+id/tv_uploading"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
@@ -366,6 +410,7 @@
 
 
             <Button
+                android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40px"
                 android:background="@drawable/frame_blue_true"

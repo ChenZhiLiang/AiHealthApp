@@ -36,6 +36,7 @@
                     android:textSize="@dimen/text_14px"
                     android:textColor="@color/default_text_color"/>
                 <Button
+                    android:id="@+id/btn_bind"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_30px"
                     android:background="@drawable/frame_blue_true"

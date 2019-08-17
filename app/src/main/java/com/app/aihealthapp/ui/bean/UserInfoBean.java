@@ -11,288 +11,527 @@ import java.io.Serializable;
  */
 public class UserInfoBean implements Serializable {
 
+        /**
+         * id : 44
+         * uuid : 5ec5d748-6dec-3bf5-1e1a-1fe62c9681f1
+         * uid : 15177253868
+         * pwd : e10adc3949ba59abbe56e057f20f883e
+         * sex : 0
+         * integral : 0
+         * user_money : 0.00
+         * frozen_money : 0.00
+         * total_money : 0.00
+         * distribut_money : 0.00
+         * nickname :
+         * email : null
+         * mobile : 15177253868
+         * mobile_validated : 0
+         * oauth_type : app
+         * openid : null
+         * xcx_openid :
+         * unionid :
+         * oauth_nickname :
+         * avatar :
+         * pid : 0
+         * last_login_time : null
+         * last_login_ip : null
+         * is_work : 1
+         * is_fx : 0
+         * fx_goods : 0
+         * token : 1566055070acajts
+         * add_date : 2019-08-17
+         * area_code : 0
+         * delivery_amount : 0.00
+         * address :
+         * place_info :
+         * card_no :
+         * town_code : 0
+         * is_director : 0
+         * card_pic1 :
+         * card_pic2 :
+         * kind_type : 0
+         * bank_name :
+         * bank_no :
+         * alipay_no :
+         * alipay_pay_pic :
+         * is_auth : 0
+         * department_name :
+         * position :
+         * obtain :
+         * hospital :
+         * hospital_hot :
+         * introduce :
+         * doctor_skill :
+         * advice_price : 0.00
+         * invite_code : 1566055070mkirop
+         */
 
-    /**
-     * id : 201
-     * mer_sign : zhongfang
-     * weid : gh_cd1cd5182705
-     * openid : oV5YH0n8mkIfn0vxiW_AaTYRudZg
-     * unionid : 5c6b806205b1d0.124310190
-     * third_openid :
-     * name : 我骨骼惊奇
-     * thumb : http://thirdwx.qlogo.cn/mmopen/vi_32/pT7MbozNxvQnCGym0FvqaSWfxOIXFRPicDXSMSMUHSZHTaugOaeQPvKCiagPvQYglZn5Id2oPV8iardkFHlYrCaBw/132
-     * phone : 18177723167
-     * money : 0.00
-     * sex : 1
-     * birth : 0000-00-00
-     * label :
-     * city :
-     * province :
-     * address :
-     * status : 1
-     * times : 1550548524
-     * is_third : 0
-     * scene : 1
-     * star_sign :
-     * hobby :
-     * wei_unionid : otbl00cZtEM8GnBzao6qO8w1PW9g
-     * password : e10adc3949ba59abbe56e057f20f883e
-     * sync_flag : null
-     * is_secure : 0
-     * is_push_msg : 1
-     * expiration : 1562508606
-     */
+        private int id;
+        private String uuid;
+        private String uid;
+        private String pwd;
+        private int sex;
+        private int integral;
+        private String user_money;
+        private String frozen_money;
+        private String total_money;
+        private String distribut_money;
+        private String nickname;
+        private Object email;
+        private String mobile;
+        private int mobile_validated;
+        private String oauth_type;
+        private Object openid;
+        private String xcx_openid;
+        private String unionid;
+        private String oauth_nickname;
+        private String avatar;
+        private int pid;
+        private Object last_login_time;
+        private Object last_login_ip;
+        private int is_work;
+        private int is_fx;
+        private String fx_goods;
+        private String token;
+        private String add_date;
+        private int area_code;
+        private String delivery_amount;
+        private String address;
+        private String place_info;
+        private String card_no;
+        private int town_code;
+        private int is_director;
+        private String card_pic1;
+        private String card_pic2;
+        private int kind_type;
+        private String bank_name;
+        private String bank_no;
+        private String alipay_no;
+        private String alipay_pay_pic;
+        private int is_auth;
+        private String department_name;
+        private String position;
+        private String obtain;
+        private String hospital;
+        private String hospital_hot;
+        private String introduce;
+        private String doctor_skill;
+        private String advice_price;
+        private String invite_code;
 
-    private int id;
-    private String mer_sign;
-    private String weid;
-    private String openid;
-    private String unionid;
-    private String third_openid;
-    private String name;
-    private String thumb;
-    private String phone;
-    private String money;
-    private int sex;
-    private String birth;
-    private String label;
-    private String city;
-    private String province;
-    private String address;
-    private int status;
-    private int times;
-    private int is_third;
-    private int scene;
-    private String star_sign;
-    private String hobby;
-    private String wei_unionid;
-    private String password;
-    private Object sync_flag;
-    private int is_secure;
-    private int is_push_msg;
-    private int expiration;
+        public int getId() {
+            return id;
+        }
 
-    public int getId() {
-        return id;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+        public String getUuid() {
+            return uuid;
+        }
 
-    public String getMer_sign() {
-        return mer_sign;
-    }
+        public void setUuid(String uuid) {
+            this.uuid = uuid;
+        }
 
-    public void setMer_sign(String mer_sign) {
-        this.mer_sign = mer_sign;
-    }
+        public String getUid() {
+            return uid;
+        }
 
-    public String getWeid() {
-        return weid;
-    }
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
 
-    public void setWeid(String weid) {
-        this.weid = weid;
-    }
+        public String getPwd() {
+            return pwd;
+        }
 
-    public String getOpenid() {
-        return openid;
-    }
+        public void setPwd(String pwd) {
+            this.pwd = pwd;
+        }
 
-    public void setOpenid(String openid) {
-        this.openid = openid;
-    }
+        public int getSex() {
+            return sex;
+        }
 
-    public String getUnionid() {
-        return unionid;
-    }
+        public void setSex(int sex) {
+            this.sex = sex;
+        }
 
-    public void setUnionid(String unionid) {
-        this.unionid = unionid;
-    }
+        public int getIntegral() {
+            return integral;
+        }
 
-    public String getThird_openid() {
-        return third_openid;
-    }
+        public void setIntegral(int integral) {
+            this.integral = integral;
+        }
 
-    public void setThird_openid(String third_openid) {
-        this.third_openid = third_openid;
-    }
+        public String getUser_money() {
+            return user_money;
+        }
 
-    public String getName() {
-        return name;
-    }
+        public void setUser_money(String user_money) {
+            this.user_money = user_money;
+        }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+        public String getFrozen_money() {
+            return frozen_money;
+        }
 
-    public String getThumb() {
-        return thumb;
-    }
+        public void setFrozen_money(String frozen_money) {
+            this.frozen_money = frozen_money;
+        }
 
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
-    }
+        public String getTotal_money() {
+            return total_money;
+        }
 
-    public String getPhone() {
-        return phone;
-    }
+        public void setTotal_money(String total_money) {
+            this.total_money = total_money;
+        }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+        public String getDistribut_money() {
+            return distribut_money;
+        }
 
-    public String getMoney() {
-        return money;
-    }
+        public void setDistribut_money(String distribut_money) {
+            this.distribut_money = distribut_money;
+        }
 
-    public void setMoney(String money) {
-        this.money = money;
-    }
+        public String getNickname() {
+            return nickname;
+        }
 
-    public int getSex() {
-        return sex;
-    }
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
 
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
+        public Object getEmail() {
+            return email;
+        }
 
-    public String getBirth() {
-        return birth;
-    }
+        public void setEmail(Object email) {
+            this.email = email;
+        }
 
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
+        public String getMobile() {
+            return mobile;
+        }
 
-    public String getLabel() {
-        return label;
-    }
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+        public int getMobile_validated() {
+            return mobile_validated;
+        }
 
-    public String getCity() {
-        return city;
-    }
+        public void setMobile_validated(int mobile_validated) {
+            this.mobile_validated = mobile_validated;
+        }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+        public String getOauth_type() {
+            return oauth_type;
+        }
 
-    public String getProvince() {
-        return province;
-    }
+        public void setOauth_type(String oauth_type) {
+            this.oauth_type = oauth_type;
+        }
 
-    public void setProvince(String province) {
-        this.province = province;
-    }
+        public Object getOpenid() {
+            return openid;
+        }
 
-    public String getAddress() {
-        return address;
-    }
+        public void setOpenid(Object openid) {
+            this.openid = openid;
+        }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+        public String getXcx_openid() {
+            return xcx_openid;
+        }
 
-    public int getStatus() {
-        return status;
-    }
+        public void setXcx_openid(String xcx_openid) {
+            this.xcx_openid = xcx_openid;
+        }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+        public String getUnionid() {
+            return unionid;
+        }
 
-    public int getTimes() {
-        return times;
-    }
+        public void setUnionid(String unionid) {
+            this.unionid = unionid;
+        }
 
-    public void setTimes(int times) {
-        this.times = times;
-    }
+        public String getOauth_nickname() {
+            return oauth_nickname;
+        }
 
-    public int getIs_third() {
-        return is_third;
-    }
+        public void setOauth_nickname(String oauth_nickname) {
+            this.oauth_nickname = oauth_nickname;
+        }
 
-    public void setIs_third(int is_third) {
-        this.is_third = is_third;
-    }
+        public String getAvatar() {
+            return avatar;
+        }
 
-    public int getScene() {
-        return scene;
-    }
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
 
-    public void setScene(int scene) {
-        this.scene = scene;
-    }
+        public int getPid() {
+            return pid;
+        }
 
-    public String getStar_sign() {
-        return star_sign;
-    }
+        public void setPid(int pid) {
+            this.pid = pid;
+        }
 
-    public void setStar_sign(String star_sign) {
-        this.star_sign = star_sign;
-    }
+        public Object getLast_login_time() {
+            return last_login_time;
+        }
 
-    public String getHobby() {
-        return hobby;
-    }
+        public void setLast_login_time(Object last_login_time) {
+            this.last_login_time = last_login_time;
+        }
 
-    public void setHobby(String hobby) {
-        this.hobby = hobby;
-    }
+        public Object getLast_login_ip() {
+            return last_login_ip;
+        }
 
-    public String getWei_unionid() {
-        return wei_unionid;
-    }
+        public void setLast_login_ip(Object last_login_ip) {
+            this.last_login_ip = last_login_ip;
+        }
 
-    public void setWei_unionid(String wei_unionid) {
-        this.wei_unionid = wei_unionid;
-    }
+        public int getIs_work() {
+            return is_work;
+        }
 
-    public String getPassword() {
-        return password;
-    }
+        public void setIs_work(int is_work) {
+            this.is_work = is_work;
+        }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+        public int getIs_fx() {
+            return is_fx;
+        }
 
-    public Object getSync_flag() {
-        return sync_flag;
-    }
+        public void setIs_fx(int is_fx) {
+            this.is_fx = is_fx;
+        }
 
-    public void setSync_flag(Object sync_flag) {
-        this.sync_flag = sync_flag;
-    }
+        public String getFx_goods() {
+            return fx_goods;
+        }
 
-    public int getIs_secure() {
-        return is_secure;
-    }
+        public void setFx_goods(String fx_goods) {
+            this.fx_goods = fx_goods;
+        }
 
-    public void setIs_secure(int is_secure) {
-        this.is_secure = is_secure;
-    }
+        public String getToken() {
+            return token;
+        }
 
-    public int getIs_push_msg() {
-        return is_push_msg;
-    }
+        public void setToken(String token) {
+            this.token = token;
+        }
 
-    public void setIs_push_msg(int is_push_msg) {
-        this.is_push_msg = is_push_msg;
-    }
+        public String getAdd_date() {
+            return add_date;
+        }
 
-    public int getExpiration() {
-        return expiration;
-    }
+        public void setAdd_date(String add_date) {
+            this.add_date = add_date;
+        }
 
-    public void setExpiration(int expiration) {
-        this.expiration = expiration;
-    }
+        public int getArea_code() {
+            return area_code;
+        }
+
+        public void setArea_code(int area_code) {
+            this.area_code = area_code;
+        }
+
+        public String getDelivery_amount() {
+            return delivery_amount;
+        }
+
+        public void setDelivery_amount(String delivery_amount) {
+            this.delivery_amount = delivery_amount;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getPlace_info() {
+            return place_info;
+        }
+
+        public void setPlace_info(String place_info) {
+            this.place_info = place_info;
+        }
+
+        public String getCard_no() {
+            return card_no;
+        }
+
+        public void setCard_no(String card_no) {
+            this.card_no = card_no;
+        }
+
+        public int getTown_code() {
+            return town_code;
+        }
+
+        public void setTown_code(int town_code) {
+            this.town_code = town_code;
+        }
+
+        public int getIs_director() {
+            return is_director;
+        }
+
+        public void setIs_director(int is_director) {
+            this.is_director = is_director;
+        }
+
+        public String getCard_pic1() {
+            return card_pic1;
+        }
+
+        public void setCard_pic1(String card_pic1) {
+            this.card_pic1 = card_pic1;
+        }
+
+        public String getCard_pic2() {
+            return card_pic2;
+        }
+
+        public void setCard_pic2(String card_pic2) {
+            this.card_pic2 = card_pic2;
+        }
+
+        public int getKind_type() {
+            return kind_type;
+        }
+
+        public void setKind_type(int kind_type) {
+            this.kind_type = kind_type;
+        }
+
+        public String getBank_name() {
+            return bank_name;
+        }
+
+        public void setBank_name(String bank_name) {
+            this.bank_name = bank_name;
+        }
+
+        public String getBank_no() {
+            return bank_no;
+        }
+
+        public void setBank_no(String bank_no) {
+            this.bank_no = bank_no;
+        }
+
+        public String getAlipay_no() {
+            return alipay_no;
+        }
+
+        public void setAlipay_no(String alipay_no) {
+            this.alipay_no = alipay_no;
+        }
+
+        public String getAlipay_pay_pic() {
+            return alipay_pay_pic;
+        }
+
+        public void setAlipay_pay_pic(String alipay_pay_pic) {
+            this.alipay_pay_pic = alipay_pay_pic;
+        }
+
+        public int getIs_auth() {
+            return is_auth;
+        }
+
+        public void setIs_auth(int is_auth) {
+            this.is_auth = is_auth;
+        }
+
+        public String getDepartment_name() {
+            return department_name;
+        }
+
+        public void setDepartment_name(String department_name) {
+            this.department_name = department_name;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public void setPosition(String position) {
+            this.position = position;
+        }
+
+        public String getObtain() {
+            return obtain;
+        }
+
+        public void setObtain(String obtain) {
+            this.obtain = obtain;
+        }
+
+        public String getHospital() {
+            return hospital;
+        }
+
+        public void setHospital(String hospital) {
+            this.hospital = hospital;
+        }
+
+        public String getHospital_hot() {
+            return hospital_hot;
+        }
+
+        public void setHospital_hot(String hospital_hot) {
+            this.hospital_hot = hospital_hot;
+        }
+
+        public String getIntroduce() {
+            return introduce;
+        }
+
+        public void setIntroduce(String introduce) {
+            this.introduce = introduce;
+        }
+
+        public String getDoctor_skill() {
+            return doctor_skill;
+        }
+
+        public void setDoctor_skill(String doctor_skill) {
+            this.doctor_skill = doctor_skill;
+        }
+
+        public String getAdvice_price() {
+            return advice_price;
+        }
+
+        public void setAdvice_price(String advice_price) {
+            this.advice_price = advice_price;
+        }
+
+        public String getInvite_code() {
+            return invite_code;
+        }
+
+        public void setInvite_code(String invite_code) {
+            this.invite_code = invite_code;
+        }
 }

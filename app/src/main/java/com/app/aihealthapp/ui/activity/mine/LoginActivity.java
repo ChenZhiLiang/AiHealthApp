@@ -1,19 +1,29 @@
 package com.app.aihealthapp.ui.activity.mine;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-
 import com.app.aihealthapp.R;
-import com.app.aihealthapp.core.base.BaseActivity;
+import com.app.aihealthapp.core.eventbus.Event;
+import com.app.aihealthapp.core.eventbus.EventCode;
+import com.app.aihealthapp.core.helper.EventBusHelper;
+import com.app.aihealthapp.core.helper.GsonHelper;
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
-import com.app.aihealthapp.util.StatusBarUtil;
-import com.app.aihealthapp.view.toasty.Toasty;
+import com.app.aihealthapp.core.helper.UserHelper;
+import com.app.aihealthapp.core.kprogresshud.KProgressHUD;
+import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.bean.UserInfoBean;
+import com.app.aihealthapp.ui.mvvm.view.LoginView;
+import com.app.aihealthapp.ui.mvvm.viewmode.LoginViewMode;
+import com.app.aihealthapp.util.CountDownTimerUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,11 +37,21 @@ import butterknife.OnClick;
  * 修改人：Chen
  * 修改时间：2019/7/26 0:06
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginView {
 
+    @BindView(R.id.edit_input_phone)
+    EditText edit_input_phone;
+    @BindView(R.id.edit_input_pass)
+    EditText edit_input_pass;
 
     @BindView(R.id.tv_register)
     TextView tv_register;
+    @BindView(R.id.btn_login)
+    Button btn_login;
+
+    private LoginViewMode mLoginViewMode;
+    public KProgressHUD hud;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +66,71 @@ public class LoginActivity extends AppCompatActivity {
             //设置状态栏字体颜色颜色为黑色
 //            StatusBarUtil.StatusBarLightMode(this);
         }
+        initView();
     }
 
-    @OnClick({R.id.tv_register})
+
+    private void initView(){
+
+        hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+//                .setCustomView(popupView)
+                .setLabel(getString(R.string.loading),this.getResources().getColor(R.color.white))
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .setCancellable(true);
+
+        mLoginViewMode = new LoginViewMode(this);
+    }
+    @OnClick({R.id.tv_register,R.id.btn_login})
     public void onClick(View v){
         if (v==tv_register){
             startActivity(new Intent(this,RegisterActivity.class));
+        }else if (v==btn_login){
+            if (TextUtils.isEmpty(edit_input_phone.getText().toString())){
+                ToastyHelper.toastyNormal(this,"请输入手机号");
+            }else if (TextUtils.isEmpty(edit_input_pass.getText().toString())){
+                ToastyHelper.toastyNormal(this,"请输入密码");
+            }else {
+                mLoginViewMode.Login(edit_input_phone.getText().toString(),edit_input_pass.getText().toString());
+            }
         }
     }
 
+    @Override
+    public void onLoginResult(Object result) {
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+            String token = GsonHelper.GsonToString(data,"token");
+            SharedPreferenceHelper.setUserToken(AppContext.getContext(),token);
+            String user = GsonHelper.GsonToData(data,"user").toString();
+            UserInfoBean mUserInfo = GsonHelper.GsonToBean(user,UserInfoBean.class);
+            SharedPreferenceHelper.setUserInfo(AppContext.getContext(),mUserInfo);
+            EventBusHelper.sendEvent(new Event(EventCode.Code.LOGIN_SUCCESS));
+            showLoadFailMsg("登录成功");
+            finish();
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+        }
+    }
+
+    @Override
+    public void showProgress() {
+
+        hud.show();
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+        hud.dismiss();
+    }
+
+    @Override
+    public void showLoadFailMsg(String err) {
+
+        ToastyHelper.toastyNormal(this,err);
+    }
 }

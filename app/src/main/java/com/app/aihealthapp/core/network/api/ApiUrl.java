@@ -9,45 +9,24 @@ public final class ApiUrl {
 
     // dev = 0 测试 dev=1 生产
     public static final int dev = 0;
-    /*通联域名*/
-    public static final String HOST =dev==0?"http://test1.allinpaygx.com/":"http://voice.xtyj.allinpaygx.com/";
-    public static final String HOST_CODE = dev==0? "http://xtest.allinpaygx.com/":"http://xtyj.allinpaygx.com/";//发送验证码域名
-    public static final String Secret = "838d8edc55b24ab5b803a642183daa10";
-    public static class VoiceApi{
-        /**
-         * 商户信息查询Marine、:
-         * http://test1.allinpaygx.com
-         */
-        public static final String MerchantInfo = HOST +"msg/voice/getMerchant";
-        /**
-         * 商户设备接入
-         */
-        public static final String Connect = HOST +"msg/voice/connect";
+    public static final String HOST =dev==0?"http://aijiankang.cacpo.com/":"http://aijiankang.cacpo.com/";
+    public static class HomeApi{
+        //首页
+        public static final String Home = HOST +"api/index/dashboard";
+    }
 
-        /**
-         * 发送消息
-         */
-        public static final String VoiceSend = HOST +"msg/voice/send";
+    public static class UserApi{
+        public static final String Verify = HOST +"api/verify";
+        public static final String Register = HOST +"api/register";
+        public static final String Login = HOST +"api/login";
+        public static final String UserInfo = HOST +"api/user/dashboard";
+        public static final String Authentication = HOST +"api/user/realname";
+    }
 
-        /**
-         * 订单列表
-         */
-        public static final String OrderList = HOST +"msg/voice/getOrders";
+    public static class DeviceApi{
 
-        /**
-         * 解除绑定
-         */
-        public static final String UnBind = HOST + "msg/voice/unbind";
-
-        /**
-        * 获取版本信息
-        */
-        public static final String GetVersionInfo = HOST +"msg/voice/getVersionInfo";
-
-        /**
-         * 发送验证码
-         */
-        public static final String SendVerificationCode = HOST_CODE + "wx/cash/external/sendMsg";
+        public static final String DeviceInfo = HOST +"api/device/dashboard";
+        public static final String BindDevice = HOST +"api/device/bind";
 
     }
 }

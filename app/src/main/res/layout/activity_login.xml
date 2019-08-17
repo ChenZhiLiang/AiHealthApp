@@ -23,6 +23,7 @@
 
 
     <EditText
+        android:id="@+id/edit_input_phone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="@dimen/dimen_16px"
@@ -30,6 +31,7 @@
         android:layout_marginLeft="@dimen/dimen_32px"
         android:drawablePadding="10dp"
         android:drawableLeft="@mipmap/login_phone_icon"
+        android:inputType="phone"
         android:background="@null"
         android:hint="请输入手机号码"
         android:textColor="@color/white"
@@ -44,6 +46,7 @@
         android:layout_marginLeft="@dimen/dimen_32px"
         android:layout_marginRight="@dimen/dimen_32px"/>
     <EditText
+        android:id="@+id/edit_input_pass"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="@dimen/dimen_32px"
@@ -66,6 +69,7 @@
         android:layout_marginRight="@dimen/dimen_32px"/>
 
     <Button
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40px"
         android:background="@drawable/frame_blue_true"

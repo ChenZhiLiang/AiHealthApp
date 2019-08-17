@@ -17,6 +17,7 @@ import com.app.aihealthapp.core.base.BaseXRecyclerViewAdapter;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.EventBusHelper;
+import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.uitrarefresh.UTRefreshLayout;
@@ -24,6 +25,8 @@ import com.app.aihealthapp.core.uitrarefresh.ptr.PtrDefaultHandler;
 import com.app.aihealthapp.core.uitrarefresh.ptr.PtrFrameLayout;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.adapter.DeviceListAdapter;
+import com.app.aihealthapp.ui.mvvm.view.BindDeviceView;
+import com.app.aihealthapp.ui.mvvm.viewmode.BindDeviceViewMode;
 import com.crrepa.ble.CRPBleClient;
 import com.crrepa.ble.conn.CRPBleConnection;
 import com.crrepa.ble.conn.CRPBleDevice;
@@ -44,7 +47,7 @@ import butterknife.BindView;
  * 修改人：Chen
  * 修改时间：2019/7/27 17:26
  */
-public class BindDeviceActivity extends BaseActivity implements CRPScanCallback{
+public class BindDeviceActivity extends BaseActivity implements CRPScanCallback, BindDeviceView {
 
     @BindView(R.id.refresh_layout)
     UTRefreshLayout refresh_layout;
@@ -60,6 +63,7 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback{
     private CRPBleConnection mBleConnection;
 
 
+    private BindDeviceViewMode mBindDeviceViewMode;
     boolean isRefresh = false;
     @Override
     public int getLayoutId() {
@@ -80,6 +84,7 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback{
 
     @Override
     public void initView() {
+        mBindDeviceViewMode = new BindDeviceViewMode(this);
         refresh_layout.disableWhenHorizontalMove(true);
         refresh_layout.setPtrHandler(new PtrDefaultHandler() {
             @Override
@@ -122,17 +127,18 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback{
                             case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
                                 mBleConnection.syncTime();
                                 mBleConnection.findDevice();
-                                SharedPreferenceHelper.setMacAddress(AppContext.getContext(),bleClient.getMacAddress());//连接成功 保存mac address
-                                EventBusHelper.sendEvent(new Event(EventCode.Code.CONNECTED_SUCCESS,bleClient.getMacAddress()));
-                                hud.dismiss();
-                                finish();
+                                mBindDeviceViewMode.BindDevice(bleClient.getMacAddress());
                                 break;
                             case CRPBleConnectionStateListener.STATE_CONNECTING://正在连接
-                                hud.show("正在连接");
+                                hud.show("正在连接...");
                                 break;
                             case CRPBleConnectionStateListener.STATE_DISCONNECTED://连接断开
+                                hud.dismiss();
+                                showLoadFailMsg("连接失败");
                                 break;
                             case CRPBleConnectionStateListener.STATE_DISCONNECTING://正在连接断开
+                                hud.dismiss();
+                                showLoadFailMsg("连接失败");
                                 break;
                         }
                     }
@@ -146,9 +152,6 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback{
 
     @Override
     public void initData() {
-//        if (!isRefresh){
-//            hud.show("正在搜索设备.....");
-//        }
         tv_search.setText("搜索中...");
         mCRPBleClient.scanDevice(this,10000);
 
@@ -168,6 +171,35 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback{
     public void onScanComplete(List<CRPScanDevice> list) {
         tv_search.setText("搜索完成");
         refresh_layout.refreshComplete();
-//        hud.dismiss();
+    }
+
+    @Override
+    public void BindDeviceReuslt(Object result) {
+
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            showLoadFailMsg("绑定成功");
+            finish();
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+        }
+    }
+
+    @Override
+    public void showProgress() {
+
+        hud.show();
+    }
+
+    @Override
+    public void hideProgress() {
+
+        hud.dismiss();
+    }
+
+    @Override
+    public void showLoadFailMsg(String err) {
+
+        ToastyHelper.toastyNormal(this,err);
     }
 }

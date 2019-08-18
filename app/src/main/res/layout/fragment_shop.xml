@@ -9,8 +9,10 @@
     <include layout="@layout/include_main_toolbar"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="商城"
-        android:textSize="@dimen/text_20px"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="即将上线，敬请期待"
+        android:textSize="@dimen/text_16px"
+        />
 </LinearLayout>

@@ -31,7 +31,7 @@ public class LoginViewMode {
         RequestParams params = new RequestParams();
         params.put("mobile",mobile);
         params.put("pwd",pwd);
-        mBaseMode.PostRequest(url, params, new ResultCallback() {
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
             @Override
             public void onSuccess(Object result) {
                 mLoginView.onLoginResult(result);

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+
+    <include layout="@layout/include_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#f9f9f9">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_16px">
+            <EditText
+                android:id="@+id/edit_input_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px"
+                android:background="@drawable/bg_frame_black"
+                android:layout_marginRight="@dimen/dimen_16px"
+                android:layout_toLeftOf="@+id/btn_search"
+                android:hint="请输入搜索内容"
+                android:paddingLeft="@dimen/dimen_10px"
+                android:textSize="@dimen/text_12px"
+                android:textColor="@color/text_color"/>
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="@dimen/dimen_60px"
+                android:layout_height="@dimen/dimen_40px"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/frame_blue_write"
+                android:text="搜索"
+                android:textSize="@dimen/text_14px"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dimen_16px"
+            android:text="选择医生进行在线咨询"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_14px"/>
+
+        <include layout="@layout/layout_no_record"/>
+        <com.app.aihealthapp.core.xrecyclerview.XRecyclerView
+            android:id="@+id/recy_doctor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:paddingLeft="@dimen/dimen_10px"
+            android:paddingRight="@dimen/dimen_10px"/>
+    </LinearLayout>
+</LinearLayout>

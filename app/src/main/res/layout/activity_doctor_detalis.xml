@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/include_toolbar"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/view_line">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_above="@+id/ll_bottom">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_10px"
+
+                android:background="@color/white">
+
+                <com.app.aihealthapp.view.CircleImageView
+                    android:id="@+id/img_doctor"
+                    android:layout_width="@dimen/dimen_80px"
+                    android:layout_height="@dimen/dimen_80px"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/my_head"
+                    android:scaleType="centerCrop"
+                    app:border_color="@color/view_line"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_doctor_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_toRightOf="@+id/img_doctor"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/tv_doctor_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="张三"
+                        android:textSize="@dimen/text_14px"
+                        android:textColor="@color/text_color"/>
+                    <TextView
+                        android:id="@+id/tv_doctor_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tv_doctor_name"
+                        android:layout_marginLeft="@dimen/dimen_10px"
+                        android:text="儿科"
+                        android:textSize="@dimen/text_12px"
+                        android:textColor="@color/default_hint_color"/>
+                    <TextView
+                        android:id="@+id/tv_doctor_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tv_doctor_type"
+                        android:layout_marginLeft="@dimen/dimen_10px"
+                        android:text="副主任医师"
+                        android:textSize="@dimen/text_12px"
+                        android:textColor="@color/default_hint_color"/>
+
+                    <TextView
+                        android:id="@+id/tv_doctor_experience"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_20px"
+                        android:layout_toRightOf="@+id/tv_doctor_level"
+                        android:paddingLeft="@dimen/dimen_4px"
+                        android:paddingRight="@dimen/dimen_4px"
+                        android:layout_marginLeft="@dimen/dimen_10px"
+                        android:gravity="center"
+                        android:background="@drawable/bg_yellow"
+                        android:text="从业20年"
+                        android:textColor="#ffb200"
+                        android:textSize="@dimen/text_12px"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_hospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_toRightOf="@+id/img_doctor"
+                    android:layout_below="@+id/ll_doctor_info"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:layout_marginTop="@dimen/dimen_8px">
+
+                    <TextView
+                        android:id="@+id/tv_hospital_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:text="南宁市中医院"
+                        android:textSize="@dimen/text_14px"
+                        android:textColor="@color/default_hint_color"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_adept"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_toRightOf="@+id/img_doctor"
+                    android:layout_below="@+id/ll_hospital"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:layout_marginTop="@dimen/dimen_8px">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="咨询人数："
+                        android:textSize="@dimen/text_14px"
+                        android:textColor="@color/default_hint_color"/>
+                    <TextView
+                        android:id="@+id/tv_ask_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:text="100"
+                        android:textSize="@dimen/text_14px"
+                        android:textColor="@color/default_text_color"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_16px"
+                        android:text="好评率："
+                        android:textSize="@dimen/text_14px"
+                        android:textColor="@color/default_hint_color"/>
+                    <TextView
+                        android:id="@+id/tv_good_evaluation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:text="90%"
+                        android:textSize="@dimen/text_14px"
+                        android:textColor="@color/default_text_color"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_10px"
+                android:background="@color/white"
+                android:padding="@dimen/dimen_16px">
+
+                <TextView
+                    android:id="@+id/tv_price_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="费用："
+                    android:textSize="@dimen/text_14px"
+                    android:textColor="@color/default_hint_color"/>
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_price_title"
+                    android:text="¥ 18（或加18条健康秘钥）/次"
+                    android:textSize="@dimen/text_14px"
+                    android:textColor="#ffb200"/>
+
+                <TextView
+                    android:id="@+id/tv_ask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_24px"
+                    android:paddingRight="@dimen/dimen_6px"
+                    android:paddingLeft="@dimen/dimen_6px"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:background="@drawable/frame_blue"
+                    android:text="立即咨询"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="@dimen/text_12px"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/view_line"/>
+            <com.app.aihealthapp.view.ProgressWebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50px"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/tv_home"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dimen_4px"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:drawableTop="@mipmap/home_icon_normal"
+
+                    android:text="首页"
+                    android:textSize="@dimen/text_14px"
+                    android:textColor="@color/default_hint_color"/>
+                <TextView
+                    android:id="@+id/tv_mine"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@mipmap/ming_icon_normal"
+                    android:layout_marginTop="@dimen/dimen_4px"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="个人中心"
+                    android:textSize="@dimen/text_12px"
+                    android:textColor="@color/default_hint_color"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_ask"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/default_text_color"
+                android:gravity="center"
+                android:text="立即咨询"
+                android:textSize="@dimen/text_16px"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

@@ -33,7 +33,7 @@ public class RegisterViewMode {
         params.put("pwd",pwd);
         params.put("code",code);
         params.put("invite_code",invite_code);
-        mBaseMode.PostRequest(url, params, new ResultCallback() {
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
             @Override
             public void onSuccess(Object result) {
                 mRegisterView.onRegisterResult(result);

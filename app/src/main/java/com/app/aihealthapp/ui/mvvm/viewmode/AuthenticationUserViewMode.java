@@ -24,7 +24,7 @@ public class AuthenticationUserViewMode {
         mBaseMode = new BaseMode();
     }
 
-    public void AuthenticationUser(String realname,String nickname,String sex,String height,String weight,String card_no,String bank_name,String bank_no,
+    public void AuthenticationUser(String realname,String nickname,int sex,String height,String weight,String card_no,String bank_name,String bank_no,
                                    String alipay_no,String alipay_pay_pic){
 
 
@@ -33,7 +33,7 @@ public class AuthenticationUserViewMode {
         RequestParams params = new RequestParams();
         params.put("realname",realname);
         params.put("nickname",nickname);
-        params.put("sex",sex);
+        params.put("sex",String.valueOf(sex));
         params.put("height",height);
         params.put("weight",weight);
         params.put("card_no",card_no);

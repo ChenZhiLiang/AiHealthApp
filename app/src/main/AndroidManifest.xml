@@ -53,6 +53,9 @@
         <activity android:name=".ui.activity.mine.MineDeviceActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.home.BindDeviceActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.home.MeasureActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.home.DoctorListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.WebActyivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.home.DoctorDetalisActivity" android:screenOrientation="portrait"/>
 
         <!--手环-->
         <activity android:name="com.crrepa.ble.trans.upgrade.NotificationActivity"/>

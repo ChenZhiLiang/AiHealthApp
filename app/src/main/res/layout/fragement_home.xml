@@ -420,7 +420,7 @@
                     android:textSize="@dimen/text_10px" />
             </RelativeLayout>
 
-            <include layout="@layout/layout_health_manage"/>
+            <include layout="@layout/layout_health_manage" />
             <include layout="@layout/layout_health_shop_area"/>
             <include layout="@layout/layout_health_shop"/>
 

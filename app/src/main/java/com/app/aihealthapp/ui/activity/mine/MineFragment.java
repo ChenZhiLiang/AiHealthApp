@@ -85,6 +85,9 @@ public class MineFragment extends BaseFragment implements MineView {
             btn_authentication.setVisibility(View.GONE);
         }
     }
+
+
+
     @Override
     public void loadingData() {
         if (isLogin()){
@@ -92,7 +95,7 @@ public class MineFragment extends BaseFragment implements MineView {
         }
     }
 
-    @OnClick({R.id.image_head,R.id.btn_authentication,R.id.rt_mine_device})
+    @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_mine_device})
     public void onClick(View v){
         if (isLogin()){
             if (v==btn_authentication){
@@ -154,6 +157,10 @@ public class MineFragment extends BaseFragment implements MineView {
         }else if (event.getCode()== EventCode.Code.AUTHENTICATION_SUCCESS){
             mMineViewMode.getUserInfo();
 
+        } else if (event.getCode() == EventCode.Code.LOGOUT) {//注销
+            GlideHelper.loadImageView(mActivity, R.mipmap.my_head, image_head);
+            tv_user_name.setText("点击登录");
+            btn_authentication.setVisibility(View.GONE);
         }
     }
     @Override

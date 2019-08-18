@@ -13,4 +13,8 @@ import com.app.aihealthapp.core.base.BaseView;
 public interface HomeView extends BaseView {
 
     void HomeDatasResult(Object result);
+
+    void MineDeviceInfo(Object result);
+
+    void runStepsResult(Object result);
 }

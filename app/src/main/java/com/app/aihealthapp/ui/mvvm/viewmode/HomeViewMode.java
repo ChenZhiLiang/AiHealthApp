@@ -45,4 +45,47 @@ public class HomeViewMode {
             }
         });
     }
+
+
+    public void getMineDeviceInfo(){
+
+        String url = ApiUrl.DeviceApi.DeviceInfo;
+        mBaseMode.GetRequest(url, null, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mHomeView.MineDeviceInfo(result);
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                mHomeView.showLoadFailMsg(result.toString());
+            }
+        });
+    }
+
+    public void runSteps(int steps,int distanc,int calories,boolean isShow){
+        if (isShow){
+            mHomeView.showProgress();
+
+        }
+        String url = ApiUrl.DeviceApi.RunSteps;
+        RequestParams params = new RequestParams();
+        params.put("steps",String.valueOf(steps));
+        params.put("distance",String.valueOf(distanc));
+        params.put("calories",String.valueOf(calories));
+
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mHomeView.runStepsResult(result);
+                mHomeView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                mHomeView.showLoadFailMsg(result.toString());
+                mHomeView.hideProgress();
+            }
+        });
+    }
 }

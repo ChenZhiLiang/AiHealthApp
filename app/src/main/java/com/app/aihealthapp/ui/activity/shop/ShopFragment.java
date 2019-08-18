@@ -26,6 +26,9 @@ public class ShopFragment extends BaseFragment {
         hf.mTitle = title;
         return hf;
     }
+
+
+
     @Override
     public void loadingData() {
 

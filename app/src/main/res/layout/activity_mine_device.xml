@@ -22,10 +22,12 @@
 
 
             <RelativeLayout
+                android:id="@+id/rt_bind_device"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@color/white"
-                android:layout_marginTop="@dimen/dimen_10px">
+                android:layout_marginTop="@dimen/dimen_10px"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -69,6 +71,7 @@
                         android:textSize="@dimen/text_14px"
                         android:textColor="@color/text_color"/>
                     <CheckBox
+                        android:id="@+id/check_open_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -92,6 +95,7 @@
                         android:textSize="@dimen/text_14px"
                         android:textColor="@color/text_color"/>
                     <CheckBox
+                        android:id="@+id/check_open_sms"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -114,12 +118,13 @@
                         android:text="微信通知"
                         android:textSize="@dimen/text_14px"
                         android:textColor="@color/text_color"/>
+
                     <CheckBox
+                        android:id="@+id/check_open_qq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:button="@drawable/device_checkbox"/>
+                        android:button="@drawable/device_checkbox" />
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
@@ -138,6 +143,7 @@
                         android:textSize="@dimen/text_14px"
                         android:textColor="@color/text_color"/>
                     <CheckBox
+                        android:id="@+id/check_open_wx"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -161,16 +167,25 @@
                         android:textSize="@dimen/text_14px"
                         android:textColor="@color/text_color"/>
                     <CheckBox
+                        android:id="@+id/check_open_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:button="@drawable/device_checkbox"/>
                 </RelativeLayout>
-                <View
+                <Button
+                    android:id="@+id/btn_logout"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/view_line"/>
+                    android:layout_height="@dimen/dimen_50px"
+                    android:background="@drawable/frame_blue_true"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:layout_marginRight="@dimen/dimen_10px"
+                    android:layout_marginTop="40dp"
+                    android:text="退出登录"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_18px"/>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

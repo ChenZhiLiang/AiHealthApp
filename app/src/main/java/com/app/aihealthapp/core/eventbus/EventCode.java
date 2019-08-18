@@ -12,7 +12,9 @@ public final class EventCode {
         public static final int LOOk_CHANG = 0x222222;
         public static final int CONNECTED_SUCCESS = 0x33333;
         public static final int LOGIN_SUCCESS = 0x444444;//登录成功
+        public static final int LOGOUT = 0x000000;
         public static final int AUTHENTICATION_SUCCESS = 0x555555;//实名认证成功
+        public static final int MEASURE_SUCCESS = 0x666666;//测量成功
 
 
     }

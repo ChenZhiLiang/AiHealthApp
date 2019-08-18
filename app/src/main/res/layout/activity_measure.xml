@@ -37,34 +37,30 @@
 
     </RelativeLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:background="@color/white">
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/white">
                 <LinearLayout
                     android:id="@+id/ll_main"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_above="@+id/ll_measure_result">
 
                     <TextView
+                        android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_margin="@dimen/dimen_32px"
+                        android:layout_margin="@dimen/dimen_16px"
                         android:text="2019年9月9日"
                         android:textSize="@dimen/text_16px"
                         android:textColor="@color/text_color"/>
 
-
                     <RelativeLayout
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
                         android:background="@mipmap/measurement_bg"
                         android:layout_gravity="center_horizontal">
 
@@ -93,12 +89,13 @@
                             android:text="血氧状态"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_16px"/>
-                        <Button
+                        <TextView
+                            android:id="@+id/tv_measure_result_status"
                             android:layout_width="@dimen/dimen_60px"
                             android:layout_height="@dimen/dimen_24px"
                             android:background="@drawable/frame_blue_write"
                             android:layout_centerHorizontal="true"
-
+                            android:gravity="center"
                             android:layout_marginTop="@dimen/dimen_10px"
                             android:text="正常"
                             android:layout_below="@+id/tv_measure_statue"
@@ -114,6 +111,7 @@
                         android:textSize="@dimen/text_16px"
                         android:textColor="@color/default_text_color"/>
                     <TextView
+                        android:id="@+id/tv_standard_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -123,6 +121,7 @@
                         android:textColor="@color/default_hint_color"/>
 
                     <Button
+                        android:id="@+id/btn_start_measure"
                         android:layout_width="120dp"
                         android:layout_height="@dimen/dimen_36px"
                         android:background="@drawable/frame_blue"
@@ -136,14 +135,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_measure_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="@dimen/dimen_32px"
                     android:background="@color/view_line"
                     android:orientation="vertical"
-                    android:padding="@dimen/text_16px"
-                    android:layout_below="@+id/ll_main">
+                    android:padding="@dimen/dimen_10px">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -167,6 +165,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_blood_pressure"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="107/80"
@@ -176,7 +175,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:layout_marginTop="@dimen/dimen_4px"
                                 android:text="mmgH"
                                 android:textColor="@color/default_hint_color" />
 
@@ -202,6 +201,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_blood_oxygen"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="95%"
@@ -211,13 +211,13 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:layout_marginTop="@dimen/dimen_4px"
                                 android:textColor="@color/default_hint_color" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:layout_marginTop="@dimen/dimen_4px"
                                 android:text="血氧"
                                 android:textColor="@color/default_text_color"
                                 android:textSize="@dimen/text_14px" />
@@ -236,6 +236,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_heart_rate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="80"
@@ -245,14 +246,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:layout_marginTop="@dimen/dimen_4px"
                                 android:text="BMP"
                                 android:textColor="@color/default_hint_color" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_8px"
+                                android:layout_marginTop="@dimen/dimen_4px"
                                 android:text="心率"
                                 android:textColor="@color/default_text_color"
                                 android:textSize="@dimen/text_14px" />
@@ -260,5 +261,4 @@
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
-    </ScrollView>
 </LinearLayout>

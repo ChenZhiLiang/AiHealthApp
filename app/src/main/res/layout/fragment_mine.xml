@@ -26,8 +26,8 @@
 
                 <ImageView
                     android:id="@+id/image_head"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_80px"
+                    android:layout_height="@dimen/dimen_80px"
                     android:layout_centerVertical="true"
                     android:background="@mipmap/my_head" />
 

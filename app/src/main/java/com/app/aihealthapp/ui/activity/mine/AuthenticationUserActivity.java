@@ -57,6 +57,7 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
     TextView tv_sex;
     @BindView(R.id.btn_submit)
     Button btn_submit;
+    private int sex = 1;//0保密 1男 2女
 
     private AuthenticationUserViewMode mAuthenticationUserViewMode;
     @Override
@@ -94,8 +95,13 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (position==0){
                        tv_sex.setText("男");
-                    }else {
+                        sex = 1;
+                    }else if (position==1){
+                        sex = 2;
                         tv_sex.setText("女");
+                    }else {
+                        sex = 0;
+                        tv_sex.setText("保密");
                     }
                 }
             });
@@ -117,7 +123,7 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
             }else if (TextUtils.isEmpty(edit_input_alipay_no.getText().toString())){
                 showLoadFailMsg("请输入支付宝账号");
             }else {
-                mAuthenticationUserViewMode.AuthenticationUser(edit_input_name.getText().toString(),edit_input_nickname.getText().toString(),tv_sex.getText().toString(),
+                mAuthenticationUserViewMode.AuthenticationUser(edit_input_name.getText().toString(),edit_input_nickname.getText().toString(),sex,
                         edit_input_height.getText().toString(),edit_input_weight.getText().toString(),edit_input_card_no.getText().toString(),edit_input_bank_name.getText().toString(),
                         edit_input_bank_no.getText().toString(),edit_input_alipay_no.getText().toString(),"123456");
             }

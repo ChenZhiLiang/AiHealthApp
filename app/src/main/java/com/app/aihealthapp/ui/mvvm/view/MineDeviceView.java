@@ -12,4 +12,5 @@ import com.app.aihealthapp.core.base.BaseView;
  */
 public interface MineDeviceView extends BaseView {
     void MineDeviceInfo(Object result);
+    void UpdateDeviceResult(Object result);
 }

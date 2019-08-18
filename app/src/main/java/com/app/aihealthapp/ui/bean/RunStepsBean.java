@@ -9,4 +9,38 @@ package com.app.aihealthapp.ui.bean;
  * 修改时间：2019/8/15 21:43
  */
 public class RunStepsBean {
+
+    /**
+     * steps : null
+     * distance : null
+     * calories : null
+     */
+
+    private String steps;
+    private String distance;
+    private String calories;
+
+    public String getSteps() {
+        return steps;
+    }
+
+    public void setSteps(String steps) {
+        this.steps = steps;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getCalories() {
+        return calories;
+    }
+
+    public void setCalories(String calories) {
+        this.calories = calories;
+    }
 }

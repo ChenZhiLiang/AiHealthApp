@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/include_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_16px"
+            android:text="患者提问"
+            android:textSize="@dimen/text_16px"
+            android:textColor="@color/black"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginLeft="@dimen/text_16px"
+            android:layout_marginRight="@dimen/text_16px"
+            android:background="@color/default_text_color"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/view_line"
+        android:layout_marginLeft="@dimen/text_16px"
+        android:layout_marginRight="@dimen/text_16px"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/rt_send_msg"
+            android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_10px">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="福建省东方嘉盛都批发价见风使舵废旧塑料东方嘉盛连接方式来对付建设路口连接方式来的空间了实间了实际发生际发间了实际发生生了快递放假"
+                android:textColor="@color/default_hint_color"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_10px"
+                android:layout_marginBottom="@dimen/dimen_10px">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@mipmap/logo"
+                    android:layout_marginRight="@dimen/dimen_16px"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@mipmap/logo"
+                    android:layout_marginRight="@dimen/dimen_16px"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@mipmap/logo"
+                    android:layout_marginRight="@dimen/dimen_16px"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@mipmap/logo"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="回复"
+                android:textColor="@color/default_text_color"
+                android:textSize="@dimen/text_14px"/>
+        </LinearLayout>
+        </ScrollView>
+        <RelativeLayout
+            android:id="@+id/rt_send_msg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_60px"
+            android:background="#f9f9f9"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:padding="@dimen/dimen_10px"
+            android:visibility="visible">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px"
+                android:background="@drawable/bg_white"
+                android:layout_toLeftOf="@+id/btn_send"
+                android:layout_marginLeft="@dimen/dimen_10px"
+                android:layout_marginRight="@dimen/dimen_10px"
+                android:paddingLeft="@dimen/dimen_10px"
+                android:hint="请输入内容"
+                android:textSize="@dimen/text_14px"
+                android:textColor="@color/default_hint_color"/>
+
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/frame_blue_true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="发送"
+                android:textSize="@dimen/text_14px"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

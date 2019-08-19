@@ -116,7 +116,36 @@
                     android:layout_marginRight="@dimen/dimen_16px"
                     android:background="@mipmap/my_arrow" />
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_0.5px"
+                android:background="@color/view_line" />
 
+            <RelativeLayout
+                android:id="@+id/rt_mine_ask"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50px"
+                android:background="@drawable/selector_onclick">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_16px"
+                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawablePadding="@dimen/text_10px"
+                    android:text="我的咨询"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_16px"
+                    android:background="@mipmap/my_arrow" />
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0.5px"

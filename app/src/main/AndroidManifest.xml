@@ -20,6 +20,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
     <application
         android:name=".ui.AppContext"
@@ -56,9 +59,14 @@
         <activity android:name=".ui.activity.home.DoctorListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.WebActyivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.home.DoctorDetalisActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.mine.MineAskActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.mine.SearchRecordDetailsActivity" android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            />
 
         <!--手环-->
-        <activity android:name="com.crrepa.ble.trans.upgrade.NotificationActivity"/>
+        <activity android:name="com.crrepa.ble.trans.upgrade.NotificationActivity"/> />
+
         <service android:name="com.crrepa.ble.trans.upgrade.DfuService"/>
     </application>
 

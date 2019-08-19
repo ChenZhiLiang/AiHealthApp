@@ -22,8 +22,10 @@ import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
+import com.app.aihealthapp.core.helper.PermissionHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
+import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.mine.LoginActivity;
@@ -169,7 +171,9 @@ public class HomeFragment extends BaseFragment implements HomeView,BGABanner.Ada
                     startActivity(enableBtIntent);
                     return;
                 }else {
-                    startActivity(new Intent(getContext(),BindDeviceActivity.class));
+                    if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
+                        startActivity(new Intent(getContext(),BindDeviceActivity.class));
+                    }
                 }
             }else {
                 startActivity(new Intent(getContext(), LoginActivity.class));

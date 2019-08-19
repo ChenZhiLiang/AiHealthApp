@@ -82,22 +82,26 @@
                     >
 
                     <ImageView
+                        android:id="@+id/img_checklist"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:src="@mipmap/ask"/>
                     <ImageView
+                        android:id="@+id/img_case"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:src="@mipmap/ask2"/>
                     <ImageView
+                        android:id="@+id/img_affected_part"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:src="@mipmap/ask3"/>
                     <ImageView
+                        android:id="@+id/img_other"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

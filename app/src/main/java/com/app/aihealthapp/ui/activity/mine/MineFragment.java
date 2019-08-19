@@ -45,6 +45,8 @@ public class MineFragment extends BaseFragment implements MineView {
     Button btn_authentication;
     @BindView(R.id.rt_mine_device)
     RelativeLayout rt_mine_device;
+    @BindView(R.id.rt_mine_ask)
+    RelativeLayout rt_mine_ask;
 
     private MineViewMode mMineViewMode;
     public static MineFragment getInstance(String title) {
@@ -95,13 +97,15 @@ public class MineFragment extends BaseFragment implements MineView {
         }
     }
 
-    @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_mine_device})
+    @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_mine_device,R.id.rt_mine_ask})
     public void onClick(View v){
         if (isLogin()){
             if (v==btn_authentication){
                 startActivity(new Intent(getContext(),AuthenticationUserActivity.class));
             }else if (v==rt_mine_device){
                 startActivity(new Intent(getContext(),MineDeviceActivity.class));
+            }else if (v==rt_mine_ask){
+                startActivity(new Intent(getContext(),MineAskActivity.class));
             }
         }else {
             startActivity(new Intent(mActivity,LoginActivity.class));

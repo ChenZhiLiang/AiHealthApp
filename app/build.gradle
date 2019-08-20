@@ -15,7 +15,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword '123456'
-            storeFile file('../key.jks')
+            storeFile file('../health.jks')
             storePassword '123456'
         }
     }

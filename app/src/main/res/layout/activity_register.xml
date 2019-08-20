@@ -32,8 +32,8 @@
 
             <ImageView
                 android:id="@+id/image_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dimen_60px"
+                android:layout_height="@dimen/dimen_60px"
                 android:background="@mipmap/logo"
                 android:layout_marginLeft="@dimen/dimen_16px"/>
             <LinearLayout
@@ -47,12 +47,12 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="爱健康"
                 android:textSize="@dimen/text_16px"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"/>
             <TextView
+                android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/image_logo"

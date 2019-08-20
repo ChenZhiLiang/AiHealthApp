@@ -61,6 +61,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rt_my_key"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:layout_marginTop="@dimen/dimen_10px"
@@ -152,6 +153,7 @@
                 android:background="@color/view_line" />
 
             <RelativeLayout
+                android:id="@+id/rt_medical_report"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick">
@@ -194,7 +196,7 @@
                     android:drawableLeft="@mipmap/mind_jkfa_icon"
                     android:drawablePadding="@dimen/text_10px"
                     android:gravity="center"
-                    android:text="我的健康秘指示"
+                    android:text="我的健康指数"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px" />
 
@@ -243,6 +245,7 @@
                 android:background="@color/view_line" />
 
             <RelativeLayout
+                android:id="@+id/rt_health_plan"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick">
@@ -333,6 +336,7 @@
                 android:background="@color/view_line" />
 
             <RelativeLayout
+                android:id="@+id/rt_myfriend_list"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick">
@@ -423,6 +427,7 @@
                 android:background="@color/view_line" />
 
             <RelativeLayout
+                android:id="@+id/rt_about"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick">
@@ -434,7 +439,7 @@
                     android:layout_marginLeft="@dimen/dimen_16px"
                     android:drawableLeft="@mipmap/mind_xxtx_icon"
                     android:drawablePadding="@dimen/text_10px"
-                    android:text="关爱健康app"
+                    android:text="关于健康密钥"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px" />
 

@@ -102,6 +102,8 @@ public class HomeFragment extends BaseFragment implements HomeView,BGABanner.Ada
     @BindView(R.id.rt_health_data)
     RelativeLayout rt_health_data;
 
+    @BindView(R.id.btn_look_report)
+    Button btn_look_report;
     @BindView(R.id.btn_ask)
     Button btn_ask;
     @BindView(R.id.btn_inquiry)
@@ -162,7 +164,7 @@ public class HomeFragment extends BaseFragment implements HomeView,BGABanner.Ada
 
     }
 
-    @OnClick({R.id.btn_add_wristband,R.id.ll_syncStep,R.id.ll_blood_pressure,R.id.ll_heart_rate,R.id.ll_blood_oxygen,R.id.btn_ask,R.id.btn_inquiry})
+    @OnClick({R.id.btn_add_wristband,R.id.ll_syncStep,R.id.ll_blood_pressure,R.id.ll_heart_rate,R.id.ll_blood_oxygen,R.id.btn_look_report,R.id.btn_ask,R.id.btn_inquiry})
     public void onClick(View v){
         if (v==btn_add_wristband){
             if (isLogin()){
@@ -178,6 +180,8 @@ public class HomeFragment extends BaseFragment implements HomeView,BGABanner.Ada
             }else {
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
+        }else if (v==btn_look_report){
+
         }else if (v==btn_ask){
             startActivity(new Intent(getActivity(),HealthAskActivity.class));
         }else if (v==btn_inquiry){
@@ -286,8 +290,13 @@ public class HomeFragment extends BaseFragment implements HomeView,BGABanner.Ada
             grid_health_manage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
-                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HeadLine+mArticleCateListBean.getId()));
+                    if (position==0){
+                        startActivity(new Intent(mActivity,DoctorListActivity.class));
+                    }else {
+                        ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
+                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HeadLine+mArticleCateListBean.getId()));
+                    }
+
                 }
             });
             // 健康商圈gridview

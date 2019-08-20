@@ -13,4 +13,6 @@ import com.app.aihealthapp.core.base.BaseView;
 public interface AuthenticationUserView extends BaseView {
 
     void AuthenticationUserResult(Object result);
+    void uploadResult(Object result);
+    void AdsResult(Object result);
 }

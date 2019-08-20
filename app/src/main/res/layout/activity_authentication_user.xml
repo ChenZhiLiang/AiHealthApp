@@ -32,8 +32,8 @@
 
                 <ImageView
                     android:id="@+id/image_logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_60px"
+                    android:layout_height="@dimen/dimen_60px"
                     android:background="@mipmap/logo"
                     android:layout_marginLeft="@dimen/dimen_16px"/>
                 <LinearLayout
@@ -53,6 +53,7 @@
                         android:textColor="@color/text_color"
                         android:textStyle="bold"/>
                     <TextView
+                        android:id="@+id/tv_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/image_logo"
@@ -100,7 +101,6 @@
                         android:layout_alignParentRight="true"
                         android:hint="请输入姓名"
                         android:gravity="right|center_vertical"
-                        android:text="123"
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
                         android:paddingLeft="@dimen/dimen_10px"
@@ -249,7 +249,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
-                        android:text="cm"
+                        android:text="kg"
                         android:textSize="@dimen/text_14px"
                         />
                 </RelativeLayout>
@@ -390,7 +390,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_10px"
-                        android:text="支付宝收款码"
+                        android:text="支付宝付款码"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/text_14px"/>
 

@@ -6,6 +6,8 @@ import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
 import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
 import com.app.aihealthapp.ui.mvvm.view.AuthenticationUserView;
 
+import java.io.File;
+
 /**
  * @Name：AiHealth
  * @Description：实名认证
@@ -55,7 +57,50 @@ public class AuthenticationUserViewMode {
                 mAuthenticationUserView.showLoadFailMsg(result.toString());
             }
         });
+    }
+    public void getAds(int stype){
 
+        mAuthenticationUserView.showProgress();
+        String url = ApiUrl.UserApi.OneAds;
+        RequestParams params = new RequestParams();
+        params.put("stype",String.valueOf(stype));
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mAuthenticationUserView.AdsResult(result);
+                mAuthenticationUserView.hideProgress();
+            }
 
+            @Override
+            public void onFailure(Object result) {
+                mAuthenticationUserView.hideProgress();
+                mAuthenticationUserView.showLoadFailMsg(result.toString());
+            }
+        });
+
+    }
+    /**
+     *  @author
+     *  @time
+     *  @describe 上传图片
+     */
+    public void uploadHead(File avatar){
+        mAuthenticationUserView.showProgress();
+        String url = ApiUrl.HomeApi.Upload;
+        RequestParams params = new RequestParams();
+        params.fileParams.put("pic",avatar);
+        mBaseMode.MultiPostRequest(url,params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mAuthenticationUserView.uploadResult(result);
+                mAuthenticationUserView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                mAuthenticationUserView.hideProgress();
+                mAuthenticationUserView.showLoadFailMsg(result.toString());
+            }
+        });
     }
 }

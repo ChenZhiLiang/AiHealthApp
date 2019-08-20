@@ -53,6 +53,7 @@
                     android:background="@color/view_line"/>
 
                 <EditText
+                    android:id="@+id/edit_input_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -84,28 +85,32 @@
                     <ImageView
                         android:id="@+id/img_checklist"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_height="@dimen/dimen_80px"
+                        android:scaleType="fitXY"
                         android:layout_weight="1"
-                        android:src="@mipmap/ask"/>
+                        android:background="@mipmap/ask" />
                     <ImageView
                         android:id="@+id/img_case"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dimen_80px"
+                        android:scaleType="fitXY"
                         android:layout_weight="1"
-                        android:src="@mipmap/ask2"/>
+                        android:background="@mipmap/ask2"/>
                     <ImageView
                         android:id="@+id/img_affected_part"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dimen_80px"
                         android:layout_weight="1"
-                        android:src="@mipmap/ask3"/>
+                        android:scaleType="fitXY"
+
+                        android:background="@mipmap/ask3"/>
                     <ImageView
                         android:id="@+id/img_other"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dimen_80px"
+                        android:scaleType="fitXY"
                         android:layout_weight="1"
-                        android:src="@mipmap/ask4"/>
+                        android:background="@mipmap/ask4"/>
                 </LinearLayout>
 
                 <TextView
@@ -118,6 +123,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_submit"
                 android:layout_width="120dp"
                 android:layout_height="@dimen/dimen_40px"
                 android:background="@drawable/frame_blue_true"

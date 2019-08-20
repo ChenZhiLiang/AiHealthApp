@@ -3,8 +3,12 @@ package com.app.aihealthapp.ui;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 import com.app.aihealthapp.view.ProgressWebView;
 import butterknife.BindView;
@@ -46,10 +50,18 @@ public class WebActyivity extends BaseActivity implements  WebTitleView {
         webView.setWebTitleView(this);
         webView.setFocusable(true);//设置有焦点
         webView.setFocusableInTouchMode(true);//设置可触摸
+        webView.addJavascriptInterface(new WebAppInterface(), "jsAndroid");
         webView.loadUrl(url);//加载网址
 
     }
 
+    public class WebAppInterface {
+        @JavascriptInterface
+        public String jsCallToken() {
+            return SharedPreferenceHelper.getUserToken(AppContext.getContext());
+        }
+
+    }
     @Override
     public void initData() {
 

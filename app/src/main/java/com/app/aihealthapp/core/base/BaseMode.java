@@ -33,4 +33,13 @@ public class BaseMode {
         OkHttpClientHelper.call(OkHttpRequest.createPostRequest(url,params),callback);
     }
 
+    /**
+     * 上传文件
+     * @param params
+     * @param callback
+     */
+    public void MultiPostRequest( String url,RequestParams params, ResultCallback callback) {
+        OkHttpClientHelper.call(OkHttpRequest.createMultiPostRequest(url,params),callback);
+    }
+
 }

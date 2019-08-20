@@ -4,10 +4,14 @@ package com.app.aihealthapp.core.network.okhttp.request;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.ui.AppContext;
 
+import java.io.File;
 import java.util.Map;
 
 import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * @author Administrator
@@ -64,4 +68,37 @@ public class OkHttpRequest {
 		}
 	}
 
+	/**
+	 * 文件上传请求
+	 *  File 请求
+	 * @param
+	 * @return
+	 */
+	public static Request createMultiPostRequest(String url ,RequestParams params) {
+
+		MultipartBody.Builder requestBody = new MultipartBody.Builder();
+
+		requestBody.setType(MultipartBody.FORM);
+
+		if (params != null) {
+			if (params.urlParams != null) {
+				for (Map.Entry<String, String> entry : params.urlParams.entrySet()) {
+					requestBody.addFormDataPart(entry.getKey(),entry.getValue());
+				}
+			}
+			if (params.fileParams != null) {
+				for (Map.Entry<String, Object> entry : params.fileParams.entrySet()) {
+					requestBody.addFormDataPart(entry.getKey(), ((File) entry.getValue()).getName(),
+							RequestBody.create(MediaType.parse("application/octet-stream"), (File) entry.getValue()));
+				}
+			}
+		}
+
+		String mToken = SharedPreferenceHelper.getUserToken(AppContext.getContext());
+		if (mToken == null) {
+			return new Request.Builder().url(url).post(requestBody.build()).build();
+		}else {
+			return new Request.Builder().addHeader("Authorization", "Bearer " + mToken).url(url).post(requestBody.build()).build();
+		}
+	}
 }

@@ -25,7 +25,6 @@ public class RegisterViewMode {
     }
 
     public void register(String mobile,String pwd,String code,String invite_code){
-
         mRegisterView.showProgress();
         String url = ApiUrl.UserApi.Register;
         RequestParams params = new RequestParams();
@@ -43,6 +42,27 @@ public class RegisterViewMode {
             @Override
             public void onFailure(Object result) {
 
+                mRegisterView.hideProgress();
+                mRegisterView.showLoadFailMsg(result.toString());
+            }
+        });
+    }
+
+    public void getAds(int stype){
+
+        mRegisterView.showProgress();
+        String url = ApiUrl.UserApi.OneAds;
+        RequestParams params = new RequestParams();
+        params.put("stype",String.valueOf(stype));
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mRegisterView.AdsResult(result);
+                mRegisterView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
                 mRegisterView.hideProgress();
                 mRegisterView.showLoadFailMsg(result.toString());
             }

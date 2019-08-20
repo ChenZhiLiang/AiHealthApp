@@ -6,12 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
+import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.ui.bean.AdvListBean;
 import com.app.aihealthapp.ui.mvvm.view.RegisterView;
 import com.app.aihealthapp.ui.mvvm.view.VerifyView;
 import com.app.aihealthapp.ui.mvvm.viewmode.RegisterViewMode;
@@ -31,6 +34,12 @@ import butterknife.OnClick;
  */
 public class RegisterActivity extends BaseActivity implements VerifyView , RegisterView {
 
+    @BindView(R.id.image_logo)
+    ImageView image_logo;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
+    @BindView(R.id.tv_content)
+    TextView tv_content;
     @BindView(R.id.edit_input_phone)
     EditText edit_input_phone;
     @BindView(R.id.edit_input_verify)
@@ -80,7 +89,7 @@ public class RegisterActivity extends BaseActivity implements VerifyView , Regis
 
     @Override
     public void initData() {
-
+        mRegisterViewMode.getAds(5);
     }
 
     @OnClick({R.id.tv_get_verify,R.id.btn_register})
@@ -136,8 +145,28 @@ public class RegisterActivity extends BaseActivity implements VerifyView , Regis
             finish();
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+
         }
     }
+
+    @Override
+    public void AdsResult(Object result) {
+
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+            String path = GsonHelper.GsonToString(data,"pic");
+            String title = GsonHelper.GsonToString(data,"title");
+            String info = GsonHelper.GsonToString(data,"info");
+            GlideHelper.loadImageView(this,path,image_logo);
+            tv_title.setText(title);
+            tv_content.setText(info);
+
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+        }
+    }
+
     @Override
     public void showProgress() {
 

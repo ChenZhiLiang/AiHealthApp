@@ -18,7 +18,9 @@ import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
+import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.bean.UserInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineViewMode;
@@ -43,10 +45,21 @@ public class MineFragment extends BaseFragment implements MineView {
     TextView tv_user_name;
     @BindView(R.id.btn_authentication)
     Button btn_authentication;
+    @BindView(R.id.rt_my_key)
+    RelativeLayout rt_my_key;//我的健康秘钥
     @BindView(R.id.rt_mine_device)
-    RelativeLayout rt_mine_device;
+    RelativeLayout rt_mine_device;//我的健康设备
     @BindView(R.id.rt_mine_ask)
-    RelativeLayout rt_mine_ask;
+    RelativeLayout rt_mine_ask;//我的咨询
+    @BindView(R.id.rt_medical_report)
+    RelativeLayout rt_medical_report;//我的体检报告
+    @BindView(R.id.rt_health_plan)
+    RelativeLayout rt_health_plan;//我的健康方案
+
+    @BindView(R.id.rt_myfriend_list)
+    RelativeLayout rt_myfriend_list;//我的健康朋友圈
+    @BindView(R.id.rt_about)
+    RelativeLayout rt_about;//关于健康秘钥
 
     private MineViewMode mMineViewMode;
     public static MineFragment getInstance(String title) {
@@ -73,7 +86,7 @@ public class MineFragment extends BaseFragment implements MineView {
         if (isLogin()){
             btn_authentication.setVisibility(View.VISIBLE);
             GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
-            if (TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
+            if (UserHelper.getUserInfo().getIs_auth()==0){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
                 btn_authentication.setText("实名认证");
                 btn_authentication.setEnabled(true);
@@ -97,15 +110,27 @@ public class MineFragment extends BaseFragment implements MineView {
         }
     }
 
-    @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_mine_device,R.id.rt_mine_ask})
+    @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,
+            R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about})
     public void onClick(View v){
         if (isLogin()){
             if (v==btn_authentication){
                 startActivity(new Intent(getContext(),AuthenticationUserActivity.class));
+            }else if (v==rt_my_key){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyKeyList));
             }else if (v==rt_mine_device){
                 startActivity(new Intent(getContext(),MineDeviceActivity.class));
             }else if (v==rt_mine_ask){
                 startActivity(new Intent(getContext(),MineAskActivity.class));
+            }else if (v==rt_medical_report){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MedicalReport));
+            }else if (v==rt_health_plan){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HealthPlan));
+            }else if (v==rt_myfriend_list){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyfriendList));
+            }else if (v==rt_about){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.About));
+
             }
         }else {
             startActivity(new Intent(mActivity,LoginActivity.class));

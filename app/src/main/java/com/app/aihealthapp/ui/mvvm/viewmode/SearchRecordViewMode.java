@@ -1,6 +1,9 @@
 package com.app.aihealthapp.ui.mvvm.viewmode;
 
 import com.app.aihealthapp.core.base.BaseMode;
+import com.app.aihealthapp.core.network.api.ApiUrl;
+import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
+import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
 import com.app.aihealthapp.ui.bean.SearchRecordBean;
 import com.app.aihealthapp.ui.mvvm.view.SearchRecordView;
 
@@ -26,6 +29,31 @@ public class SearchRecordViewMode {
     }
 
 
+    public void SearchRecord(int page,boolean isShow){
+
+        if (isShow){
+            mSearchRecordView.showProgress();
+
+        }
+        String url = ApiUrl.UserApi.SearchRecord;
+        RequestParams params = new RequestParams();
+//        params.put("page",String.valueOf(page));
+//        params.put("size",String.valueOf(10));
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mSearchRecordView.SearchRecordDatasResult(result);
+                mSearchRecordView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                mSearchRecordView.hideProgress();
+                mSearchRecordView.showLoadFailMsg(result.toString());
+            }
+        });
+
+    }
     public List<SearchRecordBean> getDatas(){
 
         List<SearchRecordBean> datas = new ArrayList<>();

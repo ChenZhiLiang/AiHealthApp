@@ -5,8 +5,9 @@
     android:orientation="vertical"
     android:gravity="center"
     >
+    <include layout="@layout/layout_no_record"/>
 
-    <android.support.v7.widget.RecyclerView
+    <com.app.aihealthapp.core.xrecyclerview.XRecyclerView
         android:id="@+id/recy_search_record"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

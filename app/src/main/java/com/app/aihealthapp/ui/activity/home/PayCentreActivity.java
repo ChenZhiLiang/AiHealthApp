@@ -114,7 +114,14 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
 
     @Override
     public void PayResult(Object result) {
-
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+//            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+//            String order_no = GsonHelper.GsonToString(data,"order_no");
+//            mPayCentreViewMode.pay(order_no,pay_type);
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+        }
     }
 
     @Override

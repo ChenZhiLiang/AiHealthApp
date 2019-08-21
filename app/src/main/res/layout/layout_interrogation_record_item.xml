@@ -7,6 +7,7 @@
     android:padding="@dimen/dimen_16px">
 
     <TextView
+        android:id="@+id/tv_reply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/default_text_color"
@@ -15,6 +16,7 @@
         android:textSize="@dimen/text_10px"
         android:textColor="@color/white"/>
     <TextView
+        android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_8px"

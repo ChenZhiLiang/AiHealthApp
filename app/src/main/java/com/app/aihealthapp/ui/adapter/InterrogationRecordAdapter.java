@@ -1,6 +1,8 @@
 package com.app.aihealthapp.ui.adapter;
 
+import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseHolder;
@@ -8,6 +10,8 @@ import com.app.aihealthapp.core.base.BaseXRecyclerViewAdapter;
 import com.app.aihealthapp.ui.bean.InterrogationRecordBean;
 
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * @Name：AiHealth
@@ -20,8 +24,10 @@ import java.util.List;
 public class InterrogationRecordAdapter extends BaseXRecyclerViewAdapter<InterrogationRecordBean> {
 
 
-    public InterrogationRecordAdapter(List<InterrogationRecordBean> data) {
+    private Context context;
+    public InterrogationRecordAdapter(Context context,List<InterrogationRecordBean> data) {
         super(data);
+        this.context = context;
     }
 
     @Override
@@ -36,6 +42,10 @@ public class InterrogationRecordAdapter extends BaseXRecyclerViewAdapter<Interro
 
     class InterrogationRecordHoler extends BaseHolder<InterrogationRecordBean>{
 
+        @BindView(R.id.tv_reply)
+        TextView tv_reply;
+        @BindView(R.id.tv_content)
+        TextView tv_content;
         public InterrogationRecordHoler(View itemView) {
             super(itemView);
         }
@@ -43,6 +53,16 @@ public class InterrogationRecordAdapter extends BaseXRecyclerViewAdapter<Interro
         @Override
         public void setData(InterrogationRecordBean data) {
 
+            if (data.getIs_reply()==1){
+                tv_reply.setText("已回复");
+                tv_reply.setBackgroundColor(context.getResources().getColor(R.color.default_text_color));
+            }else {
+                tv_reply.setText("未回复");
+                tv_reply.setBackgroundColor(context.getResources().getColor(R.color.default_hint_color));
+
+
+            }
+            tv_content.setText(data.getInfo());
         }
     }
 }

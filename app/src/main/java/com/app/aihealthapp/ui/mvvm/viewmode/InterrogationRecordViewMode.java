@@ -1,6 +1,9 @@
 package com.app.aihealthapp.ui.mvvm.viewmode;
 
 import com.app.aihealthapp.core.base.BaseMode;
+import com.app.aihealthapp.core.network.api.ApiUrl;
+import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
+import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
 import com.app.aihealthapp.ui.bean.InterrogationRecordBean;
 import com.app.aihealthapp.ui.mvvm.view.InterrogationRecordView;
 
@@ -23,6 +26,30 @@ public class InterrogationRecordViewMode {
     public InterrogationRecordViewMode(InterrogationRecordView mInterrogationRecordView) {
         this.mInterrogationRecordView = mInterrogationRecordView;
         mBaseMode = new BaseMode();
+    }
+
+    public void InterrogationRecord(int page,boolean isShow){
+        if (isShow){
+            mInterrogationRecordView.showProgress();
+        }
+        String url = ApiUrl.UserApi.InterrogationRecord;
+        RequestParams params = new RequestParams();
+        params.put("page",String.valueOf(page));
+        params.put("size",String.valueOf(10));
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mInterrogationRecordView.InterrogationRecordResult(result);
+                mInterrogationRecordView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                mInterrogationRecordView.hideProgress();
+                mInterrogationRecordView.showLoadFailMsg(result.toString());
+            }
+        });
+
     }
 
     public List<InterrogationRecordBean> getDatas(){

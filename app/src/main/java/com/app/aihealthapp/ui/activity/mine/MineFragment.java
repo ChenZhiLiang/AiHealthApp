@@ -53,6 +53,8 @@ public class MineFragment extends BaseFragment implements MineView {
     RelativeLayout rt_mine_ask;//我的咨询
     @BindView(R.id.rt_medical_report)
     RelativeLayout rt_medical_report;//我的体检报告
+    @BindView(R.id.rt_healthy_report)
+    RelativeLayout rt_healthy_report;
     @BindView(R.id.rt_health_plan)
     RelativeLayout rt_health_plan;//我的健康方案
 
@@ -61,6 +63,8 @@ public class MineFragment extends BaseFragment implements MineView {
     @BindView(R.id.rt_about)
     RelativeLayout rt_about;//关于健康秘钥
 
+    @BindView(R.id.rt_feedback)
+    RelativeLayout rt_feedback;//帮助与反馈
     private MineViewMode mMineViewMode;
     public static MineFragment getInstance(String title) {
         MineFragment hf = new MineFragment();
@@ -110,8 +114,8 @@ public class MineFragment extends BaseFragment implements MineView {
         }
     }
 
-    @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,
-            R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about})
+    @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,R.id.rt_healthy_report,
+            R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_feedback})
     public void onClick(View v){
         if (isLogin()){
             if (v==btn_authentication){
@@ -124,12 +128,17 @@ public class MineFragment extends BaseFragment implements MineView {
                 startActivity(new Intent(getContext(),MineAskActivity.class));
             }else if (v==rt_medical_report){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MedicalReport));
+            }else if (v==rt_healthy_report){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Healthy_Report));
+
             }else if (v==rt_health_plan){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HealthPlan));
             }else if (v==rt_myfriend_list){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyfriendList));
             }else if (v==rt_about){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.About));
+            }else if (v==rt_feedback){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Feedback));
 
             }
         }else {

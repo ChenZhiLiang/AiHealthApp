@@ -17,6 +17,9 @@ public final class ApiUrl {
         //首页
         public static final String Home = HOST +"api/index/dashboard";
         public static final String Upload = HOST +"api/upload";
+        public static final String Buy = HOST +"api/advice/buy";
+        public static final String Pay = HOST +"api/pay";
+
     }
 
     public static class UserApi{
@@ -64,6 +67,8 @@ public final class ApiUrl {
 
         public static final String MyfriendList = HOST + "wap/myfriend_list.html";//我的健康朋友圈
         public static final String About = HOST + "article/item/15.html";//关于健康
+        public static final String Feedback = HOST + "wap/feedback.html";//帮助与反馈
+        public static final String Healthy_Report = HOST + "wap/healthy_report.html";//我的健康指数
 
       }
 

@@ -6,8 +6,8 @@
     android:gravity="center"
     >
 
-
-    <android.support.v7.widget.RecyclerView
+    <include layout="@layout/layout_no_record"/>
+    <com.app.aihealthapp.core.xrecyclerview.XRecyclerView
         android:id="@+id/recy_interrogation_record"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

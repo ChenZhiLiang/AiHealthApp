@@ -96,24 +96,32 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
 
-            List<SearchRecordBean> datas = GsonHelper.GsonToList(result.toString(),SearchRecordBean.class,"data");
+            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+            List<SearchRecordBean> datas = GsonHelper.GsonToList(data,SearchRecordBean.class,"data");
             if (datas.size()>0){
-                page  = GsonHelper.GsonToInt(result.toString(),"current_page");
-                totalPage = GsonHelper.GsonToInt(result.toString(),"total");
-                if (page == totalPage){
-                    recy_search_record.setNoMore(true);
-                }
+                page  = GsonHelper.GsonToInt(data,"current_page");
+                totalPage = GsonHelper.GsonToInt(data,"total");
+
                 no_record_layout.setVisibility(View.GONE);
                 recy_search_record.setVisibility(View.VISIBLE);
                 if (page == 1) {
                     if (mSearchRecordAdapter != null) {
                         mSearchRecordAdapter.clear();
                     }
+                } else {
+                    if (page == totalPage){
+                        recy_search_record.setNoMore(true);
+                    }
                 }
                 SearchRecords = datas;
-                mSearchRecordAdapter.addItem(datas);
+                mSearchRecordAdapter.addItem(SearchRecords);
                 mSearchRecordAdapter.notifyDataSetChanged();
+            }else {
+                no_record_layout.setVisibility(View.VISIBLE);
+                recy_search_record.setVisibility(View.GONE);
             }
+            recy_search_record.refreshComplete();
+
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
         }

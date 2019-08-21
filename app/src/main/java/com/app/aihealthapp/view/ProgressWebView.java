@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -21,6 +22,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
+import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 
 /**
@@ -82,6 +86,8 @@ public class ProgressWebView extends WebView {
         mSettings.setAllowUniversalAccessFromFileURLs(true);
         setWebViewClient(new MyWebClient());
         setWebChromeClient(new MyWebChromeClient());
+        addJavascriptInterface(new WebAppInterface(), "jsAndroid");
+
         setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -98,7 +104,12 @@ public class ProgressWebView extends WebView {
             }
         });
     }
-
+    public class WebAppInterface {
+        @JavascriptInterface
+        public String jsCallToken() {
+            return SharedPreferenceHelper.getUserToken(AppContext.getContext());
+        }
+    }
 
     /**
      * 自定义WebChromeClient

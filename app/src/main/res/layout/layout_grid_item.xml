@@ -8,8 +8,7 @@
     <ImageView
         android:id="@+id/imgage"
         android:layout_width="@dimen/dimen_40px"
-        android:layout_height="@dimen/dimen_40px"
-        android:background="@mipmap/home_jksq_yy"/>
+        android:layout_height="@dimen/dimen_40px"/>
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"

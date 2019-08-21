@@ -52,7 +52,6 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
-        webview.addJavascriptInterface(new WebAppInterface(), "jsAndroid");
 
     }
     @Override
@@ -64,12 +63,7 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
     public void initData() {
 
     }
-    public class WebAppInterface {
-        @JavascriptInterface
-        public String jsCallToken() {
-            return SharedPreferenceHelper.getUserToken(AppContext.getContext());
-        }
-    }
+
 
     @Override
     public void onTitleResult(String title) {

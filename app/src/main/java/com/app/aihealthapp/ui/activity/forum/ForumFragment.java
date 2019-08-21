@@ -49,7 +49,6 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
-        webview.addJavascriptInterface(new WebAppInterface(), "jsAndroid");
 
     }
 
@@ -62,12 +61,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         webview.loadUrl(ApiUrl.WebApi.COMMUNITY);//加载网址
 
     }
-    public class WebAppInterface {
-        @JavascriptInterface
-        public String jsCallToken() {
-            return SharedPreferenceHelper.getUserToken(AppContext.getContext());
-        }
-    }
+
     @Override
     public void onTitleResult(String title) {
         tv_title_bar.setText(title);

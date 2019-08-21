@@ -186,7 +186,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         } else if (v == btn_ask) {
             startActivity(new Intent(getActivity(), HealthAskActivity.class));
         } else if (v == btn_inquiry) {
-            startActivity(new Intent(getActivity(), DoctorListActivity.class));
+            startActivity(new Intent(getActivity(), DoctorListActivity.class).putExtra("cate_id",16));
         } else if (v == ll_syncStep) {
             if (isLogin()) {
                 if (homeBean.getIs_bind_bracelet()== 1) {//已绑定
@@ -359,7 +359,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (position == 0) {
-                        startActivity(new Intent(mActivity, DoctorListActivity.class));
+                        startActivity(new Intent(mActivity, DoctorListActivity.class).putExtra("cate_id",10));
                     } else {
                         ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
                         startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HeadLine + mArticleCateListBean.getId()));

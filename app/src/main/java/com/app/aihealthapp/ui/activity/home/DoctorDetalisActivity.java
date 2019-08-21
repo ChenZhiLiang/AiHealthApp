@@ -3,6 +3,7 @@ package com.app.aihealthapp.ui.activity.home;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -10,9 +11,12 @@ import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
+import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.AppManager;
+import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.bean.DoctorDetalisBean;
 import com.app.aihealthapp.ui.mvvm.view.DoctorDetalisView;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
@@ -92,6 +96,7 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
+
     }
 
     @Override

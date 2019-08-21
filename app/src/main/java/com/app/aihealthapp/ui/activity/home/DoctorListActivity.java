@@ -55,6 +55,8 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
 
     private String keyword;
     private List<DoctorListBean> doctor_list = new ArrayList<>();
+
+    private int cate_id;
     @Override
     public int getLayoutId() {
         return R.layout.activity_doctor_list;
@@ -82,11 +84,12 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
         recy_doctor.setLoadingListener(this);
         recy_doctor.setAdapter(mDoctorListAdapter);
 
+        cate_id = getIntent().getIntExtra("cate_id",0);
     }
 
     @Override
     public void initData() {
-        mDoctorListViewMode.getDoctorList(page,keyword,true);
+        mDoctorListViewMode.getDoctorList(page,keyword,cate_id,true);
     }
 
     @Override
@@ -128,7 +131,7 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
     public void onClick(View v){
         if (v==btn_search){
             keyword = edit_input_content.getText().toString();
-            mDoctorListViewMode.getDoctorList(page,keyword,true);
+            mDoctorListViewMode.getDoctorList(page,keyword,cate_id,true);
         }
     }
     @Override
@@ -152,14 +155,14 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
     @Override
     public void onRefresh() {
         page = 1;
-        mDoctorListViewMode.getDoctorList(page,keyword,false);
+        mDoctorListViewMode.getDoctorList(page,keyword,cate_id,false);
 
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        mDoctorListViewMode.getDoctorList(page,keyword,false);
+        mDoctorListViewMode.getDoctorList(page,keyword,cate_id,false);
 
     }
 }

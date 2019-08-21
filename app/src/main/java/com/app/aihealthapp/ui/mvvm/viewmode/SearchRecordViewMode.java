@@ -37,8 +37,8 @@ public class SearchRecordViewMode {
         }
         String url = ApiUrl.UserApi.SearchRecord;
         RequestParams params = new RequestParams();
-//        params.put("page",String.valueOf(page));
-//        params.put("size",String.valueOf(10));
+        params.put("page",String.valueOf(page));
+        params.put("size",String.valueOf(10));
         mBaseMode.GetRequest(url, params, new ResultCallback() {
             @Override
             public void onSuccess(Object result) {

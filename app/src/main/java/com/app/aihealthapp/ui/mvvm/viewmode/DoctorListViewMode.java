@@ -31,7 +31,7 @@ public class DoctorListViewMode {
     }
 
 
-    public void getDoctorList(int page,String keyword,boolean isShow){
+    public void getDoctorList(int page,String keyword,int cate_id,boolean isShow){
 
         if (isShow){
             mDoctorListView.showProgress();
@@ -44,6 +44,7 @@ public class DoctorListViewMode {
             params.put("keyword",keyword);
         }
         params.put("page",String.valueOf(page));
+        params.put("cate_id",String.valueOf(cate_id));
 
         mBaseMode.GetRequest(url, params, new ResultCallback() {
             @Override

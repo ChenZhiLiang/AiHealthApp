@@ -50,18 +50,11 @@ public class WebActyivity extends BaseActivity implements  WebTitleView {
         webView.setWebTitleView(this);
         webView.setFocusable(true);//设置有焦点
         webView.setFocusableInTouchMode(true);//设置可触摸
-        webView.addJavascriptInterface(new WebAppInterface(), "jsAndroid");
         webView.loadUrl(url);//加载网址
 
     }
 
-    public class WebAppInterface {
-        @JavascriptInterface
-        public String jsCallToken() {
-            return SharedPreferenceHelper.getUserToken(AppContext.getContext());
-        }
 
-    }
     @Override
     public void initData() {
 

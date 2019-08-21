@@ -184,6 +184,7 @@
                 android:background="@color/view_line" />
 
             <RelativeLayout
+                android:id="@+id/rt_healthy_report"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick">
@@ -462,6 +463,7 @@
                 android:background="@color/view_line" />
 
             <RelativeLayout
+                android:id="@+id/rt_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:layout_marginBottom="@dimen/dimen_16px"

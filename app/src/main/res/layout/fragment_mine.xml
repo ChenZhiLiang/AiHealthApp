@@ -74,7 +74,7 @@
                     android:layout_marginLeft="@dimen/dimen_16px"
                     android:drawableLeft="@mipmap/mind_xxtx_icon"
                     android:drawablePadding="@dimen/text_10px"
-                    android:text="我的健康秘钥"
+                    android:text="我的健康密钥"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px" />
 

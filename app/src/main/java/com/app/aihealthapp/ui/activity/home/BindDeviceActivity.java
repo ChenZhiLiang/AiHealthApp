@@ -179,6 +179,7 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
             showLoadFailMsg("绑定成功");
+            EventBusHelper.sendEvent(new Event(EventCode.Code.BIND_DEVICE));
             finish();
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));

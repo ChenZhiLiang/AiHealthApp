@@ -212,12 +212,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0.5px"
-                android:background="@color/view_line" />
+                android:background="@color/view_line"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
-                android:background="@drawable/selector_onclick">
+                android:background="@drawable/selector_onclick"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -273,12 +275,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0.5px"
-                android:background="@color/view_line" />
+                android:background="@color/view_line"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
-                android:background="@drawable/selector_onclick">
+                android:background="@drawable/selector_onclick"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

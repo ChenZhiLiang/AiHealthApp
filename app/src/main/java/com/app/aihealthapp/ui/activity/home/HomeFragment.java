@@ -131,6 +131,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     private DeviceInfoBean mDeviceInfoBean = null;
     private boolean ClickStep = false;//判断是否点击运动记步
+    private HomeBean homeBean;
 
     public static HomeFragment getInstance(String title) {
         HomeFragment hf = new HomeFragment();
@@ -187,9 +188,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         } else if (v == btn_inquiry) {
             startActivity(new Intent(getActivity(), DoctorListActivity.class));
         } else if (v == ll_syncStep) {
-
             if (isLogin()) {
-                if (mDeviceInfoBean != null) {
+                if (homeBean.getIs_bind_bracelet()== 1) {//已绑定
                     ClickStep = true;
                     //运动记步
                     mBleConnection.syncStep();
@@ -210,7 +210,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
         } else if (v == ll_blood_pressure) {
             if (isLogin()) {
-                if (mDeviceInfoBean != null) {
+                if (homeBean.getIs_bind_bracelet()== 1) {
                     startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 0));
                 } else {
                     if (!mCRPBleClient.isBluetoothEnable()) {
@@ -228,7 +228,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             }
         } else if (v == ll_heart_rate) {
             if (isLogin()) {
-                if (mDeviceInfoBean != null) {
+                if (homeBean.getIs_bind_bracelet()== 1) {
                     //心率测量
                     startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 1));
                 } else {
@@ -248,7 +248,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         } else if (v == ll_blood_oxygen) {
 
             if (isLogin()) {
-                if (mDeviceInfoBean != null) {
+                if (homeBean.getIs_bind_bracelet()== 1) {
                     //血压测量
                     startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 2));
                 } else {
@@ -264,9 +264,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 }
             } else {
                 startActivity(new Intent(getContext(), LoginActivity.class));
-
             }
-
         }
     }
 
@@ -286,7 +284,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             mHomeViewMode.getHomeDatas(false);
         } else if (event.getCode() == EventCode.Code.LOGOUT) {
             mHomeViewMode.getHomeDatas(false);
-
+        }else if (event.getCode()== EventCode.Code.BIND_DEVICE){
+            mHomeViewMode.getHomeDatas(false);
         }
     }
 
@@ -316,7 +315,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         if (ret == 0) {
 
             String data = GsonHelper.GsonToData(result.toString(), "data").toString();
-            final HomeBean homeBean = GsonHelper.GsonToBean(data, HomeBean.class);
+            homeBean = GsonHelper.GsonToBean(data, HomeBean.class);
             if (homeBean.getIs_bind_bracelet() == 0) {
                 rt_bind_device.setVisibility(View.VISIBLE);
 //                ll_device_info.setVisibility(View.GONE);

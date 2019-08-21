@@ -15,6 +15,7 @@ public final class EventCode {
         public static final int LOGOUT = 0x000000;
         public static final int AUTHENTICATION_SUCCESS = 0x555555;//实名认证成功
         public static final int MEASURE_SUCCESS = 0x666666;//测量成功
+        public static final int BIND_DEVICE = 0x777777;//绑定设备成功
 
 
     }

@@ -48,7 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="爱健康"
+                        android:text="健康密钥"
                         android:textSize="@dimen/text_16px"
                         android:textColor="@color/text_color"
                         android:textStyle="bold"/>

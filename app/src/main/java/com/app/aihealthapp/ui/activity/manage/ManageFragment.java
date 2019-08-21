@@ -3,15 +3,19 @@ package com.app.aihealthapp.ui.activity.manage;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.uitrarefresh.UTRefreshLayout;
 import com.app.aihealthapp.core.uitrarefresh.ptr.PtrFrameLayout;
 import com.app.aihealthapp.core.uitrarefresh.ptr.PtrHandler;
+import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.AppManager;
+import com.app.aihealthapp.ui.activity.forum.ForumFragment;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 import com.app.aihealthapp.view.ProgressWebView;
 import com.app.aihealthapp.view.WebViewProgressBar;
@@ -48,6 +52,8 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
+        webview.addJavascriptInterface(new WebAppInterface(), "jsAndroid");
+
     }
     @Override
     public void loadingData() {
@@ -58,7 +64,12 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
     public void initData() {
 
     }
-
+    public class WebAppInterface {
+        @JavascriptInterface
+        public String jsCallToken() {
+            return SharedPreferenceHelper.getUserToken(AppContext.getContext());
+        }
+    }
 
     @Override
     public void onTitleResult(String title) {

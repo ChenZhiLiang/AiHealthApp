@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.aihealthapp.R;
+import com.app.aihealthapp.util.UnitUtil;
 import com.app.aihealthapp.view.toasty.Toasty;
 
 /**
@@ -71,7 +72,7 @@ public class ToastyHelper {
      * @param activity
      * @param msg
      */
-   /* public static void customCenterToast(Activity activity,String msg){
+    public static void customCenterToast(Activity activity,String msg){
         View view = ((LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.toast_custom, null);
         LinearLayout toast_linear = view.findViewById(R.id.toast_linear);
@@ -84,5 +85,5 @@ public class ToastyHelper {
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.setView(view);
         toast.show();
-    }*/
+    }
 }

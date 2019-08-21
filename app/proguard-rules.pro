@@ -185,10 +185,6 @@
 # 将下面替换成自己的实体类
 #-keep class com.example.bean.** { *; }
 
-# 微信支付
-
-#-libraryjars libs/SocialSDK_alipay.jar
-#-libraryjars libs/SocialSDK_WeiXin_Full.jar
 -dontwarn com.tencent.mm.**
 -dontwarn com.tencent.wxop.stat.**
 -keep class com.tencent.mm.** {*;}

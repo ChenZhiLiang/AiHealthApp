@@ -21,4 +21,7 @@ public class AppConfig {
     public static final String USER_PASS = "passsword";
     public static final String CAR_INFO = "car_info";
     public static final String LOCATION = "map_location";
+
+    public static final String WEIXIN_APP_ID = "wxee6db4bf522e8daa";
+
 }

@@ -76,6 +76,8 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
         mSearchRecordAdapter.setOnItemClickListener(new BaseXRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data, int position) {
+
+
                 startActivity(new Intent(mActivity,SearchRecordDetailsActivity.class));
             }
         });

@@ -58,7 +58,7 @@
                 android:textColor="@color/default_hint_color"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_80px"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/dimen_10px"
                 android:layout_marginBottom="@dimen/dimen_10px">

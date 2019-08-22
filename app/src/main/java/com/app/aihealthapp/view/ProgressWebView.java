@@ -23,8 +23,11 @@ import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
+import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
+import com.app.aihealthapp.ui.activity.home.DoctorListActivity;
+import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 
 /**
@@ -158,6 +161,17 @@ public class ProgressWebView extends WebView {
          */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, final String url) {
+
+            if (url.startsWith("navigation://question")){//立即咨询
+                context.startActivity(new Intent(context, HealthAskActivity.class));
+                return true;
+            }else if (url.startsWith("navigation://doctor?cate_id=16")){//中医问诊
+                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16));
+                return true;
+            }else if (url.startsWith("navigation://doctor?cate_id=10")){//疑难杂症
+                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",10));
+                return true;
+            }
 //            // 如下方案可在非微信内部WebView的H5页面中调出微信支付
 //            if (url.startsWith("weixin://wap/pay?")) {
 //                //如果return false  就会先提示找不到页面，然后跳转微信

@@ -322,7 +322,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             } else {
                 rt_bind_device.setVisibility(View.GONE);
 //                ll_device_info.setVisibility(View.VISIBLE);
-
                 tv_step.setText(homeBean.getRun_steps().getSteps());
                 tv_distance.setText(homeBean.getRun_steps().getDistance());
                 tv_calorie.setText(homeBean.getRun_steps().getCalories());

@@ -14,7 +14,7 @@ import butterknife.OnClick;
 
 /**
  * @Name：AiHealth
- * @Description：描述信息
+ * @Description：咨询详情
  * @Author：Chen
  * @Date：2019/8/19 22:32
  * 修改人：Chen

@@ -1,5 +1,6 @@
 package com.app.aihealthapp.ui.activity.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
+import com.app.aihealthapp.core.base.BaseXRecyclerViewAdapter;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.xrecyclerview.ProgressStyle;
@@ -21,6 +23,7 @@ import com.app.aihealthapp.ui.mvvm.viewmode.InterrogationRecordViewMode;
 import com.app.aihealthapp.ui.mvvm.viewmode.SearchRecordViewMode;
 import com.app.aihealthapp.util.SpaceItemDecoration;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +74,15 @@ public class InterrogationRecordFragment extends BaseFragment implements Interro
         recy_interrogation_record.setArrowImageView(R.mipmap.icon_pull_down);
         recy_interrogation_record.setLoadingListener(this);
         recy_interrogation_record.setAdapter(mInterrogationRecordAdapter);
+
+        mInterrogationRecordAdapter.setOnItemClickListener(new BaseXRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, Object data, int position) {
+
+                InterrogationRecordBean bean = (InterrogationRecordBean)data;
+                startActivity(new Intent(mActivity,InterrogationDetailsActivity.class).putExtra("datas", bean));
+            }
+        });
     }
 
     @Override

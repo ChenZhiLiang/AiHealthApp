@@ -41,7 +41,7 @@ public abstract class BaseXRecyclerViewAdapter<T> extends RecyclerView.Adapter<B
             @Override
             public void onViewClick(View view, int position) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(view,mData.get(position),position);
+                    mOnItemClickListener.onItemClick(view,mData.get(position-1),position);
                 }
             }
         });

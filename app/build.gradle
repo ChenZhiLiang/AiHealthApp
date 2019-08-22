@@ -15,11 +15,10 @@ android {
         config {
             keyAlias 'key0'
             keyPassword '123456'
-            storeFile file('../health.jks')
+            storeFile file('../key.jks')
             storePassword '123456'
         }
     }
-
     buildTypes {
         release {
             shrinkResources true

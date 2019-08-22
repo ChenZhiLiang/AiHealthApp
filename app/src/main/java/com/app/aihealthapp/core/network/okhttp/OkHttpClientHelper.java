@@ -21,7 +21,7 @@ import okhttp3.Request;
  * @function 用来发送get, post请求的工具类，包括设置一些请求的共用参数
  */
 public class OkHttpClientHelper {
-    private static final int TIME_OUT = 30;
+    private static final int TIME_OUT = 60;
     private static OkHttpClient mOkHttpClient;
     /**
      * 静态代码块初始化Client相关的信息
@@ -32,12 +32,6 @@ public class OkHttpClientHelper {
         okHttpClientBuilder.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
         okHttpClientBuilder.readTimeout(TIME_OUT, TimeUnit.SECONDS);
         okHttpClientBuilder.writeTimeout(TIME_OUT, TimeUnit.SECONDS);
-        okHttpClientBuilder.retryOnConnectionFailure(false);//设置不进行连接失败重试
-
-
-//        okHttpClientBuilder.addNetworkInterceptor(new CacheInterceptor());//缓存拦截器
-//        okHttpClientBuilder.addInterceptor(new OfflineCacheInterceptor());
-//        okHttpClientBuilder.cache(new Cache(AppContext.getInstance().getCacheDir(), 10 * 1024 * 1024));//使用应用缓存文件路径，缓存大小为10MB
         okHttpClientBuilder.followRedirects(true);
         //添加https支持
         okHttpClientBuilder.hostnameVerifier(new HostnameVerifier() {
@@ -46,9 +40,9 @@ public class OkHttpClientHelper {
                 return true;
             }
         });
+        // TODO: 2017/1/17  暂时取消https访问
         okHttpClientBuilder.sslSocketFactory(HttpsUtils.getSslSocketFactory());
         mOkHttpClient = okHttpClientBuilder.build();
-
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.app.aihealthapp.wxapi;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,6 +10,9 @@ import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.EventBusHelper;
+import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
+import com.app.aihealthapp.ui.activity.home.PayCentreActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -48,7 +52,18 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            EventBusHelper.sendEvent(new Event(EventCode.Code.WEIXIN_PAY,resp.errCode));
+
+            if (resp.errCode==0){
+                Intent intent =new Intent();
+                intent.setAction("action.pay.success");
+                sendBroadcast(intent);
+            }else if (resp.errCode==-1){
+                ToastyHelper.toastyNormal(this,"支付失败");
+            }else if (resp.errCode==-2){
+                ToastyHelper.toastyNormal(this,"取消支付");
+            }else {
+                ToastyHelper.toastyNormal(this,"未知错误");
+            }
             finish();
         }
     }

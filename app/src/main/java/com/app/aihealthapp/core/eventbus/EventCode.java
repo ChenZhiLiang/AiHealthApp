@@ -19,5 +19,7 @@ public final class EventCode {
         public static final int WEIXIN_AOUTH = 0x666668;//微信授权
         public static final int WEIXIN_PAY = 0x666660;//微信支付
         public static final int WEIXIN_SHARE_SUCCESS = 0x666661;//微信分享成功
+        public static final int ALIPAY_SUCCESS = 0x777771;//支付宝支付
+
     }
 }

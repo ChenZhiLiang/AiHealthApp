@@ -1,6 +1,11 @@
 package com.app.aihealthapp.ui.activity.home;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,12 +14,16 @@ import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
+import com.app.aihealthapp.core.eventbus.Event;
+import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.ui.adapter.PaymentModeAdapter;
+import com.app.aihealthapp.ui.bean.PaymentBean;
 import com.app.aihealthapp.ui.mvvm.view.PayCentreView;
 import com.app.aihealthapp.ui.mvvm.viewmode.PayCentreViewMode;
 import com.app.aihealthapp.ui.mvvm.viewmode.SelectViewMode;
+import com.app.aihealthapp.util.PayUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -46,6 +55,7 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
     private String doctor_name;
     private String advice_price;
     private int pay_type;
+    private PayUtils mPayUtil;//支付工具
 
     @Override
     public int getLayoutId() {
@@ -77,6 +87,11 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
         tv_price.setText("¥"+advice_price);
 
         mPayCentreViewMode = new PayCentreViewMode(this);
+        mPayUtil = new PayUtils(this);//初始化支付工具
+
+        IntentFilter intentFilter =new IntentFilter();
+        intentFilter.addAction("action.pay.success");
+        registerReceiver(mRefreshBroadcastReceiver, intentFilter);
 
     }
 
@@ -116,12 +131,45 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
     public void PayResult(Object result) {
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
-//            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
-//            String order_no = GsonHelper.GsonToString(data,"order_no");
-//            mPayCentreViewMode.pay(order_no,pay_type);
+            if(pay_type==1){//支付宝支付
+                String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+                String alipay_sdk  = GsonHelper.GsonToString(data,"alipay_str");
+                mPayUtil.Alipay(alipay_sdk,doctor_id);
+            }else if (pay_type==2){//微信支付
+                String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+                PaymentBean paymentBean = GsonHelper.GsonToBean(data,PaymentBean.class);
+                mPayUtil.WXPay(paymentBean);//调用微信支付
+            }else {//密钥支付
+                showLoadFailMsg("密钥支付成功");
+                startActivity(new Intent(PayCentreActivity.this,HealthAskActivity.class).putExtra("doctor_id",doctor_id));
+            }
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
         }
+    }
+
+    private BroadcastReceiver mRefreshBroadcastReceiver =new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.pay.success")){
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastyHelper.toastyNormal(PayCentreActivity.this, "支付成功");
+                        startActivity(new Intent(PayCentreActivity.this,HealthAskActivity.class).putExtra("doctor_id",doctor_id));
+                        finish();
+                    }
+                },100);
+
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mRefreshBroadcastReceiver);
     }
 
     @Override

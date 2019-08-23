@@ -1,11 +1,16 @@
 package com.app.aihealthapp.util;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import com.alipay.sdk.app.PayTask;
+import com.app.aihealthapp.core.eventbus.Event;
+import com.app.aihealthapp.core.eventbus.EventCode;
+import com.app.aihealthapp.core.helper.EventBusHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
 import com.app.aihealthapp.ui.bean.PaymentBean;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -21,7 +26,7 @@ import java.util.Map;
 public class PayUtils {
 
     private Activity mActivity;
-    private int intent_type;
+    private int doctor_id;
     public PayUtils(Activity mActivity){
         this.mActivity = mActivity;
     }
@@ -32,7 +37,7 @@ public class PayUtils {
      */
     public void WXPay(PaymentBean mPaymentBean){
         IWXAPI mWxApi = WXAPIFactory.createWXAPI(mActivity, mPaymentBean.getAppid(), true);
-        mWxApi.registerApp(  mPaymentBean.getAppid());
+        mWxApi.registerApp(mPaymentBean.getAppid());
         /**
          * 请求app服务器得到的回调结果
          */
@@ -53,10 +58,9 @@ public class PayUtils {
 
     /**
      * 支付宝支付
-     * @param alipay_sdk
      */
-    public void Alipay(final String alipay_sdk,int intent_type){
-        this.intent_type = intent_type;
+    public void Alipay(final String alipay_sdk,int doctor_id){
+        this.doctor_id = doctor_id;
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {
@@ -76,9 +80,9 @@ public class PayUtils {
         public void handleMessage(Message msg) {
             PayResult payResult = new PayResult((Map<String, String>) msg.obj);
             if (payResult.getResultStatus().equals("9000")) {//支付成功
-
-                ToastyHelper.toastyNormal(mActivity, "支付成功");
-
+                Intent intent =new Intent();
+                intent.setAction("action.pay.success");
+                mActivity.sendBroadcast(intent);
             } else if (payResult.getResultStatus().equals("6001")) {//取消支付
                 ToastyHelper.customCenterToast(mActivity,"取消支付");
             } else {//支付失败

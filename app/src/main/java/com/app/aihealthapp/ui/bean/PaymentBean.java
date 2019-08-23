@@ -12,42 +12,30 @@ import com.google.gson.annotations.SerializedName;
  */
 public class PaymentBean {
     /**
-     * sign : 3BA285B59731E02545202ABCC27CB430
-     * timestamp : 1517553061
-     * noncestr : 5a7405a57504b
-     * partnerid : 1495387632
-     * park_id : 10012
-     * prepayid : wx20180202143101836380a39e0145760552
-     * pay_log_id : 143724
+     * appid : wxee6db4bf522e8daa
+     * noncestr : zrNRie0B7Vm3Hpx4VPlhNAlpSFFva8QN
      * package : Sign=WXPay
-     * appid : wx43a677968f4bad47
+     * partnerid : 1549058731
+     * prepayid : wx23223847941278a969c49bb61450645600
+     * timestamp : 1566571127
+     * sign : 201D373A8A94E2C1AE2466A58BD6F017
      */
 
-    private String sign;
-    private String timestamp;
+    private String appid;
     private String noncestr;
-    private String partnerid;
-    private String park_id;
-    private String prepayid;
-    private String pay_log_id;
     @SerializedName("package")
     private String packageX;
-    private String appid;
+    private String partnerid;
+    private String prepayid;
+    private String timestamp;
+    private String sign;
 
-    public String getSign() {
-        return sign;
+    public String getAppid() {
+        return appid;
     }
 
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setAppid(String appid) {
+        this.appid = appid;
     }
 
     public String getNoncestr() {
@@ -58,20 +46,20 @@ public class PaymentBean {
         this.noncestr = noncestr;
     }
 
+    public String getPackageX() {
+        return packageX;
+    }
+
+    public void setPackageX(String packageX) {
+        this.packageX = packageX;
+    }
+
     public String getPartnerid() {
         return partnerid;
     }
 
     public void setPartnerid(String partnerid) {
         this.partnerid = partnerid;
-    }
-
-    public String getPark_id() {
-        return park_id;
-    }
-
-    public void setPark_id(String park_id) {
-        this.park_id = park_id;
     }
 
     public String getPrepayid() {
@@ -82,27 +70,19 @@ public class PaymentBean {
         this.prepayid = prepayid;
     }
 
-    public String getPay_log_id() {
-        return pay_log_id;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setPay_log_id(String pay_log_id) {
-        this.pay_log_id = pay_log_id;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public String getPackageX() {
-        return packageX;
+    public String getSign() {
+        return sign;
     }
 
-    public void setPackageX(String packageX) {
-        this.packageX = packageX;
-    }
-
-    public String getAppid() {
-        return appid;
-    }
-
-    public void setAppid(String appid) {
-        this.appid = appid;
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 }

@@ -52,8 +52,6 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
     @BindView(R.id.check_open_photo)
     CheckBox check_open_photo;
 
-    @BindView(R.id.btn_logout)
-    Button btn_logout;
     private MineDeviceViewMode mMineDeviceViewMode;
 
     @Override
@@ -83,7 +81,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
         mMineDeviceViewMode.getMineDeviceInfo();
     }
 
-    @OnClick({R.id.btn_bind,R.id.btn_logout})
+    @OnClick({R.id.btn_bind})
     public void onClick(View v){
         if (v==btn_bind){
             if (!AppContext.getBleClient(AppContext.getContext()).isBluetoothEnable()){
@@ -93,15 +91,6 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
             }else {
                 startActivity(new Intent(this, BindDeviceActivity.class));
             }
-        }else if (v==btn_logout){
-            CircleDialogHelper.ShowDialogHint(this, "确定注销吗?", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UserHelper.clearUser();
-                    EventBusHelper.sendEvent(new Event(EventCode.Code.LOGOUT));
-                    finish();
-                }
-            }, null);
         }
     }
     @Override

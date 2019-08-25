@@ -2,6 +2,7 @@ package com.app.aihealthapp.ui.activity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
+import com.app.aihealthapp.core.helper.CircleDialogHelper;
+import com.app.aihealthapp.core.helper.EventBusHelper;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
@@ -55,6 +58,8 @@ public class MineFragment extends BaseFragment implements MineView {
     RelativeLayout rt_medical_report;//我的体检报告
     @BindView(R.id.rt_healthy_report)
     RelativeLayout rt_healthy_report;
+    @BindView(R.id.rt_myorder)
+    RelativeLayout rt_myorder;
     @BindView(R.id.rt_health_plan)
     RelativeLayout rt_health_plan;//我的健康方案
 
@@ -65,6 +70,9 @@ public class MineFragment extends BaseFragment implements MineView {
 
     @BindView(R.id.rt_feedback)
     RelativeLayout rt_feedback;//帮助与反馈
+    @BindView(R.id.btn_logout)
+    Button btn_logout;
+
     private MineViewMode mMineViewMode;
     public static MineFragment getInstance(String title) {
         MineFragment hf = new MineFragment();
@@ -89,6 +97,7 @@ public class MineFragment extends BaseFragment implements MineView {
     public void initData() {
         if (isLogin()){
             btn_authentication.setVisibility(View.VISIBLE);
+            btn_logout.setVisibility(View.VISIBLE);
             GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
             if (UserHelper.getUserInfo().getIs_auth()==0){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
@@ -102,6 +111,8 @@ public class MineFragment extends BaseFragment implements MineView {
         }else {
             tv_user_name.setText("点击登录");
             btn_authentication.setVisibility(View.GONE);
+            btn_logout.setVisibility(View.GONE);
+
         }
     }
 
@@ -115,7 +126,7 @@ public class MineFragment extends BaseFragment implements MineView {
     }
 
     @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,R.id.rt_healthy_report,
-            R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_feedback})
+            R.id.rt_myorder,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_feedback,R.id.btn_logout})
     public void onClick(View v){
         if (isLogin()){
             if (v==btn_authentication){
@@ -131,6 +142,9 @@ public class MineFragment extends BaseFragment implements MineView {
             }else if (v==rt_healthy_report){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Healthy_Report));
 
+            }else if (v==rt_myorder){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder));
+
             }else if (v==rt_health_plan){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HealthPlan));
             }else if (v==rt_myfriend_list){
@@ -140,6 +154,14 @@ public class MineFragment extends BaseFragment implements MineView {
             }else if (v==rt_feedback){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Feedback));
 
+            }else if (v==btn_logout){
+                CircleDialogHelper.ShowDialogHint((AppCompatActivity)mActivity, "确定注销吗?", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        UserHelper.clearUser();
+                        EventBusHelper.sendEvent(new Event(EventCode.Code.LOGOUT));
+                    }
+                }, null);
             }
         }else {
             startActivity(new Intent(mActivity,LoginActivity.class));
@@ -155,6 +177,7 @@ public class MineFragment extends BaseFragment implements MineView {
             SharedPreferenceHelper.setUserInfo(AppContext.getContext(),mUserInfo);
 
             btn_authentication.setVisibility(View.VISIBLE);
+            btn_logout.setVisibility(View.VISIBLE);
             GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
             if (TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());

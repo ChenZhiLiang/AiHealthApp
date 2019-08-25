@@ -174,17 +174,6 @@
                         android:layout_centerVertical="true"
                         android:button="@drawable/device_checkbox"/>
                 </RelativeLayout>
-                <Button
-                    android:id="@+id/btn_logout"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_50px"
-                    android:background="@drawable/frame_blue_true"
-                    android:layout_marginLeft="@dimen/dimen_10px"
-                    android:layout_marginRight="@dimen/dimen_10px"
-                    android:layout_marginTop="40dp"
-                    android:text="退出登录"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_18px"/>
 
             </LinearLayout>
         </LinearLayout>

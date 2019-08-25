@@ -113,10 +113,14 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     MyGridView grid_health_manage;
     @BindView(R.id.grid_shop_manage)
     MyGridView grid_shop_manage;
+    @BindView(R.id.btn_shop_index)
+    Button btn_shop_index;
     @BindView(R.id.recycler_shop_area)
     RecyclerView recycler_shop_area;
     @BindView(R.id.gridview_shop)
     MyGridView gridview_shop;
+    @BindView(R.id.btn_health_shop)
+    Button btn_health_shop;
 
 
     private CRPBleClient mCRPBleClient;
@@ -165,7 +169,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     }
 
-    @OnClick({R.id.btn_add_wristband, R.id.ll_syncStep, R.id.ll_blood_pressure, R.id.ll_heart_rate, R.id.ll_blood_oxygen, R.id.btn_look_report, R.id.btn_ask, R.id.btn_inquiry})
+    @OnClick({R.id.btn_add_wristband, R.id.ll_syncStep, R.id.ll_blood_pressure, R.id.ll_heart_rate, R.id.ll_blood_oxygen, R.id.btn_look_report, R.id.btn_ask,
+            R.id.btn_inquiry,R.id.btn_shop_index,R.id.btn_health_shop})
     public void onClick(View v) {
         if (v == btn_add_wristband) {
             if (isLogin()) {
@@ -265,6 +270,10 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             } else {
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
+        }else if (v==btn_shop_index){
+            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index));
+        }else if (v==btn_health_shop){
+            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Self_Support));
         }
     }
 
@@ -359,7 +368,9 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (position == 0) {
                         startActivity(new Intent(mActivity, DoctorListActivity.class).putExtra("cate_id",10));
-                    } else {
+                    }else if (position==2){
+                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Community));
+                    }else {
                         ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
                         startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HeadLine + mArticleCateListBean.getId()));
                     }

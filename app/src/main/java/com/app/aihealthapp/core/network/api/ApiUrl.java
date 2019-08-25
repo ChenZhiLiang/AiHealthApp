@@ -70,6 +70,11 @@ public final class ApiUrl {
         public static final String Feedback = HOST + "wap/feedback.html";//帮助与反馈
         public static final String Healthy_Report = HOST + "wap/healthy_report.html";//我的健康指数
 
+        public static final String MyOrder = HOST + "user/myorder";//我的订单
+        public static final String User_Address = HOST + "user/user_address";//收货地址
+        public static final String Self_Support = HOST + "self/support";//健康商城
+        public static final String Index = HOST + "self/support";//健康商圈
+        public static final String Community = HOST + "wap/community.html";//健康论坛
       }
 
     public static class DoctorApi{

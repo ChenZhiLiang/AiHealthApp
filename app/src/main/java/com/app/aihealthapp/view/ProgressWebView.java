@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.home.DoctorListActivity;
@@ -111,6 +112,10 @@ public class ProgressWebView extends WebView {
         @JavascriptInterface
         public String jsCallToken() {
             return SharedPreferenceHelper.getUserToken(AppContext.getContext());
+        }
+        @JavascriptInterface
+        public int jsCallUId() {
+            return UserHelper.getUserInfo().getId();
         }
     }
 

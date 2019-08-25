@@ -47,6 +47,7 @@
         />
 
     <Button
+        android:id="@+id/btn_health_shop"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_30px"
         android:background="@drawable/frame_blue"

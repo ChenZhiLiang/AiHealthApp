@@ -7,10 +7,7 @@ import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.Button;
-
 import com.app.aihealthapp.R;
-import com.app.aihealthapp.core.eventbus.Event;
-import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.permission.Action;
 import com.app.aihealthapp.core.permission.AndPermission;
 import com.app.aihealthapp.core.permission.Permission;
@@ -18,7 +15,6 @@ import com.app.aihealthapp.core.permission.PermissionSetting;
 import com.app.aihealthapp.core.permission.Rationale;
 import com.app.aihealthapp.core.permission.RequestExecutor;
 import com.app.aihealthapp.core.permission.checker.StrictChecker;
-
 import java.util.List;
 
 /**

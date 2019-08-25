@@ -311,6 +311,7 @@
                 android:background="@color/view_line" />
 
             <RelativeLayout
+                android:id="@+id/rt_myorder"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick">
@@ -488,6 +489,16 @@
                     android:layout_marginRight="@dimen/dimen_16px"
                     android:background="@mipmap/my_arrow" />
             </RelativeLayout>
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px"
+                android:background="@drawable/frame_blue_true"
+                android:layout_margin="@dimen/dimen_16px"
+                android:text="退出登录"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18px"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

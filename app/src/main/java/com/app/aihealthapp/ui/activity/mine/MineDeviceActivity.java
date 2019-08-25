@@ -51,8 +51,11 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
     CheckBox check_open_wx;
     @BindView(R.id.check_open_photo)
     CheckBox check_open_photo;
+    @BindView(R.id.btn_unbind)
+    Button btn_unbind;
 
     private MineDeviceViewMode mMineDeviceViewMode;
+    private int id;
 
     @Override
     public int getLayoutId() {
@@ -78,10 +81,10 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
 
     @Override
     public void initData() {
-        mMineDeviceViewMode.getMineDeviceInfo();
+        mMineDeviceViewMode.getMineDeviceInfo(true);
     }
 
-    @OnClick({R.id.btn_bind})
+    @OnClick({R.id.btn_bind,R.id.btn_unbind})
     public void onClick(View v){
         if (v==btn_bind){
             if (!AppContext.getBleClient(AppContext.getContext()).isBluetoothEnable()){
@@ -91,6 +94,8 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
             }else {
                 startActivity(new Intent(this, BindDeviceActivity.class));
             }
+        }else if (v==btn_unbind){
+            mMineDeviceViewMode.UnBind(id);
         }
     }
     @Override
@@ -99,11 +104,18 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
-            if (TextUtils.isEmpty(data)){
+
+            if (data.equals("{}")){
                 rt_bind_device.setVisibility(View.VISIBLE);
+                btn_unbind.setVisibility(View.GONE);
             }else {
-                rt_bind_device.setVisibility(View.GONE);
                 DeviceInfoBean mDeviceInfoBean = GsonHelper.GsonToBean(data,DeviceInfoBean.class);
+
+                rt_bind_device.setVisibility(View.GONE);
+                btn_unbind.setVisibility(View.VISIBLE);
+
+                id = mDeviceInfoBean.getId();
+
                 if (mDeviceInfoBean.getIs_open_phone()==0){
                     check_open_phone.setChecked(false);
                 }else {
@@ -138,9 +150,37 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
         }
     }
 
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);if (event.getCode()== EventCode.Code.BIND_DEVICE){
+            mMineDeviceViewMode.getMineDeviceInfo(false);
+        }
+    }
     @Override
     public void UpdateDeviceResult(Object result) {
 
+
+    }
+
+    @Override
+    public void UnBindResult(Object result) {
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            EventBusHelper.sendEvent(new Event(EventCode.Code.UN_BIND_DEVICE));
+            mMineDeviceViewMode.getMineDeviceInfo(false);
+
+            showLoadFailMsg("解绑成功");
+
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+
+        }
     }
 
     @Override

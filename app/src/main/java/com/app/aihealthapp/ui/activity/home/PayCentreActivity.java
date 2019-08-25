@@ -134,7 +134,7 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
             if(pay_type==1){//支付宝支付
                 String data = GsonHelper.GsonToData(result.toString(),"data").toString();
                 String alipay_sdk  = GsonHelper.GsonToString(data,"alipay_str");
-                mPayUtil.Alipay(alipay_sdk,doctor_id);
+                mPayUtil.Alipay(alipay_sdk);
             }else if (pay_type==2){//微信支付
                 String data = GsonHelper.GsonToData(result.toString(),"data").toString();
                 PaymentBean paymentBean = GsonHelper.GsonToBean(data,PaymentBean.class);

@@ -26,7 +26,6 @@ import java.util.Map;
 public class PayUtils {
 
     private Activity mActivity;
-    private int doctor_id;
     public PayUtils(Activity mActivity){
         this.mActivity = mActivity;
     }
@@ -59,8 +58,7 @@ public class PayUtils {
     /**
      * 支付宝支付
      */
-    public void Alipay(final String alipay_sdk,int doctor_id){
-        this.doctor_id = doctor_id;
+    public void Alipay(final String alipay_sdk){
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {

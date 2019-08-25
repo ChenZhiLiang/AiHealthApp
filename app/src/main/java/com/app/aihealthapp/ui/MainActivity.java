@@ -1,5 +1,6 @@
 package com.app.aihealthapp.ui;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import com.app.aihealthapp.R;
@@ -17,6 +18,7 @@ import com.app.aihealthapp.ui.activity.mine.MineFragment;
 import com.app.aihealthapp.ui.activity.shop.ShopFragment;
 import com.app.aihealthapp.ui.bean.TabEntityBean;
 import com.app.aihealthapp.view.NoScrollViewPager;
+import com.luck.picture.lib.config.PictureConfig;
 
 import java.util.ArrayList;
 
@@ -34,11 +36,11 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
     private String[] mTitles;
     private int[] mIconUnselectIds = {
             R.mipmap.home_icon_normal, R.mipmap.management_icon_normal,
-            R.mipmap.forum_icon_normal, R.mipmap.mall_icon_normal,
+            R.mipmap.mall_icon_normal,R.mipmap.forum_icon_normal,
             R.mipmap.ming_icon_normal};
     private int[] mIconSelectIds = {
             R.mipmap.home_icon_select, R.mipmap.management_icon_select,
-            R.mipmap.forum_icon_select, R.mipmap.mall_icon_select,
+            R.mipmap.mall_icon_select,R.mipmap.forum_icon_select,
             R.mipmap.mind_icon_select};
 
     private BaseFragment mBackHandedFragment;
@@ -63,8 +65,9 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
         mTitles = getResources().getStringArray(R.array.tab);
         mFragments.add(HomeFragment.getInstance(mTitles[0]));
         mFragments.add(ManageFragment.getInstance(mTitles[1]));
-        mFragments.add(ForumFragment.getInstance(mTitles[2]));
-        mFragments.add(ShopFragment.getInstance(mTitles[3]));
+        mFragments.add(ShopFragment.getInstance(mTitles[2]));
+        mFragments.add(ForumFragment.getInstance(mTitles[3]));
+
         mFragments.add(MineFragment.getInstance(mTitles[4]));
 
         for (int i = 0; i < mTitles.length; i++) {
@@ -124,7 +127,4 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
             getSupportFragmentManager().popBackStack(); //fragment 出栈
         }
     }
-
-
-
 }

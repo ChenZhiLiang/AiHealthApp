@@ -1,10 +1,13 @@
 package com.app.aihealthapp.ui.activity.mine;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,18 +21,31 @@ import com.app.aihealthapp.core.helper.CircleDialogHelper;
 import com.app.aihealthapp.core.helper.EventBusHelper;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
+import com.app.aihealthapp.core.helper.PermissionHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
+import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
+import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
 import com.app.aihealthapp.ui.bean.UserInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineViewMode;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * @Name：AiHealth
@@ -58,8 +74,10 @@ public class MineFragment extends BaseFragment implements MineView {
     RelativeLayout rt_medical_report;//我的体检报告
     @BindView(R.id.rt_healthy_report)
     RelativeLayout rt_healthy_report;
-    @BindView(R.id.rt_myorder)
+    @BindView(R.id.rt_myorder)//我的订单
     RelativeLayout rt_myorder;
+    @BindView(R.id.rt_address)
+    RelativeLayout rt_address;//收货地址
     @BindView(R.id.rt_health_plan)
     RelativeLayout rt_health_plan;//我的健康方案
 
@@ -74,6 +92,9 @@ public class MineFragment extends BaseFragment implements MineView {
     Button btn_logout;
 
     private MineViewMode mMineViewMode;
+    private List<LocalMedia> selectList = new ArrayList<>();
+    private String loading_img;
+
     public static MineFragment getInstance(String title) {
         MineFragment hf = new MineFragment();
         hf.mTitle = title;
@@ -126,10 +147,34 @@ public class MineFragment extends BaseFragment implements MineView {
     }
 
     @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,R.id.rt_healthy_report,
-            R.id.rt_myorder,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_feedback,R.id.btn_logout})
+            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_feedback,R.id.btn_logout})
     public void onClick(View v){
         if (isLogin()){
-            if (v==btn_authentication){
+            if (v==image_head){
+                CircleDialogHelper.ShowBottomDialog((AppCompatActivity) mActivity, getResources().getStringArray(R.array.head_check), new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (i == 0) {
+                            // 获得摄像权限才能进入拍照界面
+                            if (new PermissionHelper().RequestPermisson(mActivity, Permission.CAMERA)){
+                                PictureSelector.create(MineFragment.this)
+                                        .openCamera(PictureMimeType.ofImage())
+                                        .compress(true)
+                                        .forResult(PictureConfig.REQUEST_CAMERA);
+                            }
+                        } else {
+                            //获得访问外部存储权限才能访问相册
+                            if (new PermissionHelper().RequestPermisson(mActivity, Permission.WRITE_EXTERNAL_STORAGE)){
+                                PictureSelector.create(MineFragment.this)
+                                        .openGallery(PictureMimeType.ofImage())
+                                        .compress(true)
+                                        .selectionMode(PictureConfig.SINGLE)// 多选 or 单选
+                                        .forResult(PictureConfig.CHOOSE_REQUEST);
+                            }
+                        }
+                    }
+                });
+            }else if (v==btn_authentication){
                 startActivity(new Intent(getContext(),AuthenticationUserActivity.class));
             }else if (v==rt_my_key){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyKeyList));
@@ -144,6 +189,9 @@ public class MineFragment extends BaseFragment implements MineView {
 
             }else if (v==rt_myorder){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder));
+
+            }else if (v==rt_address){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.User_Address));
 
             }else if (v==rt_health_plan){
                 startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HealthPlan));
@@ -194,6 +242,31 @@ public class MineFragment extends BaseFragment implements MineView {
 
     }
 
+    @Override
+    public void uploadResult(Object result) {
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+            String url = GsonHelper.GsonToString(data,"url");
+            mMineViewMode.UpdateProfile(url);
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),""));
+        }
+    }
+
+    @Override
+    public void UpdateProfileResult(Object result) {
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+//            Bitmap bm = BitmapFactory.decodeFile(loading_img);
+            mMineViewMode.getUserInfo();
+            showLoadFailMsg("上传成功");
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),""));
+
+        }
+    }
+
 
     @Override
     protected boolean isRegisterEventBus() {
@@ -224,6 +297,44 @@ public class MineFragment extends BaseFragment implements MineView {
             btn_authentication.setVisibility(View.GONE);
         }
     }
+
+    @Override
+    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片选择结果回调
+                    selectList = PictureSelector.obtainMultipleResult(data);
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                    // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                    for (LocalMedia media : selectList) {
+                        if (media.isCompressed()){
+                            loading_img = media.getCompressPath();
+                            File file = new File(media.getCompressPath());
+                            mMineViewMode.uploadHead(file);
+                        }
+                    }
+
+                    break;
+                case PictureConfig.REQUEST_CAMERA:
+                    // 图片选择结果回调
+                    selectList = PictureSelector.obtainMultipleResult(data);
+                    for (LocalMedia media : selectList) {
+                        if (media.isCompressed()){
+                            loading_img = media.getCompressPath();
+                            File file = new File(media.getCompressPath());
+                            mMineViewMode.uploadHead(file);
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
     @Override
     public void showProgress() {
 

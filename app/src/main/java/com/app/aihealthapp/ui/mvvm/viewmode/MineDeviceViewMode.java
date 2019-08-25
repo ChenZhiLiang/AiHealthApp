@@ -24,9 +24,12 @@ public class MineDeviceViewMode {
         mBaseMode = new BaseMode();
     }
 
-    public void getMineDeviceInfo(){
+    public void getMineDeviceInfo(boolean isShow){
 
-        mMineDeviceView.showProgress();
+        if (isShow){
+            mMineDeviceView.showProgress();
+
+        }
         String url = ApiUrl.DeviceApi.DeviceInfo;
         mBaseMode.GetRequest(url, null, new ResultCallback() {
             @Override
@@ -59,6 +62,28 @@ public class MineDeviceViewMode {
             @Override
             public void onSuccess(Object result) {
                 mMineDeviceView.UpdateDeviceResult(result);
+                mMineDeviceView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+
+                mMineDeviceView.hideProgress();
+                mMineDeviceView.showLoadFailMsg(result.toString());
+            }
+        });
+
+    }
+
+    public void UnBind(int id){
+        mMineDeviceView.showProgress();
+        String url = ApiUrl.DeviceApi.UnBind;
+        RequestParams params = new RequestParams();
+        params.put("id",String.valueOf(id));
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mMineDeviceView.UnBindResult(result);
                 mMineDeviceView.hideProgress();
             }
 

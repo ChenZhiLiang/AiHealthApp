@@ -3,7 +3,10 @@ package com.app.aihealthapp.ui.mvvm.viewmode;
 import com.app.aihealthapp.core.base.BaseMode;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
+import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
 import com.app.aihealthapp.ui.mvvm.view.MineView;
+
+import java.io.File;
 
 /**
  * @Name：AiHealth
@@ -41,5 +44,50 @@ public class MineViewMode {
                 mMineView.showLoadFailMsg(result.toString());
             }
         });
+    }
+    /**
+     *  @author
+     *  @time
+     *  @describe 上传图片
+     */
+    public void uploadHead(File avatar){
+        mMineView.showProgress();
+        String url = ApiUrl.HomeApi.Upload;
+        RequestParams params = new RequestParams();
+        params.fileParams.put("pic",avatar);
+        mBaseMode.MultiPostRequest(url,params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mMineView.uploadResult(result);
+                mMineView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                mMineView.hideProgress();
+                mMineView.showLoadFailMsg(result.toString());
+            }
+        });
+    }
+
+    public void UpdateProfile(String avatar){
+        mMineView.showProgress();
+        String url = ApiUrl.UserApi.UpdateProfile;
+        RequestParams params = new RequestParams();
+        params.put("avatar",avatar);
+        mBaseMode.GetRequest(url,params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mMineView.UpdateProfileResult(result);
+                mMineView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                mMineView.hideProgress();
+                mMineView.showLoadFailMsg(result.toString());
+            }
+        });
+
     }
 }

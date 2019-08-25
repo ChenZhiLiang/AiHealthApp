@@ -1,6 +1,7 @@
 package com.app.aihealthapp.view;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,14 +23,23 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 
+import com.app.aihealthapp.core.base.BaseMode;
+import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
+import com.app.aihealthapp.core.network.api.ApiUrl;
+import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
+import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.home.DoctorListActivity;
 import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
+import com.app.aihealthapp.ui.activity.home.PayCentreActivity;
+import com.app.aihealthapp.ui.activity.mine.LoginActivity;
+import com.app.aihealthapp.ui.bean.PaymentBean;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
+import com.app.aihealthapp.util.PayUtils;
 
 /**
  * @Name：AiHealth
@@ -117,7 +127,42 @@ public class ProgressWebView extends WebView {
         public int jsCallUId() {
             return UserHelper.getUserInfo().getId();
         }
+
+        @JavascriptInterface
+        public void jsCallPay(String order_no, final int pay_type){
+            String url = ApiUrl.HomeApi.Pay;
+            RequestParams params = new RequestParams();
+            params.put("order_no",order_no);
+            params.put("pay_type",String.valueOf(pay_type));
+            new BaseMode().GetRequest(url, params, new ResultCallback() {
+                @Override
+                public void onSuccess(Object result) {
+                    int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+                    if (ret==0){
+                        if(pay_type==1){//支付宝支付
+                            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+                            String alipay_sdk  = GsonHelper.GsonToString(data,"alipay_str");
+                            new PayUtils((Activity) context).Alipay(alipay_sdk);
+                        }else if (pay_type==2){//微信支付
+                            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+                            PaymentBean paymentBean = GsonHelper.GsonToBean(data,PaymentBean.class);
+                            new PayUtils((Activity) context).WXPay(paymentBean);//调用微信支付
+                        }else {//密钥支付
+                            ToastyHelper.toastyNormal((Activity) context,"密钥支付成功");
+                        }
+                    }else {
+                        ToastyHelper.toastyNormal((Activity) context,GsonHelper.GsonToString(result.toString(),"msg"));
+                    }
+                }
+
+                @Override
+                public void onFailure(Object result) {
+                    ToastyHelper.toastyNormal((Activity) context,result.toString());
+                }
+            });
+        }
     }
+
 
     /**
      * 自定义WebChromeClient
@@ -176,6 +221,12 @@ public class ProgressWebView extends WebView {
             }else if (url.startsWith("navigation://doctor?cate_id=10")){//疑难杂症
                 context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",10));
                 return true;
+            }else if (url.startsWith("http://aijiankang.cacpo.com/order/cart")
+                    ||url.startsWith("http://aijiankang.cacpo.com/order/submit")
+                    ||url.startsWith("http://aijiankang.cacpo.com/user/user_address")){
+                if (UserHelper.getUserInfo()==null){
+                    context.startActivity(new Intent(context, LoginActivity.class));
+                }
             }
 //            // 如下方案可在非微信内部WebView的H5页面中调出微信支付
 //            if (url.startsWith("weixin://wap/pay?")) {

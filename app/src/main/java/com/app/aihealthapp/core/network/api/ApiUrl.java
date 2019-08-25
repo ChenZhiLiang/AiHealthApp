@@ -27,6 +27,7 @@ public final class ApiUrl {
         public static final String Register = HOST +"api/register";
         public static final String Login = HOST +"api/login";
         public static final String UserInfo = HOST +"api/user/dashboard";
+        public static final String UpdateProfile = HOST+"api/update/profile";
         public static final String Authentication = HOST +"api/user/realname";
 
         public static final String OneAds = HOST +"api/one/ads";
@@ -46,6 +47,7 @@ public final class ApiUrl {
         public static final String Bloodoxygen = HOST+"api/measure/bloodoxygen";
         public static final String Heartrate = HOST+"api/measure/heartrate";
         public static final String Bloodpressure = HOST+"api/measure/bloodpressure";
+        public static final String UnBind = HOST +"api/un/bind";//解绑
 
 
 
@@ -73,7 +75,7 @@ public final class ApiUrl {
         public static final String MyOrder = HOST + "user/myorder";//我的订单
         public static final String User_Address = HOST + "user/user_address";//收货地址
         public static final String Self_Support = HOST + "self/support";//健康商城
-        public static final String Index = HOST + "self/support";//健康商圈
+        public static final String Index = HOST + "index";//健康商圈
         public static final String Community = HOST + "wap/community.html";//健康论坛
       }
 

@@ -175,7 +175,18 @@
                         android:button="@drawable/device_checkbox"/>
                 </RelativeLayout>
 
+
             </LinearLayout>
+            <Button
+                android:id="@+id/btn_unbind"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40px"
+                android:background="@drawable/frame_blue_true"
+                android:text="解绑"
+                android:textSize="@dimen/text_14px"
+                android:textColor="@color/white"
+                android:layout_margin="@dimen/dimen_16px"
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -16,6 +16,8 @@ public final class EventCode {
         public static final int AUTHENTICATION_SUCCESS = 0x555555;//实名认证成功
         public static final int MEASURE_SUCCESS = 0x666666;//测量成功
         public static final int BIND_DEVICE = 0x777777;//绑定设备成功
+        public static final int UN_BIND_DEVICE = 0x777778;//解绑设备成功
+
         public static final int WEIXIN_AOUTH = 0x666668;//微信授权
         public static final int WEIXIN_PAY = 0x666660;//微信支付
         public static final int WEIXIN_SHARE_SUCCESS = 0x666661;//微信分享成功

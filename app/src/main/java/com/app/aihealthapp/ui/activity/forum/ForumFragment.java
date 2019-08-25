@@ -58,7 +58,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     }
     @Override
     public void loadingData() {
-        webview.loadUrl(ApiUrl.WebApi.COMMUNITY);//加载网址
+        webview.loadUrl(ApiUrl.WebApi.Index);//加载网址
 
     }
 

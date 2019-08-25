@@ -293,7 +293,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             mHomeViewMode.getHomeDatas(false);
         } else if (event.getCode() == EventCode.Code.LOGOUT) {
             mHomeViewMode.getHomeDatas(false);
-        }else if (event.getCode()== EventCode.Code.BIND_DEVICE){
+        }else if (event.getCode()== EventCode.Code.BIND_DEVICE||event.getCode()== EventCode.Code.UN_BIND_DEVICE){
             mHomeViewMode.getHomeDatas(false);
         }
     }

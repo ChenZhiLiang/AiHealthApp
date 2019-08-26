@@ -62,6 +62,8 @@ public class MineFragment extends BaseFragment implements MineView {
     ImageView image_head;
     @BindView(R.id.tv_user_name)
     TextView tv_user_name;
+    @BindView(R.id.tv_invite_code)
+    TextView tv_invite_code;
     @BindView(R.id.btn_authentication)
     Button btn_authentication;
     @BindView(R.id.rt_my_key)
@@ -120,6 +122,7 @@ public class MineFragment extends BaseFragment implements MineView {
             btn_authentication.setVisibility(View.VISIBLE);
             btn_logout.setVisibility(View.VISIBLE);
             GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
+            tv_invite_code.setText("邀请码："+UserHelper.getUserInfo().getInvite_code());
             if (UserHelper.getUserInfo().getIs_auth()==0){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
                 btn_authentication.setText("实名认证");
@@ -226,6 +229,7 @@ public class MineFragment extends BaseFragment implements MineView {
 
             btn_authentication.setVisibility(View.VISIBLE);
             btn_logout.setVisibility(View.VISIBLE);
+            tv_invite_code.setText("邀请码："+mUserInfo.getInvite_code());
             GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
             if (TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());

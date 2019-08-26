@@ -7,17 +7,17 @@
     android:fitsSystemWindows="true">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/login_logo"
+        android:layout_width="@dimen/dimen_70px"
+        android:layout_height="@dimen/dimen_70px"
+        android:background="@mipmap/logo"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32dp"/>
+        android:layout_margin="32dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="欢迎登录爱健康APP"
+        android:text="欢迎登录健康密钥"
         android:textSize="@dimen/text_16px"
         android:textColor="@color/white"/>
 

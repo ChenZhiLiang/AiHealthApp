@@ -223,7 +223,8 @@ public class ProgressWebView extends WebView {
                 return true;
             }else if (url.startsWith("http://aijiankang.cacpo.com/order/cart")
                     ||url.startsWith("http://aijiankang.cacpo.com/order/submit")
-                    ||url.startsWith("http://aijiankang.cacpo.com/user/user_address")){
+                    ||url.startsWith("http://aijiankang.cacpo.com/user/user_address")
+                    ||url.startsWith("http://aijiankang.cacpo.com/user/login")){
                 if (UserHelper.getUserInfo()==null){
                     context.startActivity(new Intent(context, LoginActivity.class));
                 }

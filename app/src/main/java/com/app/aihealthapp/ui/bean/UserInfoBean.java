@@ -51,7 +51,7 @@ public class UserInfoBean implements Serializable {
          * card_pic2 :
          * kind_type : 0
          * bank_name :
-         * bank_no :
+         * bank_no :`invite_code` varchar(50) DEFAULT '' COMMENT '邀请码',
          * alipay_no :
          * alipay_pay_pic :
          * is_auth : 0

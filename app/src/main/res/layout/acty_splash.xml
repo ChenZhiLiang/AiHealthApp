@@ -8,8 +8,8 @@
     >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/login_logo"
+        android:layout_width="@dimen/dimen_100px"
+        android:layout_height="@dimen/dimen_100px"
+        android:background="@mipmap/logo"
         android:layout_gravity="center"/>
 </FrameLayout>

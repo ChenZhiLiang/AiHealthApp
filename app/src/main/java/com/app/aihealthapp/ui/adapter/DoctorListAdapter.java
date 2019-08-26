@@ -15,6 +15,7 @@ import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.ui.activity.home.DoctorDetalisActivity;
 import com.app.aihealthapp.ui.activity.home.DoctorListActivity;
+import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
 import com.app.aihealthapp.ui.activity.home.PayCentreActivity;
 import com.app.aihealthapp.ui.bean.DoctorListBean;
 
@@ -91,9 +92,15 @@ public class DoctorListAdapter extends BaseXRecyclerViewAdapter<DoctorListBean> 
             btn_ask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.startActivity(new Intent(mActivity, PayCentreActivity.class).putExtra("doctor_id",data.getId())
-                            .putExtra("advice_price",data.getAdvice_price())
-                            .putExtra("doctor_name",data.getNickname()));
+                    if (data.getIs_valid()==0){
+                        mActivity.startActivity(new Intent(mActivity, PayCentreActivity.class).putExtra("doctor_id",data.getId())
+                                .putExtra("advice_price",data.getAdvice_price())
+                                .putExtra("doctor_name",data.getNickname()));
+                    }else {
+                        mActivity.startActivity(new Intent(mActivity, HealthAskActivity.class).putExtra("doctor_id",data.getId()));
+
+                    }
+
                 }
             });
 

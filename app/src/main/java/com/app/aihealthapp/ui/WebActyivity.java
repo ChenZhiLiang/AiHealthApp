@@ -16,6 +16,7 @@ import com.app.aihealthapp.core.base.BaseActivity;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
+import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 import com.app.aihealthapp.view.ProgressWebView;
 import butterknife.BindView;
@@ -111,6 +112,9 @@ public class WebActyivity extends BaseActivity implements  WebTitleView {
                     @Override
                     public void run() {
                         ToastyHelper.toastyNormal(WebActyivity.this, "支付成功");
+                        webView.loadUrl(ApiUrl.WebApi.MyOrder);
+//                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder));
+
 
                     }
                 },100);

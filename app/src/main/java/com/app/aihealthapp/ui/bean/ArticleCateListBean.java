@@ -21,7 +21,8 @@ public class ArticleCateListBean {
      * sequence : 1
      * is_top : 1
      * is_show : 1
-     * pic : 20190814/29b6a2416d19dcd888a3c3d6306235ef.jpg
+     * pic : http://aijiankang.cacpo.com/upload/pic/20190821/7ecef4abe0e02e710c2faa0263c26b0d.png
+     * url : navigation://doctor?cate_id=10
      */
 
     private int id;
@@ -35,6 +36,7 @@ public class ArticleCateListBean {
     private int is_top;
     private int is_show;
     private String pic;
+    private String url;
 
     public int getId() {
         return id;
@@ -122,5 +124,13 @@ public class ArticleCateListBean {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

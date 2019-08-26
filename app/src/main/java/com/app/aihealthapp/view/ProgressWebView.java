@@ -129,7 +129,7 @@ public class ProgressWebView extends WebView {
         }
 
         @JavascriptInterface
-        public void jsCallPay(String order_no, final int pay_type){
+        public void jsCallPay(String order_no, final String pay_type){
             String url = ApiUrl.HomeApi.Pay;
             RequestParams params = new RequestParams();
             params.put("order_no",order_no);
@@ -139,11 +139,11 @@ public class ProgressWebView extends WebView {
                 public void onSuccess(Object result) {
                     int ret = GsonHelper.GsonToInt(result.toString(),"ret");
                     if (ret==0){
-                        if(pay_type==1){//支付宝支付
+                        if(pay_type.equals("1")){//支付宝支付
                             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
                             String alipay_sdk  = GsonHelper.GsonToString(data,"alipay_str");
                             new PayUtils((Activity) context).Alipay(alipay_sdk);
-                        }else if (pay_type==2){//微信支付
+                        }else if (pay_type.equals("2")){//微信支付
                             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
                             PaymentBean paymentBean = GsonHelper.GsonToBean(data,PaymentBean.class);
                             new PayUtils((Activity) context).WXPay(paymentBean);//调用微信支付
@@ -221,58 +221,14 @@ public class ProgressWebView extends WebView {
             }else if (url.startsWith("navigation://doctor?cate_id=10")){//疑难杂症
                 context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",10));
                 return true;
-            }else if (url.startsWith("http://aijiankang.cacpo.com/order/cart")
-                    ||url.startsWith("http://aijiankang.cacpo.com/order/submit")
-                    ||url.startsWith("http://aijiankang.cacpo.com/user/user_address")
-                    ||url.startsWith("http://aijiankang.cacpo.com/user/login")){
+            }else if (url.startsWith(ApiUrl.HOST+"order/cart")
+                    ||url.startsWith(ApiUrl.HOST+"order/submit")
+                    ||url.startsWith(ApiUrl.HOST+"user/user_address")
+                    ||url.startsWith(ApiUrl.HOST+"user/login")){
                 if (UserHelper.getUserInfo()==null){
                     context.startActivity(new Intent(context, LoginActivity.class));
                 }
             }
-//            // 如下方案可在非微信内部WebView的H5页面中调出微信支付
-//            if (url.startsWith("weixin://wap/pay?")) {
-//                //如果return false  就会先提示找不到页面，然后跳转微信
-//                Intent intent = new Intent();
-//                intent.setAction(Intent.ACTION_VIEW);
-//                intent.setData(Uri.parse(url));
-//                context.startActivity(intent);
-//                return true;
-//            }else if (url.startsWith("shopdetail://?")){//活动商户详情
-//                context.startActivity(new Intent(context, MerChantDetailsActivity.class).putExtra("shop_id",Integer.parseInt(Utils.getValueByName(url,"id"))));
-//                return true;
-//
-//            }else if (url.startsWith("gooddetail://?")){//活动产品详情
-//                context.startActivity(new Intent(context,MerchantServiceDetailActivity.class).putExtra("goods_id",Integer.parseInt(Utils.getValueByName(url,"id"))));
-//                return true;
-//
-//            }else if (url.startsWith("navigate://?")){//活动商户导航
-//                CircleDialogHelper.ShowBottomDialog((AppCompatActivity) context, context.getResources().getStringArray(R.array.navigation), new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        if (position == 0) {
-//                            if (AMapUtil.isInstallByRead("com.autonavi.minimap")) {
-//                                AMapUtil.setUpGaodeAppByMine((Activity) context, Utils.getValueByName(url,"ycoordinate"), Utils.getValueByName(url,"xcoordinate"),Utils.getValueByName(url,"shopname"));
-//                            } else {
-//                                ToastyHelper.toastyNormal((Activity) context,"没有安装高德地图客户端");
-//                            }
-//                        } else {
-//                            if (AMapUtil.isInstallByRead("com.baidu.BaiduMap")) {
-//                                AMapUtil.setUpBaiduAPPByMine((Activity) context,Utils.getValueByName(url,"shopname"));
-//                            } else {
-//                                ToastyHelper.toastyNormal((Activity) context,"没有安装百度地图客户端");
-//                            }
-//                        }
-//                    }
-//                });
-//                return true;
-//            }else if (url.startsWith("tel:")){
-//                if (new PermissionHelper().RequestPermisson(context, Permission.CALL_PHONE)){
-//                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+Utils.getValueByName(url,"tel")));
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    context.startActivity(intent);
-//                }
-//                return true;
-//            }
             return false;
         }
 

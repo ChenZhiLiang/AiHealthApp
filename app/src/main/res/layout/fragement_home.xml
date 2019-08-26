@@ -118,7 +118,7 @@
                         <ImageView
                             android:layout_width="@dimen/dimen_50px"
                             android:layout_height="@dimen/dimen_50px"
-                            android:background="@mipmap/home_xycl_icon"
+                            android:background="@mipmap/home_xyacl_icon"
                             android:scaleType="centerCrop" />
 
                         <TextView

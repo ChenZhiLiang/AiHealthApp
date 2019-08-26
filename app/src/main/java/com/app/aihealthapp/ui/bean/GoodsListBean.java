@@ -25,6 +25,7 @@ public class GoodsListBean {
     private String pic;
     private String markey_price;
     private String price;
+    private String url;
 
     public int getId() {
         return id;
@@ -72,5 +73,13 @@ public class GoodsListBean {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

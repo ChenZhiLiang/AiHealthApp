@@ -105,6 +105,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             String token = GsonHelper.GsonToString(data,"token");
             SharedPreferenceHelper.setUserToken(AppContext.getContext(),token);
             String user = GsonHelper.GsonToData(data,"user").toString();
+
             UserInfoBean mUserInfo = GsonHelper.GsonToBean(user,UserInfoBean.class);
             SharedPreferenceHelper.setUserInfo(AppContext.getContext(),mUserInfo);
             EventBusHelper.sendEvent(new Event(EventCode.Code.LOGIN_SUCCESS));

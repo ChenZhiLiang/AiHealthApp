@@ -37,6 +37,7 @@ public class DoctorListBean {
     private String doctor_skill;
     private String advice_price;
     private int buy_count;
+    private int is_valid;
 
     public int getId() {
         return id;
@@ -132,5 +133,13 @@ public class DoctorListBean {
 
     public void setBuy_count(int buy_count) {
         this.buy_count = buy_count;
+    }
+
+    public int getIs_valid() {
+        return is_valid;
+    }
+
+    public void setIs_valid(int is_valid) {
+        this.is_valid = is_valid;
     }
 }

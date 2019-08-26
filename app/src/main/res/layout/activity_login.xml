@@ -54,6 +54,8 @@
         android:layout_marginLeft="@dimen/dimen_32px"
         android:drawablePadding="10dp"
         android:drawableLeft="@mipmap/login_password_icon"
+        android:inputType="textPassword"
+
         android:background="@null"
         android:hint="请输入密码"
         android:textColor="@color/white"

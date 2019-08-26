@@ -9,13 +9,12 @@ package com.app.aihealthapp.ui.bean;
  * 修改时间：2019/8/15 21:45
  */
 public class GoodsCateListBean {
-
     /**
      * id : 1
      * parent_id : 0
      * title : 医院
      * wap_title : 医院
-     * pic : 20190709/3dded8676a3a9f70603d802dd370ece3.jpg
+     * pic : http://aijiankang.cacpo.com/upload/pic/20190821/e1ea58cd89f7c06a51e5206ac0d75ec5.png
      * slide_pic :
      * info :
      * keywords : 医院
@@ -24,6 +23,7 @@ public class GoodsCateListBean {
      * sequence : 1
      * is_top : 1
      * is_show : 1
+     * url : http://aijiankang.cacpo.com
      */
 
     private int id;
@@ -39,6 +39,7 @@ public class GoodsCateListBean {
     private int sequence;
     private int is_top;
     private int is_show;
+    private String url;
 
     public int getId() {
         return id;
@@ -142,5 +143,13 @@ public class GoodsCateListBean {
 
     public void setIs_show(int is_show) {
         this.is_show = is_show;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

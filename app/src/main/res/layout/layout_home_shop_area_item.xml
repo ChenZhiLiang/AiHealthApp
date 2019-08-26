@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
         <ImageView
             android:id="@+id/image_shop_area"
             android:layout_width="@dimen/dimen_60px"
@@ -22,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/image_shop_area"
             android:layout_marginLeft="@dimen/dimen_16px"
+            android:layout_marginTop="@dimen/dimen_8px"
             android:maxEms="12"
             android:singleLine="true"
             android:ellipsize="end"
@@ -36,7 +38,7 @@
             android:layout_below="@+id/tv_shop_area_name"
             android:layout_toRightOf="@+id/image_shop_area"
             android:layout_marginLeft="@dimen/dimen_16px"
-            android:layout_marginTop="@dimen/dimen_8px"
+            android:layout_marginTop="@dimen/dimen_10px"
             android:singleLine="true"
             android:ellipsize="end"
             android:text="美容减肥，100元瘦5斤美容减肥，100元瘦5斤美容减肥，100元瘦5斤"
@@ -51,7 +53,8 @@
         android:layout_toRightOf="@+id/image_shop_area"
         android:layout_marginLeft="@dimen/dimen_16px"
         android:layout_below="@+id/tv_shop_area_details"
-        android:layout_marginTop="@dimen/dimen_8px">
+        android:layout_marginTop="@dimen/dimen_8px"
+            android:visibility="gone">
        <Button
            android:id="@+id/btn_shop_area_discounts"
            android:layout_width="@dimen/dimen_60px"

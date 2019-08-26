@@ -226,7 +226,6 @@ public class MineFragment extends BaseFragment implements MineView {
             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
             UserInfoBean mUserInfo = GsonHelper.GsonToBean(data,UserInfoBean.class);
             SharedPreferenceHelper.setUserInfo(AppContext.getContext(),mUserInfo);
-
             btn_authentication.setVisibility(View.VISIBLE);
             btn_logout.setVisibility(View.VISIBLE);
             tv_invite_code.setText("邀请码："+mUserInfo.getInvite_code());
@@ -282,7 +281,10 @@ public class MineFragment extends BaseFragment implements MineView {
         super.receiveEvent(event);
         if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {//登录成功
             btn_authentication.setVisibility(View.VISIBLE);
+            tv_invite_code.setVisibility(View.VISIBLE);
+            btn_logout.setVisibility(View.VISIBLE);
             GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
+            tv_invite_code.setText(UserHelper.getUserInfo().getInvite_code());
             if (TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
                 btn_authentication.setText("实名认证");
@@ -299,6 +301,8 @@ public class MineFragment extends BaseFragment implements MineView {
             GlideHelper.loadImageView(mActivity, R.mipmap.my_head, image_head);
             tv_user_name.setText("点击登录");
             btn_authentication.setVisibility(View.GONE);
+            tv_invite_code.setVisibility(View.GONE);
+            btn_logout.setVisibility(View.GONE);
         }
     }
 

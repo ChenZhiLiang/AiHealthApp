@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
+import com.app.aihealthapp.core.base.BaseXRecyclerViewAdapter;
 import com.app.aihealthapp.core.bgabanner.BGABanner;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
@@ -37,7 +38,10 @@ import com.app.aihealthapp.ui.adapter.HomeShopAreaAdapter;
 import com.app.aihealthapp.ui.bean.AdvListBean;
 import com.app.aihealthapp.ui.bean.ArticleCateListBean;
 import com.app.aihealthapp.ui.bean.DeviceInfoBean;
+import com.app.aihealthapp.ui.bean.GoodsCateListBean;
+import com.app.aihealthapp.ui.bean.GoodsListBean;
 import com.app.aihealthapp.ui.bean.HomeBean;
+import com.app.aihealthapp.ui.bean.ShopListBean;
 import com.app.aihealthapp.ui.mvvm.view.HomeView;
 import com.app.aihealthapp.ui.mvvm.viewmode.HomeViewMode;
 import com.app.aihealthapp.view.MyGridView;
@@ -366,28 +370,51 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             grid_health_manage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == 0) {
-                        startActivity(new Intent(mActivity, DoctorListActivity.class).putExtra("cate_id",10));
-                    }else if (position==2){
-                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Community));
-                    }else {
-                        ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
-                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HeadLine + mArticleCateListBean.getId()));
-                    }
+//                    if (position == 0) {
+//                        startActivity(new Intent(mActivity, DoctorListActivity.class).putExtra("cate_id",10));
+//                    }else if (position==2){
+//                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Community));
+//                    }else {
+//
+//                    }
+                    ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mArticleCateListBean.getUrl()));
 
                 }
             });
             // 健康商圈gridview
             mHealthShopAdapter = new HealthShopAdapter(mActivity, homeBean.getGoods_cate_list());
             grid_shop_manage.setAdapter(mHealthShopAdapter);
+            grid_shop_manage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    GoodsCateListBean mGoodsCateListBean =  homeBean.getGoods_cate_list().get(position);
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mGoodsCateListBean.getUrl()));
 
+                }
+            });
             //健康商圈列表
             mHomeShopAreaAdapter = new HomeShopAreaAdapter(mActivity, homeBean.getShop_list());
             recycler_shop_area.setAdapter(mHomeShopAreaAdapter);
+            mHomeShopAreaAdapter.setOnItemClickListener(new BaseXRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, Object data, int position) {
+                    ShopListBean mShopListBean =  homeBean.getShop_list().get(position);
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mShopListBean.getUrl()));
 
+                }
+            });
             //健康商城
             mHomeShopAdapter = new HomeShopAdapter(getActivity(), homeBean.getGoods_list());
             gridview_shop.setAdapter(mHomeShopAdapter);
+            gridview_shop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    GoodsListBean mGoodsListBean = homeBean.getGoods_list().get(position);
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mGoodsListBean.getUrl()));
+
+                }
+            });
         } else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(), "msg"));
         }

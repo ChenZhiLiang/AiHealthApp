@@ -23,6 +23,7 @@ public class ShopListBean {
     private String pic;
     private String info;
     private String seo_des;
+    private String url;
 
     public int getId() {
         return id;
@@ -62,5 +63,13 @@ public class ShopListBean {
 
     public void setSeo_des(String seo_des) {
         this.seo_des = seo_des;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

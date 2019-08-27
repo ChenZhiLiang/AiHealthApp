@@ -1,5 +1,6 @@
 package com.app.aihealthapp.ui.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.AppManager;
+import com.app.aihealthapp.ui.MainActivity;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.bean.DoctorDetalisBean;
 import com.app.aihealthapp.ui.mvvm.view.DoctorDetalisView;
@@ -70,8 +72,12 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
     @BindView(R.id.btn_ask)
     Button btn_ask;
 
+
     private DoctorDetalisViewMode mDoctorDetalisViewMode;
     private int id;
+    private int Is_valid;
+    private String advice_price;
+    private String doctor_name;
     @Override
     public int getLayoutId() {
         return R.layout.activity_doctor_detalis;
@@ -92,6 +98,9 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
     @Override
     public void initView() {
         id  =getIntent().getIntExtra("id",0);
+        Is_valid = getIntent().getIntExtra("Is_valid",0);
+        advice_price = getIntent().getStringExtra("advice_price");
+        doctor_name = getIntent().getStringExtra("doctor_name");
         mDoctorDetalisViewMode = new DoctorDetalisViewMode(this);
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
@@ -113,11 +122,24 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
               finish();
             }
         }else if (v==tv_ask||v==btn_ask){
-            showLoadFailMsg("立即咨询");
+            if (Is_valid==0){
+                startActivity(new Intent(this, PayCentreActivity.class).putExtra("doctor_id",id)
+                        .putExtra("advice_price",advice_price)
+                        .putExtra("doctor_name",doctor_name));
+            }else {
+                startActivity(new Intent(this, HealthAskActivity.class).putExtra("doctor_id",id));
+
+            }
         }else if (v==tv_home){
-            showLoadFailMsg("首页");
+            Intent intent = new Intent(this, DoctorListActivity.class);
+            intent.putExtra("type","home");
+            setResult(RESULT_OK, intent);
+            finish();
         }else if (v==tv_mine){
-            showLoadFailMsg("个人中心");
+            Intent intent = new Intent(this, DoctorListActivity.class);
+            intent.putExtra("type","mine");
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
 

@@ -2,6 +2,7 @@ package com.app.aihealthapp.ui.activity.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -164,5 +165,30 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
         page++;
         mDoctorListViewMode.getDoctorList(page,keyword,cate_id,false);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+
+                case 100:
+                    if(data!=null){
+                        String type = data.getStringExtra("type");
+                        if (type.equals("home")){
+                            Intent intent =new Intent();
+                            intent.setAction("action.intent_home");
+                            sendBroadcast(intent);
+                            finish();
+                        }else if (type.equals("mine")){
+                            Intent intent =new Intent();
+                            intent.setAction("action.intent_mine");
+                            sendBroadcast(intent);
+                            finish();
+                        }
+                    }
+            }
+        }
     }
 }

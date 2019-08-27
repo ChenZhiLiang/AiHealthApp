@@ -74,7 +74,7 @@ public final class ApiUrl {
 
         public static final String MyOrder = HOST + "user/myorder";//我的订单
         public static final String User_Address = HOST + "user/user_address";//收货地址
-        public static final String Self_Support = HOST + "http://aijiankang.cacpo.com/self/support";//健康商城
+        public static final String Self_Support = HOST + "self/support";//健康商城
         public static final String Index = HOST + "index";//健康商圈
         public static final String Community = HOST + "wap/community.html";//健康论坛
       }

@@ -113,8 +113,6 @@ public class WebActyivity extends BaseActivity implements  WebTitleView {
                     public void run() {
                         ToastyHelper.toastyNormal(WebActyivity.this, "支付成功");
                         webView.loadUrl(ApiUrl.WebApi.MyOrder);
-//                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder));
-
 
                     }
                 },100);

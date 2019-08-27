@@ -1,6 +1,10 @@
 package com.app.aihealthapp.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import com.app.aihealthapp.R;
@@ -12,7 +16,9 @@ import com.app.aihealthapp.core.tablayout.CommonTabLayout;
 import com.app.aihealthapp.core.tablayout.listener.CustomTabEntity;
 import com.app.aihealthapp.core.tablayout.listener.OnTabSelectListener;
 import com.app.aihealthapp.ui.activity.forum.ForumFragment;
+import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
 import com.app.aihealthapp.ui.activity.home.HomeFragment;
+import com.app.aihealthapp.ui.activity.home.PayCentreActivity;
 import com.app.aihealthapp.ui.activity.manage.ManageFragment;
 import com.app.aihealthapp.ui.activity.mine.MineFragment;
 import com.app.aihealthapp.ui.activity.shop.ShopFragment;
@@ -58,6 +64,12 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
     public void initView() {
         mFragments = new ArrayList<>();
         mTabEntities = new ArrayList<>();
+
+        IntentFilter intentFilter =new IntentFilter();
+        intentFilter.addAction("action.intent_home");
+        intentFilter.addAction("action.intent_mine");
+
+        registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
 
     @Override
@@ -126,5 +138,27 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
         }else{
             getSupportFragmentManager().popBackStack(); //fragment 出栈
         }
+    }
+
+    public void StartIntent(int pos){
+        vpageMain.setCurrentItem(pos, false);
+    }
+
+    private BroadcastReceiver mRefreshBroadcastReceiver =new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.intent_home")){
+                StartIntent(0);
+            }else if (action.equals("action.intent_mine")){
+                StartIntent(4);
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mRefreshBroadcastReceiver);
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.aihealthapp.R;
@@ -31,6 +32,9 @@ import butterknife.BindView;
  * 修改时间：2019/7/24 22:07
  */
 public class ManageFragment extends BaseFragment implements  WebTitleView {
+
+    @BindView(R.id.img_back)
+    ImageView img_back;
     @BindView(R.id.tv_title_bar)
     TextView tv_title_bar;
     @BindView(R.id.webview)
@@ -57,6 +61,11 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
     @Override
     public void loadingData() {
         webview.loadUrl(ApiUrl.WebApi.CONTROL_CENTER);//加载网址
+        if (webview.canGoBack()){
+            img_back.setVisibility(View.VISIBLE);
+        }else {
+            img_back.setVisibility(View.GONE);
+        }
 
     }
     @Override

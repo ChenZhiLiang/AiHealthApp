@@ -107,7 +107,11 @@ public class DoctorListAdapter extends BaseXRecyclerViewAdapter<DoctorListBean> 
             rt_main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.startActivity(new Intent(mActivity, DoctorDetalisActivity.class).putExtra("id",data.getId()));
+                    mActivity.startActivityForResult(new Intent(mActivity, DoctorDetalisActivity.class)
+                            .putExtra("id",data.getId()).putExtra("Is_valid",data.getIs_valid())
+                            .putExtra("advice_price",data.getAdvice_price())
+                            .putExtra("doctor_name",data.getNickname()),100);
+
                 }
             });
 

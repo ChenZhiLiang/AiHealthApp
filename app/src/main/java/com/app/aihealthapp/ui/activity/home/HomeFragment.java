@@ -370,15 +370,12 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             grid_health_manage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    if (position == 0) {
-//                        startActivity(new Intent(mActivity, DoctorListActivity.class).putExtra("cate_id",10));
-//                    }else if (position==2){
-//                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Community));
-//                    }else {
-//
-//                    }
-                    ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
-                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mArticleCateListBean.getUrl()));
+                    if (position == 0) {
+                        startActivity(new Intent(mActivity, DoctorListActivity.class).putExtra("cate_id",10));
+                    }else {
+                        ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
+                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mArticleCateListBean.getUrl()));
+                    }
 
                 }
             });

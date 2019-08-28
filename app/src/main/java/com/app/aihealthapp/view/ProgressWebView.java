@@ -202,6 +202,7 @@ public class ProgressWebView extends WebView {
         }
     }
     private class MyWebClient extends WebViewClient {
+
         /**
          * 加载过程中 拦截加载的地址url
          *
@@ -260,7 +261,19 @@ public class ProgressWebView extends WebView {
          */
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
+
+
+            String mUrl;
+            if (UserHelper.getUserInfo()!=null){
+                if (url.contains("?")){
+                    mUrl = url+"&uid="+UserHelper.getUserInfo().getId();
+                }else {
+                    mUrl = url+"?uid="+UserHelper.getUserInfo().getId();
+                }
+            }else {
+                mUrl = url;
+            }
+            super.onPageStarted(view, mUrl, favicon);
         }
 
         @Override

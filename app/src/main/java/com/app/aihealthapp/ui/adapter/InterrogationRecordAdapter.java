@@ -1,12 +1,15 @@
 package com.app.aihealthapp.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseHolder;
 import com.app.aihealthapp.core.base.BaseXRecyclerViewAdapter;
+import com.app.aihealthapp.ui.activity.mine.InterrogationDetailsActivity;
 import com.app.aihealthapp.ui.bean.InterrogationRecordBean;
 
 import java.util.List;
@@ -42,6 +45,8 @@ public class InterrogationRecordAdapter extends BaseXRecyclerViewAdapter<Interro
 
     class InterrogationRecordHoler extends BaseHolder<InterrogationRecordBean>{
 
+        @BindView(R.id.ll_interrogation_record)
+        LinearLayout ll_interrogation_record;
         @BindView(R.id.tv_reply)
         TextView tv_reply;
         @BindView(R.id.tv_content)
@@ -51,7 +56,7 @@ public class InterrogationRecordAdapter extends BaseXRecyclerViewAdapter<Interro
         }
 
         @Override
-        public void setData(InterrogationRecordBean data) {
+        public void setData(final InterrogationRecordBean data) {
 
             if (data.getIs_reply()==1){
                 tv_reply.setText("已回复");
@@ -59,10 +64,14 @@ public class InterrogationRecordAdapter extends BaseXRecyclerViewAdapter<Interro
             }else {
                 tv_reply.setText("未回复");
                 tv_reply.setBackgroundColor(context.getResources().getColor(R.color.default_hint_color));
-
-
             }
             tv_content.setText(data.getInfo());
+            ll_interrogation_record.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.startActivity(new Intent(context, InterrogationDetailsActivity.class).putExtra("datas", data));
+                }
+            });
         }
     }
 }

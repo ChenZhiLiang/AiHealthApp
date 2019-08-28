@@ -66,21 +66,14 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
 
         recy_search_record.setLayoutManager(new LinearLayoutManager(mActivity));
         mSearchRecordViewMode = new SearchRecordViewMode(this);
-        mSearchRecordAdapter = new SearchRecordAdapter(SearchRecords);
+        mSearchRecordAdapter = new SearchRecordAdapter(mActivity,SearchRecords);
         recy_search_record.addItemDecoration(new SpaceItemDecoration(mActivity,1));
         recy_search_record.setRefreshProgressStyle(ProgressStyle.BallPulse);
         recy_search_record.setLoadingMoreProgressStyle(ProgressStyle.BallBeat);
         recy_search_record.setArrowImageView(R.mipmap.icon_pull_down);
         recy_search_record.setLoadingListener(this);
         recy_search_record.setAdapter(mSearchRecordAdapter);
-        mSearchRecordAdapter.setOnItemClickListener(new BaseXRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, Object data, int position) {
 
-
-                startActivity(new Intent(mActivity,SearchRecordDetailsActivity.class));
-            }
-        });
 
     }
 

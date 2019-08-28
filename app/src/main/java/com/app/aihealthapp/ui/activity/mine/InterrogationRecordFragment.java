@@ -75,14 +75,6 @@ public class InterrogationRecordFragment extends BaseFragment implements Interro
         recy_interrogation_record.setLoadingListener(this);
         recy_interrogation_record.setAdapter(mInterrogationRecordAdapter);
 
-        mInterrogationRecordAdapter.setOnItemClickListener(new BaseXRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, Object data, int position) {
-
-                InterrogationRecordBean bean = (InterrogationRecordBean)data;
-                startActivity(new Intent(mActivity,InterrogationDetailsActivity.class).putExtra("datas", bean));
-            }
-        });
     }
 
     @Override

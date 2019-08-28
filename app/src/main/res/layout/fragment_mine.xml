@@ -53,9 +53,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_8px"
-                        android:text=""
+                        android:text="邀请码："
                         android:textColor="@color/default_hint_color"
-                        android:textSize="@dimen/text_14px" />
+                        android:textSize="@dimen/text_14px"
+                        android:visibility="visible"/>
                     <Button
                         android:id="@+id/btn_authentication"
                         android:layout_width="@dimen/dimen_70px"

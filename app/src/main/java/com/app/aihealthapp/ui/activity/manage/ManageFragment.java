@@ -33,8 +33,7 @@ import butterknife.BindView;
  */
 public class ManageFragment extends BaseFragment implements  WebTitleView {
 
-    @BindView(R.id.img_back)
-    ImageView img_back;
+
     @BindView(R.id.tv_title_bar)
     TextView tv_title_bar;
     @BindView(R.id.webview)
@@ -61,12 +60,6 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
     @Override
     public void loadingData() {
         webview.loadUrl(ApiUrl.WebApi.CONTROL_CENTER);//加载网址
-        if (webview.canGoBack()){
-            img_back.setVisibility(View.VISIBLE);
-        }else {
-            img_back.setVisibility(View.GONE);
-        }
-
     }
     @Override
     public void initData() {

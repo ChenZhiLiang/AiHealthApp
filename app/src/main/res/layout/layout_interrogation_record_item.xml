@@ -4,7 +4,8 @@
     android:layout_height="@dimen/dimen_60px"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:padding="@dimen/dimen_16px">
+    android:padding="@dimen/dimen_16px"
+    android:id="@+id/ll_interrogation_record">
 
     <TextView
         android:id="@+id/tv_reply"

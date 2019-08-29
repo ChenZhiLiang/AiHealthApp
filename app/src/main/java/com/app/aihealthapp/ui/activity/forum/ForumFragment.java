@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
@@ -58,8 +59,13 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     }
     @Override
     public void loadingData() {
-        webview.loadUrl(ApiUrl.WebApi.Index);//加载网址
 
+        if (isLogin()){
+            String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId();
+            webview.loadUrl(url);//加载网址
+        }else {
+            webview.loadUrl(ApiUrl.WebApi.Index);//加载网址
+        }
     }
 
     @Override

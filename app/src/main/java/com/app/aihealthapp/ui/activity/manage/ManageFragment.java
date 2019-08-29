@@ -1,5 +1,6 @@
 package com.app.aihealthapp.ui.activity.manage;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.uitrarefresh.UTRefreshLayout;
 import com.app.aihealthapp.core.uitrarefresh.ptr.PtrFrameLayout;
@@ -59,7 +61,13 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
     }
     @Override
     public void loadingData() {
-        webview.loadUrl(ApiUrl.WebApi.CONTROL_CENTER);//加载网址
+
+        if (isLogin()){
+            String url = ApiUrl.WebApi.CONTROL_CENTER+"?uid="+UserHelper.getUserInfo().getId();
+            webview.loadUrl(url);//加载网址
+        }else {
+            webview.loadUrl(ApiUrl.WebApi.CONTROL_CENTER);//加载网址
+        }
     }
     @Override
     public void initData() {

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.ui.activity.mine.MineFragment;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
@@ -36,7 +37,13 @@ public class ShopFragment extends BaseFragment implements WebTitleView {
 
     @Override
     public void loadingData() {
-        webview.loadUrl(ApiUrl.WebApi.Self_Support);//加载网址
+
+        if (isLogin()){
+            String url = ApiUrl.WebApi.Self_Support+"?uid="+ UserHelper.getUserInfo().getId();
+            webview.loadUrl(url);//加载网址
+        }else {
+            webview.loadUrl(ApiUrl.WebApi.Self_Support);//加载网址
+        }
 
     }
 

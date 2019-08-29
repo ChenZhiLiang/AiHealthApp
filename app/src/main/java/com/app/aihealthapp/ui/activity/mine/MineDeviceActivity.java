@@ -23,6 +23,8 @@ import com.app.aihealthapp.ui.activity.home.BindDeviceActivity;
 import com.app.aihealthapp.ui.bean.DeviceInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineDeviceView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineDeviceViewMode;
+import com.crrepa.ble.CRPBleClient;
+import com.crrepa.ble.conn.CRPBleDevice;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,6 +59,10 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
     private MineDeviceViewMode mMineDeviceViewMode;
     private int id;
 
+    private CRPBleClient mCRPBleClient;
+    private CRPBleDevice mBleDevice;
+    private DeviceInfoBean mDeviceInfoBean;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_mine_device;
@@ -77,6 +83,8 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
     @Override
     public void initView() {
         mMineDeviceViewMode = new MineDeviceViewMode(this);
+        mCRPBleClient = AppContext.getBleClient(AppContext.getContext());
+
     }
 
     @Override
@@ -95,6 +103,10 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
                 startActivity(new Intent(this, BindDeviceActivity.class));
             }
         }else if (v==btn_unbind){
+            mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
+            if (mBleDevice.isConnected()){
+                mBleDevice.disconnect();
+            }
             mMineDeviceViewMode.UnBind(id);
         }
     }
@@ -109,7 +121,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
                 rt_bind_device.setVisibility(View.VISIBLE);
                 btn_unbind.setVisibility(View.GONE);
             }else {
-                DeviceInfoBean mDeviceInfoBean = GsonHelper.GsonToBean(data,DeviceInfoBean.class);
+                 mDeviceInfoBean = GsonHelper.GsonToBean(data,DeviceInfoBean.class);
 
                 rt_bind_device.setVisibility(View.GONE);
                 btn_unbind.setVisibility(View.VISIBLE);

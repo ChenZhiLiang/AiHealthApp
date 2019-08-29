@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="@color/default_text_color"
-    >
+    android:background="@color/default_text_color">
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -63,7 +63,18 @@
                         android:layout_height="200dp"
                         android:background="@mipmap/measurement_bg"
                         android:layout_gravity="center_horizontal">
-
+                        <com.dinuscxj.progressbar.CircleProgressBar
+                            android:id="@+id/custom_progress"
+                            android:layout_centerInParent="true"
+                            app:style="solid_line"
+                            app:progress_stroke_width="3dp"
+                            app:progress_background_color="@color/white"
+                            app:progress_start_color="@color/default_text_color"
+                            app:progress_end_color="@color/default_text_color"
+                            app:progress_text_color="@color/default_text_color"
+                            android:layout_width="185dp"
+                            android:layout_height="185dp"
+                            android:max="60"/>
                         <TextView
                             android:id="@+id/tv_measure_value"
                             android:layout_width="wrap_content"

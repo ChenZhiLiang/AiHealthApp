@@ -1,9 +1,11 @@
 package com.app.aihealthapp.ui.activity.home;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,6 +43,7 @@ import com.crrepa.ble.conn.listener.CRPBleConnectionStateListener;
 import com.crrepa.ble.conn.listener.CRPBloodOxygenChangeListener;
 import com.crrepa.ble.conn.listener.CRPBloodPressureChangeListener;
 import com.crrepa.ble.conn.listener.CRPHeartRateChangeListener;
+import com.dinuscxj.progressbar.CircleProgressBar;
 
 import java.util.List;
 
@@ -87,6 +90,8 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
     TextView tv_blood_oxygen;
     @BindView(R.id.tv_heart_rate)
     TextView tv_heart_rate;
+    @BindView(R.id.custom_progress)
+    CircleProgressBar custom_progress;
 
 
     private int type;
@@ -99,6 +104,7 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
     private MeasureViewMode mMeasureViewMode;
     public KProgressHUD hud;
 
+    private int Progress = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,6 +179,9 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
                 .setDimAmount(0.5f)
                 .setCancellable(true);
         mMeasureViewMode.getHomeDatas();
+
+
+
     }
 
     @OnClick({R.id.img_back,R.id.btn_start_measure})
@@ -187,9 +196,39 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
             }else {
                 mBleConnection.startMeasureBloodOxygen();
             }
-            showProgress();
+            cdTimer.start();
         }
     }
+
+    private CountDownTimer cdTimer = new CountDownTimer(60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            btn_start_measure.setText("正在测量("+(millisUntilFinished / 1000) + ")");
+            btn_start_measure.setTextColor(getResources().getColor(R.color.default_hint_color));
+            btn_start_measure.setBackground(getResources().getDrawable(R.drawable.frame_gray_40));
+            btn_start_measure.setEnabled(false);
+            Progress++;
+            custom_progress.setProgress(Progress);
+        }
+
+        @Override
+        public void onFinish() {
+            btn_start_measure.setEnabled(true);
+            btn_start_measure.setText("重新测量");
+            btn_start_measure.setTextColor(getResources().getColor(R.color.default_text_color));
+            btn_start_measure.setBackground(getResources().getDrawable(R.drawable.frame_blue));
+            Progress = 0;
+            custom_progress.setProgress(Progress);
+            if (type==0){
+                mBleConnection.stopMeasureBloodPressure();;
+            }else if (type==1){
+                mBleConnection.stopMeasureOnceHeartRate();
+            }else {
+                mBleConnection.stopMeasureBloodOxygen();
+            }
+
+        }
+    };
 
     @Override
     public void onBloodOxygenChange(final int i) {
@@ -200,6 +239,14 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
                 tv_blood_oxygen.setText(String.valueOf(i)+"%");
                 tv_measure_value.setText(String.valueOf(i)+"%");
                 mMeasureViewMode.MeasureBloodOxygen(String.valueOf(i));
+                custom_progress.setProgress(0);
+                cdTimer.cancel();
+                btn_start_measure.setEnabled(true);
+                btn_start_measure.setText("开始测量");
+                btn_start_measure.setTextColor(getResources().getColor(R.color.default_text_color));
+                btn_start_measure.setBackground(getResources().getDrawable(R.drawable.frame_blue));
+                custom_progress.setProgress(0);
+                showLoadFailMsg("测量成功");
             }
         });
 
@@ -215,6 +262,13 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
                 tv_blood_pressure.setText(i+"/"+i1);
                 tv_measure_value.setText(i+"/"+i1);
                 mMeasureViewMode.MeasureBloodPressure(String.valueOf(i),String.valueOf(i1));
+                cdTimer.cancel();
+                btn_start_measure.setEnabled(true);
+                btn_start_measure.setText("开始测量");
+                btn_start_measure.setTextColor(getResources().getColor(R.color.default_text_color));
+                btn_start_measure.setBackground(getResources().getDrawable(R.drawable.frame_blue));
+                custom_progress.setProgress(0);
+                showLoadFailMsg("测量成功");
             }
         });
 
@@ -225,7 +279,6 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
         @Override
         public void onMeasuring(int rate) {
             Log.d(TAG, "onMeasuring: " + rate);
-
 
         }
 
@@ -239,6 +292,13 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
                     tv_heart_rate.setText(String.valueOf(rate));
                     tv_measure_value.setText(String.valueOf(rate));
                     mMeasureViewMode.MeasureHeartRate(String.valueOf(rate));
+                    cdTimer.cancel();
+                    btn_start_measure.setEnabled(true);
+                    btn_start_measure.setText("开始测量");
+                    btn_start_measure.setTextColor(getResources().getColor(R.color.default_text_color));
+                    btn_start_measure.setBackground(getResources().getDrawable(R.drawable.frame_blue));
+                    custom_progress.setProgress(0);
+                    showLoadFailMsg("测量成功");
                 }
             });
         }
@@ -276,31 +336,28 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
 
             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
             HomeBean homeBean = GsonHelper.GsonToBean(data,HomeBean.class);
+            tv_blood_pressure.setText(TextUtils.isEmpty(homeBean.getHealth_data().getBlood_pressure())?"0/0":homeBean.getHealth_data().getBlood_pressure());
+            tv_heart_rate.setText(TextUtils.isEmpty(homeBean.getHealth_data().getHeart_rate())?"0":homeBean.getHealth_data().getHeart_rate());
+            tv_blood_oxygen.setText(TextUtils.isEmpty(homeBean.getHealth_data().getBlood_oxygen())?"0":homeBean.getHealth_data().getBlood_oxygen()+"%");
+
             if (type==0){
                 if (TextUtils.isEmpty(homeBean.getHealth_data().getBlood_pressure())){
-                    tv_blood_pressure.setText("0/0");
                     tv_measure_value.setText("0/0");
                 }else {
-                    tv_blood_pressure.setText(homeBean.getHealth_data().getBlood_pressure());
                     tv_measure_value.setText(homeBean.getHealth_data().getBlood_pressure());
-
                 }
             }else if (type==1){
                 if (TextUtils.isEmpty(homeBean.getHealth_data().getBlood_oxygen())){
-                    tv_heart_rate.setText("0");
                     tv_measure_value.setText("0");
 
                 }else {
-                    tv_heart_rate.setText(homeBean.getHealth_data().getHeart_rate());
                     tv_measure_value.setText(homeBean.getHealth_data().getHeart_rate());
 
                 }
             }else {
                 if (TextUtils.isEmpty(homeBean.getHealth_data().getBlood_oxygen())){
-                    tv_blood_oxygen.setText("0");
                     tv_measure_value.setText("0");
                 }else {
-                    tv_blood_oxygen.setText(homeBean.getHealth_data().getBlood_oxygen()+"%");
                     tv_measure_value.setText(homeBean.getHealth_data().getBlood_oxygen()+"%");
                 }
             }

@@ -90,6 +90,9 @@ public class MineFragment extends BaseFragment implements MineView {
 
     @BindView(R.id.rt_feedback)
     RelativeLayout rt_feedback;//帮助与反馈
+
+    @BindView(R.id.rt_editpaw)
+    RelativeLayout rt_editpaw;
     @BindView(R.id.btn_logout)
     Button btn_logout;
 
@@ -151,72 +154,77 @@ public class MineFragment extends BaseFragment implements MineView {
     }
 
     @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,R.id.rt_healthy_report,
-            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_feedback,R.id.btn_logout})
+            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_feedback,R.id.rt_editpaw,R.id.btn_logout})
     public void onClick(View v){
-        if (isLogin()){
-            if (v==image_head){
-                CircleDialogHelper.ShowBottomDialog((AppCompatActivity) mActivity, getResources().getStringArray(R.array.head_check), new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        if (i == 0) {
-                            // 获得摄像权限才能进入拍照界面
-                            if (new PermissionHelper().RequestPermisson(mActivity, Permission.CAMERA)){
-                                PictureSelector.create(MineFragment.this)
-                                        .openCamera(PictureMimeType.ofImage())
-                                        .compress(true)
-                                        .forResult(PictureConfig.REQUEST_CAMERA);
-                            }
-                        } else {
-                            //获得访问外部存储权限才能访问相册
-                            if (new PermissionHelper().RequestPermisson(mActivity, Permission.WRITE_EXTERNAL_STORAGE)){
-                                PictureSelector.create(MineFragment.this)
-                                        .openGallery(PictureMimeType.ofImage())
-                                        .compress(true)
-                                        .selectionMode(PictureConfig.SINGLE)// 多选 or 单选
-                                        .forResult(PictureConfig.CHOOSE_REQUEST);
+
+        if (v==rt_about){
+            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.About));
+        }else if (v==rt_feedback){
+            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Feedback));
+        }else {
+            if (isLogin()){
+                if (v==image_head){
+                    CircleDialogHelper.ShowBottomDialog((AppCompatActivity) mActivity, getResources().getStringArray(R.array.head_check), new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            if (i == 0) {
+                                // 获得摄像权限才能进入拍照界面
+                                if (new PermissionHelper().RequestPermisson(mActivity, Permission.CAMERA)){
+                                    PictureSelector.create(MineFragment.this)
+                                            .openCamera(PictureMimeType.ofImage())
+                                            .compress(true)
+                                            .forResult(PictureConfig.REQUEST_CAMERA);
+                                }
+                            } else {
+                                //获得访问外部存储权限才能访问相册
+                                if (new PermissionHelper().RequestPermisson(mActivity, Permission.WRITE_EXTERNAL_STORAGE)){
+                                    PictureSelector.create(MineFragment.this)
+                                            .openGallery(PictureMimeType.ofImage())
+                                            .compress(true)
+                                            .selectionMode(PictureConfig.SINGLE)// 多选 or 单选
+                                            .forResult(PictureConfig.CHOOSE_REQUEST);
+                                }
                             }
                         }
-                    }
-                });
-            }else if (v==btn_authentication){
-                startActivity(new Intent(getContext(),AuthenticationUserActivity.class));
-            }else if (v==rt_my_key){
-                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyKeyList));
-            }else if (v==rt_mine_device){
-                startActivity(new Intent(getContext(),MineDeviceActivity.class));
-            }else if (v==rt_mine_ask){
-                startActivity(new Intent(getContext(),MineAskActivity.class));
-            }else if (v==rt_medical_report){
-                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MedicalReport));
-            }else if (v==rt_healthy_report){
-                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Healthy_Report));
+                    });
+                }else if (v==btn_authentication){
+                    startActivity(new Intent(getContext(),AuthenticationUserActivity.class));
+                }else if (v==rt_my_key){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyKeyList+UserHelper.getUserInfo().getId()));
+                }else if (v==rt_mine_device){
+                    startActivity(new Intent(getContext(),MineDeviceActivity.class));
+                }else if (v==rt_mine_ask){
+                    startActivity(new Intent(getContext(),MineAskActivity.class));
+                }else if (v==rt_medical_report){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MedicalReport+UserHelper.getUserInfo().getId()));
+                }else if (v==rt_healthy_report){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Healthy_Report+UserHelper.getUserInfo().getId()));
 
-            }else if (v==rt_myorder){
-                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder));
+                }else if (v==rt_myorder){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder+UserHelper.getUserInfo().getId()));
 
-            }else if (v==rt_address){
-                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.User_Address));
+                }else if (v==rt_address){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.User_Address+UserHelper.getUserInfo().getId()));
 
-            }else if (v==rt_health_plan){
-                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HealthPlan));
-            }else if (v==rt_myfriend_list){
-                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyfriendList));
-            }else if (v==rt_about){
-                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.About));
-            }else if (v==rt_feedback){
-                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Feedback));
+                }else if (v==rt_health_plan){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.HealthPlan+UserHelper.getUserInfo().getId()));
+                }else if (v==rt_myfriend_list){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyfriendList + UserHelper.getUserInfo().getId()));
+                }else if (v==rt_editpaw){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.EditPwd + UserHelper.getUserInfo().getId()));
 
-            }else if (v==btn_logout){
-                CircleDialogHelper.ShowDialogHint((AppCompatActivity)mActivity, "确定注销吗?", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        UserHelper.clearUser();
-                        EventBusHelper.sendEvent(new Event(EventCode.Code.LOGOUT));
-                    }
-                }, null);
+                }else if (v==btn_logout){
+                    CircleDialogHelper.ShowDialogHint((AppCompatActivity)mActivity, "确定注销吗?", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            UserHelper.clearUser();
+                            EventBusHelper.sendEvent(new Event(EventCode.Code.LOGOUT));
+                        }
+                    }, null);
+                }
+            }else {
+                startActivity(new Intent(mActivity,LoginActivity.class));
             }
-        }else {
-            startActivity(new Intent(mActivity,LoginActivity.class));
         }
     }
 

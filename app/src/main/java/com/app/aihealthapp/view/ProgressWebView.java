@@ -265,7 +265,9 @@ public class ProgressWebView extends WebView {
 
             String mUrl;
             if (UserHelper.getUserInfo()!=null){
-                if (url.contains("?")){
+                if (url.contains("uid")){
+                    mUrl = url;
+                }else if (url.contains("?")){
                     mUrl = url+"&uid="+UserHelper.getUserInfo().getId();
                 }else {
                     mUrl = url+"?uid="+UserHelper.getUserInfo().getId();

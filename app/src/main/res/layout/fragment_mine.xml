@@ -409,12 +409,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0.5px"
-                android:background="@color/view_line" />
+                android:background="@color/view_line"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
-                android:background="@drawable/selector_onclick">
+                android:background="@drawable/selector_onclick"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -439,12 +441,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0.5px"
-                android:background="@color/view_line" />
+                android:background="@color/view_line"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
-                android:background="@drawable/selector_onclick">
+                android:background="@drawable/selector_onclick"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -506,7 +510,6 @@
                 android:id="@+id/rt_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
-                android:layout_marginBottom="@dimen/dimen_16px"
                 android:background="@drawable/selector_onclick">
 
                 <TextView
@@ -517,6 +520,37 @@
                     android:drawableLeft="@mipmap/mind_xxtx_icon"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="帮助与反馈"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_16px"
+                    android:background="@mipmap/my_arrow" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_0.5px"
+                android:background="@color/view_line" />
+
+            <RelativeLayout
+                android:id="@+id/rt_editpaw"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50px"
+                android:layout_marginBottom="@dimen/dimen_16px"
+                android:background="@drawable/selector_onclick">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_16px"
+                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawablePadding="@dimen/text_10px"
+                    android:text="修改密码"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px" />
 

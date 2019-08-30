@@ -55,18 +55,19 @@ public final class ApiUrl {
         public static final String COMMUNITY = HOST +"wap/community.html";//健康社区
         public static final String HeadLine = HOST +"wap/headline_list.html?cate_id=";//首页健康管理分类进入页面
         public static final String DoctorDetail = HOST+"wap/doctor_details.html?id=";//医生详情介绍
-        public static final String MyKeyList = HOST + "wap/mykey_list_app.html";//我的健康秘钥
-        public static final String HealthPlan = HOST + "wap/health_plan.html";//我的健康方案
-        public static final String MedicalReport = HOST + "wap/medical_report.html";//我的体检报告
-        public static final String MyfriendList = HOST + "wap/myfriend_list.html";//我的健康朋友圈
+        public static final String MyKeyList = HOST + "wap/mykey_list_app.html?uid=";//我的健康秘钥
+        public static final String HealthPlan = HOST + "wap/health_plan.html?uid=";//我的健康方案
+        public static final String MedicalReport = HOST + "wap/medical_report.html?uid=";//我的体检报告
+        public static final String MyfriendList = HOST + "wap/myfriend_list.html?uid=";//我的健康朋友圈
         public static final String About = HOST + "article/item/15.html";//关于健康
         public static final String Feedback = HOST + "wap/feedback.html";//帮助与反馈
-        public static final String Healthy_Report = HOST + "wap/healthy_report.html";//我的健康指数
-        public static final String MyOrder = HOST + "user/myorder";//我的订单
-        public static final String User_Address = HOST + "user/user_address";//收货地址
+        public static final String Healthy_Report = HOST + "wap/healthy_report.html?uid=";//我的健康指数
+        public static final String MyOrder = HOST + "user/myorder?uid=";//我的订单
+        public static final String User_Address = HOST + "user/user_address?uid=";//收货地址
         public static final String Self_Support = HOST + "self/support";//健康商城
         public static final String Index = HOST + "index";//健康商圈
         public static final String Community = HOST + "wap/community.html";//健康论坛
+        public static final String EditPwd = HOST +"user/editpwd?uid=";
       }
 
     public static class DoctorApi{

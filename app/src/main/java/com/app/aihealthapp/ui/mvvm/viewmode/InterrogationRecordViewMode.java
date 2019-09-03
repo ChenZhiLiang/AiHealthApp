@@ -1,6 +1,7 @@
 package com.app.aihealthapp.ui.mvvm.viewmode;
 
 import com.app.aihealthapp.core.base.BaseMode;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
 import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
@@ -12,7 +13,7 @@ import java.util.List;
 
 /**
  * @Name：AiHealth
- * @Description：描述信息
+ * @Description：会员描述信息
  * @Author：Chen
  * @Date：2019/8/19 22:24
  * 修改人：Chen
@@ -28,7 +29,7 @@ public class InterrogationRecordViewMode {
         mBaseMode = new BaseMode();
     }
 
-    public void InterrogationRecord(int page,boolean isShow){
+    public void InterrogationRecord(int page,int kind_type,boolean isShow){
         if (isShow){
             mInterrogationRecordView.showProgress();
         }
@@ -36,6 +37,8 @@ public class InterrogationRecordViewMode {
         RequestParams params = new RequestParams();
         params.put("page",String.valueOf(page));
         params.put("size",String.valueOf(10));
+        params.put("kind_type",String.valueOf(kind_type));//问诊记录
+
         mBaseMode.GetRequest(url, params, new ResultCallback() {
             @Override
             public void onSuccess(Object result) {

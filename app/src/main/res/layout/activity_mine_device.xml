@@ -27,16 +27,17 @@
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@color/white"
                 android:layout_marginTop="@dimen/dimen_10px"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
+                    android:id="@+id/tv_device_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
                     android:text="您还未绑定设备"
                     android:textSize="@dimen/text_14px"
-                    android:textColor="@color/default_text_color"/>
+                    android:textColor="@color/default_hint_color"/>
                 <Button
                     android:id="@+id/btn_bind"
                     android:layout_width="wrap_content"
@@ -177,7 +178,7 @@
 
 
             </LinearLayout>
-            <Button
+          <!--  <Button
                 android:id="@+id/btn_unbind"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40px"
@@ -186,7 +187,7 @@
                 android:textSize="@dimen/text_14px"
                 android:textColor="@color/white"
                 android:layout_margin="@dimen/dimen_16px"
-                android:visibility="gone"/>
+                android:visibility="gone"/>-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -52,12 +52,16 @@ public class InterrogationDetailsActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
         initToolBar();
-        setTitle("问诊详情");
     }
 
     @Override
     public void initView() {
         datas = (InterrogationRecordBean)getIntent().getSerializableExtra("datas");
+        if (datas.getKind_type()==1){
+            setTitle("咨询详情");
+        }else {
+            setTitle("问诊详情");
+        }
         tv_my_question.setText(datas.getInfo());
         GlideHelper.loadImageView(this,datas.getChecklist_pic(),image_checklist_pic);
         GlideHelper.loadImageView(this,datas.getMedical_pic(),image_medical_pic);

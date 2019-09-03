@@ -31,7 +31,7 @@ import butterknife.BindView;
 
 /**
  * @Name：AiHealth
- * @Description：问诊记录
+ * @Description：会员 询问、问诊记录
  * @Author：Chen
  * @Date：2019/8/19 21:35
  * 修改人：Chen
@@ -49,13 +49,17 @@ public class InterrogationRecordFragment extends BaseFragment implements Interro
 
     private int page = 1;
     private int totalPage ;//总页数
-    public static InterrogationRecordFragment getInstance() {
+    private int kind_type;
+    public static InterrogationRecordFragment getInstance(int kind_type) {
         InterrogationRecordFragment hf = new InterrogationRecordFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("kind_type",kind_type);
+        hf.setArguments(bundle);
         return hf;
     }
     @Override
     public void loadingData() {
-        mInterrogationRecordViewMode.InterrogationRecord(page,true);
+        mInterrogationRecordViewMode.InterrogationRecord(page,kind_type,true);
     }
 
     @Override
@@ -65,10 +69,12 @@ public class InterrogationRecordFragment extends BaseFragment implements Interro
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
+
+        kind_type = getArguments().getInt("kind_type");
         recy_interrogation_record.setLayoutManager(new LinearLayoutManager(mActivity));
         mInterrogationRecordViewMode = new InterrogationRecordViewMode(this);
         mInterrogationRecordAdapter = new InterrogationRecordAdapter(getContext(),InterrogationRecords);
-        recy_interrogation_record.addItemDecoration(new SpaceItemDecoration(mActivity,1));
+//        recy_interrogation_record.addItemDecoration(new SpaceItemDecoration(mActivity,1));
         recy_interrogation_record.setRefreshProgressStyle(ProgressStyle.BallPulse);
         recy_interrogation_record.setLoadingMoreProgressStyle(ProgressStyle.BallBeat);
         recy_interrogation_record.setArrowImageView(R.mipmap.icon_pull_down);
@@ -139,14 +145,14 @@ public class InterrogationRecordFragment extends BaseFragment implements Interro
     @Override
     public void onRefresh() {
         page = 1;
-        mInterrogationRecordViewMode.InterrogationRecord(page,false);
+        mInterrogationRecordViewMode.InterrogationRecord(page,kind_type,false);
 
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        mInterrogationRecordViewMode.InterrogationRecord(page,false);
+        mInterrogationRecordViewMode.InterrogationRecord(page,kind_type,false);
 
     }
 }

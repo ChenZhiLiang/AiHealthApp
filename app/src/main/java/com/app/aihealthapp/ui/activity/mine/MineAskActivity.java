@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
 import com.app.aihealthapp.core.base.BaseFragmentPageAdapter;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.view.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -61,8 +62,13 @@ public class MineAskActivity extends BaseActivity implements ViewPager.OnPageCha
     @Override
     public void initView() {
         mFragments = new ArrayList<>();
-        mFragments.add(SearchRecordFragment.getInstance());
-        mFragments.add(InterrogationRecordFragment.getInstance());
+        if (UserHelper.getUserInfo().getKind_type()==1){
+            mFragments.add(SearchRecordFragment.getInstance(1));
+            mFragments.add(SearchRecordFragment.getInstance(0));
+        }else {
+            mFragments.add(InterrogationRecordFragment.getInstance(1));
+            mFragments.add(InterrogationRecordFragment.getInstance(0));
+        }
         mBaseFragmentPageAdapter = new BaseFragmentPageAdapter(getSupportFragmentManager(), mFragments);
         viewpage_ask.setNoScroll(false);//设置viewpage 是否可以左右滑动
         viewpage_ask.setAdapter(mBaseFragmentPageAdapter);

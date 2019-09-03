@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/dimen_10px"
     android:id="@+id/rt_search_record">
 
@@ -11,6 +12,7 @@
         android:layout_height="@dimen/dimen_50px"
         android:background="@mipmap/my_head"
         android:layout_centerVertical="true"
+        app:border_color="@color/transparent"
         />
 
     <LinearLayout
@@ -22,6 +24,7 @@
         android:layout_toRightOf="@+id/img_doctor_head"
         >
         <TextView
+            android:id="@+id/tv_doctor_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="林医生"
@@ -42,6 +45,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_14px"/>
             <TextView
+                android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_8px"

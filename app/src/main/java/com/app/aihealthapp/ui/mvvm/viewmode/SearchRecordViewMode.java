@@ -1,6 +1,7 @@
 package com.app.aihealthapp.ui.mvvm.viewmode;
 
 import com.app.aihealthapp.core.base.BaseMode;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
 import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
@@ -29,16 +30,17 @@ public class SearchRecordViewMode {
     }
 
 
-    public void SearchRecord(int page,boolean isShow){
+    public void SearchRecord(int page,int kind_type,boolean isShow){
 
         if (isShow){
             mSearchRecordView.showProgress();
-
         }
-        String url = ApiUrl.UserApi.SearchRecord;
+        String url;
+        url = ApiUrl.UserApi.SearchRecord;
         RequestParams params = new RequestParams();
         params.put("page",String.valueOf(page));
         params.put("size",String.valueOf(10));
+        params.put("kind_type",String.valueOf(kind_type));//咨询记录
         mBaseMode.GetRequest(url, params, new ResultCallback() {
             @Override
             public void onSuccess(Object result) {

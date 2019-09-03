@@ -12,19 +12,23 @@ import java.io.Serializable;
  */
 public class InterrogationRecordBean implements Serializable {
 
+
     /**
-     * id : 3
+     * id : 17
      * title :
-     * kind_type : 0
-     * doctor_id : 0
-     * info : 王伟娥方飞飞哥哥光头然然服服帖帖哥哥
-     * user_id : 51
-     * add_date : 2019-08-21
-     * checklist_pic : 20190821/f51f1988dfbe2cb46e6838595ac82aef.png
-     * medical_pic : 20190821/a47380f23084e3a72dc4318b70e868ad.png
-     * affected_part_pic : 20190821/66051199a6be7493d2e3ae426da38b41.png
-     * other_pic : 20190821/8236c8181be5ae8d65b3b7736e6829b0.png
+     * kind_type : 1
+     * doctor_id : 62
+     * info : 毫末来咯噢噢噢哦哦下雨啦阿卡丽咯哦哦老K就拉个咯啦咯啦
+     * user_id : 68
+     * add_date : 2019-09-03
+     * checklist_pic : 20190903/cef30d3ac233ba88c07c2f66d1eca4f1.png
+     * medical_pic : 20190903/f0de957af502dafef5fbc7fb3f479aa8.png
+     * affected_part_pic : 20190903/3bb7a7365e1deb2e4b7f5e94e5fb2508.png
+     * other_pic : 20190903/2219a8e150c251d1647c7c45e83d1103.jpg
      * reply_info : null
+     * is_reply : 0
+     * doctor_name : 张医生
+     * doctor_avatar : /upload/pic/avatar/20190827/28edde523ec77719cc51f96939996790.jpg
      */
 
     private int id;
@@ -38,17 +42,10 @@ public class InterrogationRecordBean implements Serializable {
     private String medical_pic;
     private String affected_part_pic;
     private String other_pic;
-    int is_reply;//1 已回复
-
     private String reply_info;
-
-    public int getIs_reply() {
-        return is_reply;
-    }
-
-    public void setIs_reply(int is_reply) {
-        this.is_reply = is_reply;
-    }
+    private int is_reply;
+    private String doctor_name;
+    private String doctor_avatar;
 
     public int getId() {
         return id;
@@ -144,5 +141,29 @@ public class InterrogationRecordBean implements Serializable {
 
     public void setReply_info(String reply_info) {
         this.reply_info = reply_info;
+    }
+
+    public int getIs_reply() {
+        return is_reply;
+    }
+
+    public void setIs_reply(int is_reply) {
+        this.is_reply = is_reply;
+    }
+
+    public String getDoctor_name() {
+        return doctor_name;
+    }
+
+    public void setDoctor_name(String doctor_name) {
+        this.doctor_name = doctor_name;
+    }
+
+    public String getDoctor_avatar() {
+        return doctor_avatar;
+    }
+
+    public void setDoctor_avatar(String doctor_avatar) {
+        this.doctor_avatar = doctor_avatar;
     }
 }

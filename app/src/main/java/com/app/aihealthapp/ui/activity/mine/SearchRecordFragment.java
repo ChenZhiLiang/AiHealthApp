@@ -31,7 +31,7 @@ import butterknife.BindView;
 
 /**
  * @Name：AiHealth
- * @Description：咨询记录
+ * @Description：医生 咨询、问诊记录
  * @Author：Chen
  * @Date：2019/8/19 21:35
  * 修改人：Chen
@@ -50,8 +50,12 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
 
     private int page = 1;
     private int totalPage ;//总页数
-    public static SearchRecordFragment getInstance() {
+    private int kind_type;
+    public static SearchRecordFragment getInstance(int kind_type) {
         SearchRecordFragment hf = new SearchRecordFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("kind_type",kind_type);
+        hf.setArguments(bundle);
         return hf;
     }
 
@@ -63,11 +67,12 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
+        kind_type = getArguments().getInt("kind_type");
 
         recy_search_record.setLayoutManager(new LinearLayoutManager(mActivity));
         mSearchRecordViewMode = new SearchRecordViewMode(this);
         mSearchRecordAdapter = new SearchRecordAdapter(mActivity,SearchRecords);
-        recy_search_record.addItemDecoration(new SpaceItemDecoration(mActivity,1));
+//        recy_search_record.addItemDecoration(new SpaceItemDecoration(mActivity,1));
         recy_search_record.setRefreshProgressStyle(ProgressStyle.BallPulse);
         recy_search_record.setLoadingMoreProgressStyle(ProgressStyle.BallBeat);
         recy_search_record.setArrowImageView(R.mipmap.icon_pull_down);
@@ -79,7 +84,7 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
 
     @Override
     public void loadingData() {
-        mSearchRecordViewMode.SearchRecord(page,true);
+        mSearchRecordViewMode.SearchRecord(page,kind_type,true);
     }
     @Override
     public void initData() {
@@ -90,13 +95,11 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
     public void SearchRecordDatasResult(Object result) {
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
-
             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
             List<SearchRecordBean> datas = GsonHelper.GsonToList(data,SearchRecordBean.class,"data");
             if (datas.size()>0){
                 page  = GsonHelper.GsonToInt(data,"current_page");
                 totalPage = GsonHelper.GsonToInt(data,"total");
-
                 no_record_layout.setVisibility(View.GONE);
                 recy_search_record.setVisibility(View.VISIBLE);
                 if (page == 1) {
@@ -144,14 +147,14 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
     @Override
     public void onRefresh() {
         page = 1;
-        mSearchRecordViewMode.SearchRecord(page,false);
+        mSearchRecordViewMode.SearchRecord(page,kind_type,false);
 
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        mSearchRecordViewMode.SearchRecord(page,false);
+        mSearchRecordViewMode.SearchRecord(page,kind_type,false);
 
     }
 }

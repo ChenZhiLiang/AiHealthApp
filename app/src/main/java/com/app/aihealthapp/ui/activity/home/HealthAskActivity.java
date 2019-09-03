@@ -101,15 +101,17 @@ public class HealthAskActivity extends BaseActivity implements HealthAskView {
 
             if (TextUtils.isEmpty(edit_input_content.getText().toString())){
                 showLoadFailMsg("请输入内容");
-            }else if (TextUtils.isEmpty(checklist_pic)){
-                showLoadFailMsg("请上传检查单照片");
-            }else if(TextUtils.isEmpty(medical_pic)){
-                showLoadFailMsg("请上传病例照片");
-            }else if (TextUtils.isEmpty(affected_part_pic)){
-                showLoadFailMsg("请上传患处照片");
-            }else if (TextUtils.isEmpty(other_pic)){
-                showLoadFailMsg("请上传其他照片");
-            }else {
+            }
+//            else if (TextUtils.isEmpty(checklist_pic)){
+//                showLoadFailMsg("请上传检查单照片");
+//            }else if(TextUtils.isEmpty(medical_pic)){
+//                showLoadFailMsg("请上传病例照片");
+//            }else if (TextUtils.isEmpty(affected_part_pic)){
+//                showLoadFailMsg("请上传患处照片");
+//            }else if (TextUtils.isEmpty(other_pic)){
+//                showLoadFailMsg("请上传其他照片");
+//            }
+            else {
                 mHealthAskViewMode.question(doctor_id,edit_input_content.getText().toString(),doctor_id==0?0:1,checklist_pic,medical_pic,affected_part_pic,other_pic);
             }
         }else {

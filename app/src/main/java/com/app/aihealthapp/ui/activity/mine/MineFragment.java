@@ -290,20 +290,21 @@ public class MineFragment extends BaseFragment implements MineView {
     protected void receiveEvent(Event event) {
         super.receiveEvent(event);
         if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {//登录成功
-            btn_authentication.setVisibility(View.VISIBLE);
-            tv_invite_code.setVisibility(View.VISIBLE);
-            btn_logout.setVisibility(View.VISIBLE);
-            GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
-            tv_invite_code.setText(UserHelper.getUserInfo().getInvite_code());
-            if (TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
-                tv_user_name.setText(UserHelper.getUserInfo().getMobile());
-                btn_authentication.setText("实名认证");
-                btn_authentication.setEnabled(true);
-            }else {
-                tv_user_name.setText(UserHelper.getUserInfo().getNickname());
-                btn_authentication.setText("已认证");
-                btn_authentication.setEnabled(false);
-            }
+            mMineViewMode.getUserInfo();
+//            btn_authentication.setVisibility(View.VISIBLE);
+//            tv_invite_code.setVisibility(View.VISIBLE);
+//            btn_logout.setVisibility(View.VISIBLE);
+//            GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
+//            tv_invite_code.setText("邀请码："+UserHelper.getUserInfo().getInvite_code());
+//            if (TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
+//                tv_user_name.setText(UserHelper.getUserInfo().getMobile());
+//                btn_authentication.setText("实名认证");
+//                btn_authentication.setEnabled(true);
+//            }else {
+//                tv_user_name.setText(UserHelper.getUserInfo().getNickname());
+//                btn_authentication.setText("已认证");
+//                btn_authentication.setEnabled(false);
+//            }
         }else if (event.getCode()== EventCode.Code.AUTHENTICATION_SUCCESS){
             mMineViewMode.getUserInfo();
 

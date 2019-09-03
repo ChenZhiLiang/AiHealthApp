@@ -1,13 +1,17 @@
 package com.app.aihealthapp.ui.activity.mine;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
@@ -19,12 +23,16 @@ import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.AppManager;
 import com.app.aihealthapp.ui.activity.home.BindDeviceActivity;
 import com.app.aihealthapp.ui.bean.DeviceInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineDeviceView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineDeviceViewMode;
 import com.crrepa.ble.CRPBleClient;
 import com.crrepa.ble.conn.CRPBleDevice;
+
+import java.lang.reflect.Method;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,8 +47,10 @@ import butterknife.OnClick;
  */
 public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
 
-    @BindView(R.id.rt_bind_device)
-    RelativeLayout rt_bind_device;
+//    @BindView(R.id.rt_bind_device)
+//    RelativeLayout rt_bind_device;
+    @BindView(R.id.tv_device_name)
+    TextView tv_device_name;
     @BindView(R.id.btn_bind)
     Button btn_bind;
     @BindView(R.id.check_open_phone)
@@ -53,8 +63,8 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
     CheckBox check_open_wx;
     @BindView(R.id.check_open_photo)
     CheckBox check_open_photo;
-    @BindView(R.id.btn_unbind)
-    Button btn_unbind;
+//    @BindView(R.id.btn_unbind)
+//    Button btn_unbind;
 
     private MineDeviceViewMode mMineDeviceViewMode;
     private int id;
@@ -92,22 +102,42 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
         mMineDeviceViewMode.getMineDeviceInfo(true);
     }
 
-    @OnClick({R.id.btn_bind,R.id.btn_unbind})
+    @OnClick({R.id.btn_bind})
     public void onClick(View v){
         if (v==btn_bind){
-            if (!AppContext.getBleClient(AppContext.getContext()).isBluetoothEnable()){
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivity(enableBtIntent);
-                return;
+            if (btn_bind.getText().equals("绑定设备")){
+                if (!AppContext.getBleClient(AppContext.getContext()).isBluetoothEnable()){
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivity(enableBtIntent);
+                    return;
+                }else {
+                    startActivity(new Intent(this, BindDeviceActivity.class));
+                }
             }else {
-                startActivity(new Intent(this, BindDeviceActivity.class));
+                CircleDialogHelper.ShowDialog(this,"温馨提示","确定解除绑定该设备(Qs-05)?","确定","取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
+                        unpairDevice(mBleDevice.getBluetoothDevice());
+                        if (mBleDevice.isConnected()){
+                            mBleDevice.disconnect();
+                        }
+                        mMineDeviceViewMode.UnBind(id);
+                    }
+                }, null);
+
             }
-        }else if (v==btn_unbind){
-            mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
-            if (mBleDevice.isConnected()){
-                mBleDevice.disconnect();
-            }
-            mMineDeviceViewMode.UnBind(id);
+
+        }
+    }
+
+    //反射来调用BluetoothDevice.removeBond取消设备的配对
+    private void unpairDevice(BluetoothDevice device) {
+        try {
+            Method m = device.getClass().getMethod("removeBond", (Class[]) null);
+            m.invoke(device, (Object[]) null);
+        } catch (Exception e) {
+            Log.e("unpairDevice", e.getMessage());
         }
     }
     @Override
@@ -116,15 +146,18 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
-
             if (data.equals("{}")){
-                rt_bind_device.setVisibility(View.VISIBLE);
-                btn_unbind.setVisibility(View.GONE);
+                btn_bind.setText("绑定设备");
+                tv_device_name.setText("您还未绑定设备");
+
+//                rt_bind_device.setVisibility(View.VISIBLE);
+//                btn_unbind.setVisibility(View.GONE);
             }else {
                  mDeviceInfoBean = GsonHelper.GsonToBean(data,DeviceInfoBean.class);
-
-                rt_bind_device.setVisibility(View.GONE);
-                btn_unbind.setVisibility(View.VISIBLE);
+                tv_device_name.setText("已绑定设备(Qs-05)");
+                btn_bind.setText("解除绑定");
+//                rt_bind_device.setVisibility(View.GONE);
+//                btn_unbind.setVisibility(View.VISIBLE);
 
                 id = mDeviceInfoBean.getId();
 
@@ -170,7 +203,8 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
 
     @Override
     protected void receiveEvent(Event event) {
-        super.receiveEvent(event);if (event.getCode()== EventCode.Code.BIND_DEVICE){
+        super.receiveEvent(event);
+        if (event.getCode()== EventCode.Code.BIND_DEVICE){
             mMineDeviceViewMode.getMineDeviceInfo(false);
         }
     }

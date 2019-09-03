@@ -52,6 +52,7 @@
             android:padding="@dimen/dimen_10px">
 
             <TextView
+                android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="福建省东方嘉盛都批发价见风使舵废旧塑料东方嘉盛连接方式来对付建设路口连接方式来的空间了实间了实际发生际发间了实际发生生了快递放假"
@@ -64,28 +65,31 @@
                 android:layout_marginBottom="@dimen/dimen_10px">
 
                 <ImageView
+                    android:id="@+id/image_checklist_pic"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@mipmap/logo"
                     android:layout_marginRight="@dimen/dimen_16px"/>
                 <ImageView
+                    android:id="@+id/image_medical_pic"
+
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@mipmap/logo"
                     android:layout_marginRight="@dimen/dimen_16px"/>
                 <ImageView
+                    android:id="@+id/image_affected_part_pic"
+
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@mipmap/logo"
                     android:layout_marginRight="@dimen/dimen_16px"/>
                 <ImageView
+                    android:id="@+id/image_other_pic"
+
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@mipmap/logo"/>
+                    android:layout_weight="1"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/tv_reply"

@@ -30,7 +30,6 @@ public class AppContext extends BaseApplication {
         mInstance = this;
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
         mBleClient = CRPBleClient.create(this);
-
         // 推荐分享 调用微信 用到
         wxapi = WXAPIFactory.createWXAPI(this,AppConfig.WEIXIN_APP_ID,true);
         //将应用的app_id 注册到微信

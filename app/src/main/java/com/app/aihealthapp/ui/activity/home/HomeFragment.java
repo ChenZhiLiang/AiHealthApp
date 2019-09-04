@@ -191,6 +191,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         } else if (v == btn_look_report) {
+            //体检报告
+            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MedicalReport));
 
         } else if (v == btn_ask) {
             startActivity(new Intent(getActivity(), HealthAskActivity.class));

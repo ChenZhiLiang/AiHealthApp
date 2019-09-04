@@ -118,10 +118,19 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
                     @Override
                     public void onClick(View view) {
                         mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
-                        unpairDevice(mBleDevice.getBluetoothDevice());
                         if (mBleDevice.isConnected()){
                             mBleDevice.disconnect();
                         }
+                        // 获取本地蓝牙适配器
+                        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                        if(mBluetoothAdapter!=null){
+                            // 获取已经配对的设备
+                            Set<BluetoothDevice> bondedDevices = mBluetoothAdapter.getBondedDevices();
+                            for(BluetoothDevice device : bondedDevices ){
+                                unpairDevice(device);
+                            }
+                        }
+
                         mMineDeviceViewMode.UnBind(id);
                     }
                 }, null);

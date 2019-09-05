@@ -1,5 +1,7 @@
 package com.app.aihealthapp.ui.activity.home;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,8 +36,11 @@ import com.crrepa.ble.conn.listener.CRPBleConnectionStateListener;
 import com.crrepa.ble.scan.bean.CRPScanDevice;
 import com.crrepa.ble.scan.callback.CRPScanCallback;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 
@@ -128,6 +133,7 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
                                 mBleConnection.syncTime();
                                 mBleConnection.findDevice();
                                 mBindDeviceViewMode.BindDevice(bleClient.getMacAddress());
+                                mCRPBleClient.cancelScan();
                                 break;
                             case CRPBleConnectionStateListener.STATE_CONNECTING://正在连接
                                 hud.show("正在连接...");
@@ -153,15 +159,31 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
     @Override
     public void initData() {
         tv_search.setText("搜索中...");
+        // 获取本地蓝牙适配器
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(mBluetoothAdapter!=null){
+            // 获取已经配对的设备
+            Set<BluetoothDevice> bondedDevices = mBluetoothAdapter.getBondedDevices();
+            for(BluetoothDevice device : bondedDevices ){
+                unpairDevice(device);
+            }
+        }
         mCRPBleClient.scanDevice(this,10000);
 
     }
-
+    private void unpairDevice(BluetoothDevice device) {
+        try {
+            Method m = device.getClass().getMethod("removeBond", (Class[]) null);
+            m.invoke(device, (Object[]) null);
+        } catch (Exception e) {
+            Log.e("unpairDevice", e.getMessage());
+        }
+    }
     @Override
     public void onScanning(CRPScanDevice crpScanDevice) {
 
         CRPBleDevice bleDevice = mCRPBleClient.getBleDevice(crpScanDevice.getDevice().getAddress());
-        if (!TextUtils.isEmpty(bleDevice.getName())){
+        if (!TextUtils.isEmpty(bleDevice.getName())&&bleDevice.getName().equals("Qs-05")){
             devicelList.add(bleDevice);
             mDeviceListAdapter.notifyDataSetChanged();
         }
@@ -169,6 +191,10 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
 
     @Override
     public void onScanComplete(List<CRPScanDevice> list) {
+
+        for (int i = 0; i < list.size(); i++) {
+            Log.i("aaaaaaaaa",list.get(i).getDevice().getAddress());
+        }
         tv_search.setText("搜索完成");
         refresh_layout.refreshComplete();
     }

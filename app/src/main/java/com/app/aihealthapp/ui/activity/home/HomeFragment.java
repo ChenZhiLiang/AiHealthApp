@@ -444,7 +444,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                         }
                     }
                 });
-                mBleDevice.disconnect();
+//                mBleDevice.disconnect();
             }
 
         } else {

@@ -222,4 +222,3 @@
 #版本更新com.allenliu.versionchecklib:library:2.0.5
 -keep class com.allenliu.versionchecklib.**{*;}
 
-

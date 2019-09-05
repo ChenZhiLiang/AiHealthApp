@@ -93,7 +93,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
     @Override
     public void initView() {
         mMineDeviceViewMode = new MineDeviceViewMode(this);
-        mCRPBleClient = AppContext.getBleClient(AppContext.getContext());
+        mCRPBleClient = AppContext.getBleClient(this);
 
     }
 
@@ -106,7 +106,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
     public void onClick(View v){
         if (v==btn_bind){
             if (btn_bind.getText().equals("绑定设备")){
-                if (!AppContext.getBleClient(AppContext.getContext()).isBluetoothEnable()){
+                if (!mCRPBleClient.isBluetoothEnable()){
                     Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivity(enableBtIntent);
                     return;
@@ -121,6 +121,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
                         if (mBleDevice.isConnected()){
                             mBleDevice.disconnect();
                         }
+
                         // 获取本地蓝牙适配器
                         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                         if(mBluetoothAdapter!=null){

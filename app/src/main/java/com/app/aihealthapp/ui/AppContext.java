@@ -34,8 +34,6 @@ public class AppContext extends BaseApplication {
         wxapi = WXAPIFactory.createWXAPI(this,AppConfig.WEIXIN_APP_ID,true);
         //将应用的app_id 注册到微信
         wxapi.registerApp(AppConfig.WEIXIN_APP_ID);
-
-        mBleClient.cancelScan();
     }
 
     @Override

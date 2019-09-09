@@ -29,7 +29,9 @@ import com.app.aihealthapp.ui.bean.DeviceInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineDeviceView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineDeviceViewMode;
 import com.crrepa.ble.CRPBleClient;
+import com.crrepa.ble.conn.CRPBleConnection;
 import com.crrepa.ble.conn.CRPBleDevice;
+import com.crrepa.ble.conn.listener.CRPBleConnectionStateListener;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -93,7 +95,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
     @Override
     public void initView() {
         mMineDeviceViewMode = new MineDeviceViewMode(this);
-        mCRPBleClient = AppContext.getBleClient(this);
+        mCRPBleClient = AppContext.getBleClient();
 
     }
 
@@ -121,18 +123,19 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
                         if (mBleDevice.isConnected()){
                             mBleDevice.disconnect();
                         }
-
                         // 获取本地蓝牙适配器
                         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                         if(mBluetoothAdapter!=null){
                             // 获取已经配对的设备
                             Set<BluetoothDevice> bondedDevices = mBluetoothAdapter.getBondedDevices();
                             for(BluetoothDevice device : bondedDevices ){
+                                //取消设备的配对
                                 unpairDevice(device);
                             }
                         }
 
                         mMineDeviceViewMode.UnBind(id);
+
                     }
                 }, null);
 
@@ -230,7 +233,6 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
         if (ret==0){
             EventBusHelper.sendEvent(new Event(EventCode.Code.UN_BIND_DEVICE));
             mMineDeviceViewMode.getMineDeviceInfo(false);
-
             showLoadFailMsg("解绑成功");
 
         }else {

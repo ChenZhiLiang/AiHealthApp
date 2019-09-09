@@ -61,7 +61,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     // 多dex 打包的类库
-    api 'com.android.support:multidex:1.0.3'
+//    api 'com.android.support:multidex:1.0.3'
     api 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 

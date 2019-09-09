@@ -19,10 +19,10 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
     <!-- 这个权限用于访问GPS定位-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
     <application
         android:name=".ui.AppContext"
@@ -70,6 +70,7 @@
         <activity android:name="com.crrepa.ble.trans.upgrade.NotificationActivity"/> />
 
         <service android:name="com.crrepa.ble.trans.upgrade.DfuService"/>
+
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Vibrator;
-import android.support.multidex.MultiDex;
 
 import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseApplication;
@@ -19,34 +18,36 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 public class AppContext extends BaseApplication {
 
-    public Vibrator mVibrator;
+//    public Vibrator mVibrator;
     private static AppContext mInstance;
 
     public static IWXAPI wxapi;
+    public static CRPBleClient mBleClient;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-        mBleClient = CRPBleClient.create(this);
+//        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        mBleClient = CRPBleClient.create(getContext());
         // 推荐分享 调用微信 用到
         wxapi = WXAPIFactory.createWXAPI(this,AppConfig.WEIXIN_APP_ID,true);
         //将应用的app_id 注册到微信
         wxapi.registerApp(AppConfig.WEIXIN_APP_ID);
     }
 
-    @Override
+   /* @Override
     public void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-    }
+    }*/
 
-    private CRPBleClient mBleClient;
 
-    public static CRPBleClient getBleClient(Context context) {
-        AppContext application = (AppContext) context.getApplicationContext();
-        return application.mBleClient;
+    public static CRPBleClient getBleClient() {
+        if (mBleClient==null){
+            mBleClient = CRPBleClient.create(getContext());
+        }
+        return mBleClient;
     }
 
 

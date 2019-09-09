@@ -26,6 +26,7 @@ import com.app.aihealthapp.core.uitrarefresh.UTRefreshLayout;
 import com.app.aihealthapp.core.uitrarefresh.ptr.PtrDefaultHandler;
 import com.app.aihealthapp.core.uitrarefresh.ptr.PtrFrameLayout;
 import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.AppManager;
 import com.app.aihealthapp.ui.adapter.DeviceListAdapter;
 import com.app.aihealthapp.ui.mvvm.view.BindDeviceView;
 import com.app.aihealthapp.ui.mvvm.viewmode.BindDeviceViewMode;
@@ -89,6 +90,7 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
 
     @Override
     public void initView() {
+        mCRPBleClient = AppContext.getBleClient();
         mBindDeviceViewMode = new BindDeviceViewMode(this);
         refresh_layout.disableWhenHorizontalMove(true);
         refresh_layout.setPtrHandler(new PtrDefaultHandler() {
@@ -124,6 +126,7 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
             @Override
             public void onItemClick(View view, final Object data, int position) {
                 final CRPBleDevice bleClient = (CRPBleDevice)data;
+                mCRPBleClient.cancelScan();
                 mBleConnection = bleClient.connect();
                 mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
                     @Override
@@ -152,7 +155,6 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
 
             }
         });
-        mCRPBleClient = AppContext.getBleClient(AppContext.getContext());
 
     }
 

@@ -138,8 +138,9 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     private HomeShopAdapter mHomeShopAdapter;
 
     private DeviceInfoBean mDeviceInfoBean = null;
-    private boolean ClickStep = false;//判断是否点击运动记步
+    private boolean ClickStep = false;//判断是否点击运动记rt_health_data步
     private HomeBean homeBean;
+
 
     public static HomeFragment getInstance(String title) {
         HomeFragment hf = new HomeFragment();
@@ -159,13 +160,15 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         banner_home_adv.setDelegate(this);
         mHomeViewMode = new HomeViewMode(this);
         configRecycleView(recycler_shop_area, new LinearLayoutManager(getContext()));
-        mCRPBleClient = AppContext.getBleClient(AppContext.getContext());
+        mCRPBleClient = AppContext.getBleClient();
     }
 
 
     @Override
     public void loadingData() {
         mHomeViewMode.getHomeDatas(true);
+        //获取设备信息
+        mHomeViewMode.getMineDeviceInfo();
     }
 
     @Override
@@ -202,8 +205,26 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             if (isLogin()) {
                 if (homeBean.getIs_bind_bracelet()== 1) {//已绑定
                     ClickStep = true;
-                    //运动记步
-                    mBleConnection.syncStep();
+                    mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
+                    mBleConnection = mBleDevice.connect();
+                    mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
+                        @Override
+                        public void onConnectionStateChange(int newState) {
+                            switch (newState) {
+                                case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mBleConnection.setStepChangeListener(HomeFragment.this);
+                                            //运动记步
+                                            mBleConnection.syncStep();
+                                        }
+                                    });
+                                    break;
+                            }
+                        }
+                    });
+
                 } else {
                     if (!mCRPBleClient.isBluetoothEnable()) {
                         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -299,8 +320,12 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             mHomeViewMode.getHomeDatas(false);
         } else if (event.getCode() == EventCode.Code.LOGOUT) {
             mHomeViewMode.getHomeDatas(false);
-        }else if (event.getCode()== EventCode.Code.BIND_DEVICE||event.getCode()== EventCode.Code.UN_BIND_DEVICE){
+        }else if (event.getCode()== EventCode.Code.BIND_DEVICE){
             mHomeViewMode.getHomeDatas(false);
+            mHomeViewMode.getMineDeviceInfo();
+        }else if(event.getCode()== EventCode.Code.UN_BIND_DEVICE){
+            mHomeViewMode.getHomeDatas(false);
+
         }
     }
 
@@ -332,10 +357,10 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             String data = GsonHelper.GsonToData(result.toString(), "data").toString();
             homeBean = GsonHelper.GsonToBean(data, HomeBean.class);
             if (homeBean.getIs_bind_bracelet() == 0) {
-                rt_bind_device.setVisibility(View.VISIBLE);
+//                rt_bind_device.setVisibility(View.VISIBLE);
 //                ll_device_info.setVisibility(View.GONE);
             } else {
-                rt_bind_device.setVisibility(View.GONE);
+//                rt_bind_device.setVisibility(View.GONE);
 //                ll_device_info.setVisibility(View.VISIBLE);
                 tv_step.setText(homeBean.getRun_steps().getSteps());
                 tv_distance.setText(homeBean.getRun_steps().getDistance());
@@ -356,13 +381,11 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 } else {
                     tv_heart_rate.setText(homeBean.getHealth_data().getHeart_rate());
                 }
-                if (homeBean.getHealth_report() == 0) {
+               /* if (homeBean.getHealth_report() == 0) {
                     rt_health_data.setVisibility(View.GONE);
                 } else {
                     rt_health_data.setVisibility(View.VISIBLE);
-                }
-
-                mHomeViewMode.getMineDeviceInfo();
+                }*/
             }
 
             banner_home_adv.setData(homeBean.getAdv_list(), null);
@@ -433,18 +456,19 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 mBleConnection = mBleDevice.connect();
                 mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
                     @Override
-                    public void onConnectionStateChange(int i) {
-                        if (i == CRPBleConnectionStateListener.STATE_CONNECTED) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mBleConnection.setStepChangeListener(HomeFragment.this);
-                                }
-                            });
+                    public void onConnectionStateChange(int newState) {
+                        switch (newState) {
+                            case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mBleConnection.setStepChangeListener(HomeFragment.this);
+                                    }
+                                });
+                                break;
                         }
                     }
                 });
-//                mBleDevice.disconnect();
             }
 
         } else {

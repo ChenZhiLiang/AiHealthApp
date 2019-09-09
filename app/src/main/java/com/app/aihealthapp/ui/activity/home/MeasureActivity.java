@@ -148,7 +148,12 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
 
         }
 
-        mCRPBleClient = AppContext.getBleClient(AppContext.getContext());
+        btn_start_measure.setText("设备连接中...");
+        btn_start_measure.setTextColor(getResources().getColor(R.color.default_hint_color));
+        btn_start_measure.setBackground(getResources().getDrawable(R.drawable.frame_gray_40));
+        btn_start_measure.setEnabled(false);
+
+        mCRPBleClient = AppContext.getBleClient();
         mBleDevice = mCRPBleClient.getBleDevice(Device_no);
         mBleConnection = mBleDevice.connect();
         mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
@@ -158,6 +163,7 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+
                             if (type==0){
                                 mBleConnection.setBloodPressureChangeListener(MeasureActivity.this);
                             }else if (type==1){
@@ -165,6 +171,10 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
                             }else {
                                 mBleConnection.setBloodOxygenChangeListener(MeasureActivity.this);
                             }
+                            btn_start_measure.setEnabled(true);
+                            btn_start_measure.setText("开始测量");
+                            btn_start_measure.setTextColor(getResources().getColor(R.color.default_text_color));
+                            btn_start_measure.setBackground(getResources().getDrawable(R.drawable.frame_blue));
                         }
                     });
                 }

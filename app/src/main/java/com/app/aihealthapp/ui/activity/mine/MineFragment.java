@@ -130,11 +130,9 @@ public class MineFragment extends BaseFragment implements MineView {
             if (UserHelper.getUserInfo().getIs_auth()==0){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
                 btn_authentication.setText("实名认证");
-                btn_authentication.setEnabled(true);
             }else {
                 tv_user_name.setText(UserHelper.getUserInfo().getNickname());
                 btn_authentication.setText("已认证");
-                btn_authentication.setEnabled(false);
             }
         }else {
             tv_user_name.setText("点击登录");
@@ -243,11 +241,9 @@ public class MineFragment extends BaseFragment implements MineView {
             if (TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
                 btn_authentication.setText("实名认证");
-                btn_authentication.setEnabled(true);
             }else {
                 tv_user_name.setText(UserHelper.getUserInfo().getNickname());
                 btn_authentication.setText("已认证");
-                btn_authentication.setEnabled(false);
             }
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));

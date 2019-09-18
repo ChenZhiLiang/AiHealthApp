@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,7 +49,7 @@ import butterknife.OnClick;
  * 修改人：Chen
  * 修改时间：2019/7/26 21:53
  */
-public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
+public class MineDeviceActivity extends BaseActivity implements MineDeviceView, OnCheckedChangeListener {
 
 //    @BindView(R.id.rt_bind_device)
 //    RelativeLayout rt_bind_device;
@@ -97,6 +99,11 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
         mMineDeviceViewMode = new MineDeviceViewMode(this);
         mCRPBleClient = AppContext.getBleClient();
 
+        check_open_phone.setOnCheckedChangeListener(this);
+        check_open_sms.setOnCheckedChangeListener(this);
+        check_open_qq.setOnCheckedChangeListener(this);
+        check_open_wx.setOnCheckedChangeListener(this);
+        check_open_photo.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -224,7 +231,14 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
     @Override
     public void UpdateDeviceResult(Object result) {
 
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            //刷新
+            mMineDeviceViewMode.getMineDeviceInfo(false);
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
 
+        }
     }
 
     @Override
@@ -238,6 +252,90 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
 
+        }
+    }
+
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        switch (buttonView.getId()){
+            case R.id.check_open_phone:
+                if (isChecked){
+                    if (mDeviceInfoBean.getIs_open_phone()==0){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),1,-1,-1,
+                                -1,-1);
+                    }
+
+                }else {
+                    if (mDeviceInfoBean.getIs_open_phone()==1){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),0,-1,-1,
+                                -1,-1);
+                    }
+
+                }
+                break;
+            case R.id.check_open_sms:
+                if (isChecked){
+                    if (mDeviceInfoBean.getIs_open_sms()==0){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,1,-1,
+                                -1,-1);
+                    }
+
+                }else {
+                    if (mDeviceInfoBean.getIs_open_sms()==1){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,0,-1,
+                                -1,-1);
+                    }
+
+                }
+
+                break;
+            case R.id.check_open_qq:
+
+                if (isChecked){
+                    if (mDeviceInfoBean.getIs_open_qq()==0){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+                                1,-1);
+                    }
+
+                }else {
+                    if (mDeviceInfoBean.getIs_open_qq()==1){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+                                0,-1);
+                    }
+
+                }
+                break;
+            case R.id.check_open_wx:
+                if (isChecked){
+                    if (mDeviceInfoBean.getIs_open_wechat()==0){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,1,
+                                -1,-1);
+                    }
+
+                }else {
+                    if (mDeviceInfoBean.getIs_open_wechat()==1){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,0,
+                                -1,-1);
+                    }
+
+                }
+                break;
+            case R.id.check_open_photo:
+                if (isChecked){
+                    if (mDeviceInfoBean.getIs_open_photo()==0){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+                                -1,1);
+                    }
+
+                }else {
+                    if (mDeviceInfoBean.getIs_open_photo()==1){
+                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+                                -1,0);
+                    }
+                }
+                break;
         }
     }
 
@@ -258,4 +356,6 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView {
 
         ToastyHelper.toastyNormal(this,err);
     }
+
+
 }

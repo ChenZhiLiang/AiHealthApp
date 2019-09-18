@@ -144,7 +144,7 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
         }else {
             tv_title_bar.setText("血氧测量");
             tv_measure_statue.setText("血氧状态");
-            tv_standard_value.setText("94%-97%");
+            tv_standard_value.setText("94%-98%");
 
         }
 

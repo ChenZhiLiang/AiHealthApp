@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.helper.EventBusHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.interfaces.BaseViewInterface;
 import com.app.aihealthapp.core.kprogresshud.KProgressHUD;
 import com.app.aihealthapp.ui.AppManager;
@@ -114,6 +115,17 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         }
     }
 
+    /**
+     * 是否登录
+     * @return
+     */
+    public boolean isLogin(){
+        if (UserHelper.getUserInfo()!=null){
+            return  true;
+        }else{
+            return false;
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();

@@ -22,9 +22,13 @@ import com.app.aihealthapp.core.helper.EventBusHelper;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.PermissionHelper;
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.permission.Permission;
+import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.bean.AdvListBean;
+import com.app.aihealthapp.ui.bean.UserInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.AuthenticationUserView;
 import com.app.aihealthapp.ui.mvvm.viewmode.AuthenticationUserViewMode;
 import com.luck.picture.lib.PictureSelector;
@@ -111,6 +115,9 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
     @Override
     public void initData() {
         mAuthenticationUserViewMode.getAds(6);
+        if (isLogin()){
+            mAuthenticationUserViewMode.getUserInfo();
+        }
     }
 
     @OnClick({R.id.rt_sex,R.id.tv_uploading,R.id.btn_submit})
@@ -214,6 +221,34 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
                     }
                     break;
             }
+        }
+    }
+
+    @Override
+    public void UesrInfoResult(Object result) {
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+            UserInfoBean mUserInfo = GsonHelper.GsonToBean(data,UserInfoBean.class);
+            SharedPreferenceHelper.setUserInfo(AppContext.getContext(),mUserInfo);
+            if (!TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
+                edit_input_name.setText(UserHelper.getUserInfo().getOauth_nickname());
+                edit_input_name.setSelection(UserHelper.getUserInfo().getOauth_nickname().length());
+                edit_input_nickname.setText(UserHelper.getUserInfo().getNickname());
+                if (UserHelper.getUserInfo().getSex()==1){
+                    tv_sex.setText("男");
+                }else {
+                    tv_sex.setText("女");
+                }
+                edit_input_height.setText(UserHelper.getUserInfo().getHeight()+"");
+                edit_input_weight.setText(UserHelper.getUserInfo().getWeight()+"");
+                edit_input_card_no.setText(UserHelper.getUserInfo().getCard_no());
+                edit_input_bank_no.setText(UserHelper.getUserInfo().getBank_no());
+                edit_input_bank_name.setText(UserHelper.getUserInfo().getBank_name());
+                edit_input_alipay_no.setText(UserHelper.getUserInfo().getAlipay_no());
+            }
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
         }
     }
 

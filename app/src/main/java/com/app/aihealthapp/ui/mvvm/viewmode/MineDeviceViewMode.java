@@ -46,18 +46,30 @@ public class MineDeviceViewMode {
         });
     }
 
-    public void UpdateDevice(int id,int is_bind,int is_open_phone,int is_open_sms,int is_open_wechat,int is_open_qq,int is_open_photo){
+
+
+
+    public void UpdateDevice(int id,int is_open_phone,int is_open_sms,int is_open_wechat,int is_open_qq,int is_open_photo){
 
         mMineDeviceView.showProgress();
         String url = ApiUrl.DeviceApi.UpdateDevice;
         RequestParams params = new RequestParams();
         params.put("id",String.valueOf(id));
-        params.put("is_bind",String.valueOf(is_bind));
-        params.put("is_open_phone",String.valueOf(is_open_phone));
-        params.put("is_open_sms",String.valueOf(is_open_sms));
-        params.put("is_open_wechat",String.valueOf(is_open_wechat));
-        params.put("is_open_qq",String.valueOf(is_open_qq));
-        params.put("is_open_photo",String.valueOf(is_open_photo));
+        if (is_open_phone!=-1){
+            params.put("is_open_phone",String.valueOf(is_open_phone));
+        }
+        if (is_open_sms!=-1){
+            params.put("is_open_sms",String.valueOf(is_open_sms));
+        }
+        if (is_open_wechat!=-1){
+            params.put("is_open_wechat",String.valueOf(is_open_wechat));
+        }
+        if (is_open_qq!=-1){
+            params.put("is_open_qq",String.valueOf(is_open_qq));
+        }
+        if (is_open_photo!=-1){
+            params.put("is_open_photo",String.valueOf(is_open_photo));
+        }
         mBaseMode.GetRequest(url, params, new ResultCallback() {
             @Override
             public void onSuccess(Object result) {

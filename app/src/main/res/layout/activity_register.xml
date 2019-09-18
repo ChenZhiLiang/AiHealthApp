@@ -67,7 +67,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="欢迎您注册爱健康app,请填写以下资料进行注册！"
+            android:text="欢迎您注册健康密钥app,请填写以下资料进行注册！"
             android:textSize="@dimen/text_14px"
             android:textColor="@color/default_text_color"
             android:layout_margin="@dimen/dimen_16px"/>
@@ -178,6 +178,7 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/tv_pass"
                     android:layout_marginLeft="@dimen/dimen_10px"
+                    android:inputType="textPassword"
                     android:hint="请输入密码"
                     android:background="@null"
                     android:layout_marginRight="@dimen/dimen_10px"
@@ -210,6 +211,7 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/tv_again_pass"
                     android:layout_marginLeft="@dimen/dimen_10px"
+                    android:inputType="textPassword"
                     android:hint="请再次输入密码"
                     android:background="@null"
                     android:layout_marginRight="@dimen/dimen_10px"
@@ -270,7 +272,7 @@
                 android:id="@+id/tv_protocol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="点击阅读《爱健康app用户协议》"
+                android:text="点击阅读《健康密钥app用户协议》"
                 android:textColor="@color/default_text_color"
                 android:textSize="@dimen/text_12px"/>
         </LinearLayout>

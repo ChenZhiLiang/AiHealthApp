@@ -26,6 +26,25 @@ public class AuthenticationUserViewMode {
         mBaseMode = new BaseMode();
     }
 
+    public void getUserInfo(){
+
+        String url = ApiUrl.UserApi.UserInfo;
+//        mMineView.showProgress();
+        mBaseMode.GetRequest(url, null, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mAuthenticationUserView.UesrInfoResult(result);
+//                mMineView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+//                mMineView.hideProgress();
+                mAuthenticationUserView.showLoadFailMsg(result.toString());
+            }
+        });
+    }
+
     public void AuthenticationUser(String realname,String nickname,int sex,String height,String weight,String card_no,String bank_name,String bank_no,
                                    String alipay_no,String alipay_pay_pic){
 

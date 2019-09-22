@@ -163,7 +163,6 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
                             if (type==0){
                                 mBleConnection.setBloodPressureChangeListener(MeasureActivity.this);
                             }else if (type==1){

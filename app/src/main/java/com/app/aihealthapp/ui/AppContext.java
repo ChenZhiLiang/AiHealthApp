@@ -1,14 +1,25 @@
 package com.app.aihealthapp.ui;
 
-import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Vibrator;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseApplication;
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
+import com.app.aihealthapp.ui.activity.service.PhoneListenService;
+import com.app.aihealthapp.ui.bean.DeviceInfoBean;
+import com.app.aihealthapp.util.utils;
 import com.crrepa.ble.CRPBleClient;
+import com.crrepa.ble.conn.CRPBleConnection;
+import com.crrepa.ble.conn.CRPBleDevice;
+import com.crrepa.ble.conn.type.CRPBleMessageType;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -23,6 +34,8 @@ public class AppContext extends BaseApplication {
 
     public static IWXAPI wxapi;
     public static CRPBleClient mBleClient;
+    public static CRPBleConnection mBleConnection;
+    public static CRPBleDevice mBleDevice;
 
     @Override
     public void onCreate() {
@@ -34,13 +47,15 @@ public class AppContext extends BaseApplication {
         wxapi = WXAPIFactory.createWXAPI(this,AppConfig.WEIXIN_APP_ID,true);
         //将应用的app_id 注册到微信
         wxapi.registerApp(AppConfig.WEIXIN_APP_ID);
-    }
 
-   /* @Override
-    public void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }*/
+        //重置通知栏监听服务
+        utils.toggleNotificationListenerService(this);
+        /*
+        * 开启电话监听服务
+        * */
+        startService(new Intent(this,PhoneListenService.class));
+
+    }
 
 
     public static CRPBleClient getBleClient() {
@@ -49,6 +64,7 @@ public class AppContext extends BaseApplication {
         }
         return mBleClient;
     }
+
 
 
     /**

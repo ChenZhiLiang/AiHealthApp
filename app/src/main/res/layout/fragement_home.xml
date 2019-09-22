@@ -37,6 +37,7 @@
                     android:background="@mipmap/home_wristband" />
 
                 <TextView
+                    android:id="@+id/tv_device_hint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

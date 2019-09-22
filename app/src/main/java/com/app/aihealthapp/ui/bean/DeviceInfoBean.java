@@ -1,5 +1,7 @@
 package com.app.aihealthapp.ui.bean;
 
+import java.io.Serializable;
+
 /**
  * @Name：AiHealth
  * @Description：描述信息
@@ -8,7 +10,7 @@ package com.app.aihealthapp.ui.bean;
  * 修改人：Chen
  * 修改时间：2019/8/18 11:52
  */
-public class DeviceInfoBean {
+public class DeviceInfoBean implements Serializable {
 
     /**
      * id : 1

@@ -2,6 +2,7 @@ package com.app.aihealthapp.ui.activity.home;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,7 +67,7 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
     private List<CRPBleDevice> devicelList  = new ArrayList<>();
 
     private CRPBleClient mCRPBleClient;
-    private CRPBleConnection mBleConnection;
+//    private CRPBleConnection mBleConnection;
 
 
     private BindDeviceViewMode mBindDeviceViewMode;
@@ -125,17 +126,18 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
         mDeviceListAdapter.setOnItemClickListener(new BaseXRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, final Object data, int position) {
-                final CRPBleDevice bleClient = (CRPBleDevice)data;
+//                final CRPBleDevice bleClient = (CRPBleDevice)data;
+                AppContext.mBleDevice = (CRPBleDevice)data;
                 mCRPBleClient.cancelScan();
-                mBleConnection = bleClient.connect();
-                mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
+                AppContext.mBleConnection = AppContext.mBleDevice.connect();
+                AppContext.mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
                     @Override
                     public void onConnectionStateChange(int newState) {
                         switch (newState) {
                             case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
-                                mBleConnection.syncTime();
-                                mBleConnection.findDevice();
-                                mBindDeviceViewMode.BindDevice(bleClient.getMacAddress());
+                                AppContext.mBleConnection.syncTime();
+                                AppContext.mBleConnection.findDevice();
+                                mBindDeviceViewMode.BindDevice(AppContext.mBleDevice.getMacAddress());
                                 mCRPBleClient.cancelScan();
                                 break;
                             case CRPBleConnectionStateListener.STATE_CONNECTING://正在连接
@@ -194,9 +196,6 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
     @Override
     public void onScanComplete(List<CRPScanDevice> list) {
 
-        for (int i = 0; i < list.size(); i++) {
-            Log.i("aaaaaaaaa",list.get(i).getDevice().getAddress());
-        }
         tv_search.setText("搜索完成");
         refresh_layout.refreshComplete();
     }
@@ -207,7 +206,11 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
             showLoadFailMsg("绑定成功");
-            EventBusHelper.sendEvent(new Event(EventCode.Code.BIND_DEVICE));
+            //发送广播通知 已经绑定成功设备
+            Intent intent =new Intent();
+            intent.setAction("action.bind_device_success");
+            sendBroadcast(intent);
+//            EventBusHelper.sendEvent(new Event(EventCode.Code.BIND_DEVICE));
             finish();
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));

@@ -4,27 +4,23 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
-import com.app.aihealthapp.core.base.BaseFragment;
 import com.app.aihealthapp.core.base.BaseFragmentPageAdapter;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.tablayout.CommonTabLayout;
 import com.app.aihealthapp.core.tablayout.listener.CustomTabEntity;
 import com.app.aihealthapp.core.tablayout.listener.OnTabSelectListener;
 import com.app.aihealthapp.ui.activity.forum.ForumFragment;
-import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
 import com.app.aihealthapp.ui.activity.home.HomeFragment;
-import com.app.aihealthapp.ui.activity.home.PayCentreActivity;
 import com.app.aihealthapp.ui.activity.manage.ManageFragment;
 import com.app.aihealthapp.ui.activity.mine.MineFragment;
 import com.app.aihealthapp.ui.activity.shop.ShopFragment;
 import com.app.aihealthapp.ui.bean.TabEntityBean;
 import com.app.aihealthapp.view.NoScrollViewPager;
-import com.luck.picture.lib.config.PictureConfig;
 
 import java.util.ArrayList;
 
@@ -49,7 +45,6 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
             R.mipmap.mall_icon_select,R.mipmap.forum_icon_select,
             R.mipmap.mind_icon_select};
 
-    private BaseFragment mBackHandedFragment;
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -68,10 +63,9 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
         IntentFilter intentFilter =new IntentFilter();
         intentFilter.addAction("action.intent_home");
         intentFilter.addAction("action.intent_mine");
-
         registerReceiver(mRefreshBroadcastReceiver, intentFilter);
-    }
 
+    }
     @Override
     public void initData() {
         mTitles = getResources().getStringArray(R.array.tab);
@@ -79,7 +73,6 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
         mFragments.add(ManageFragment.getInstance(mTitles[1]));
         mFragments.add(ShopFragment.getInstance(mTitles[2]));
         mFragments.add(ForumFragment.getInstance(mTitles[3]));
-
         mFragments.add(MineFragment.getInstance(mTitles[4]));
 
         for (int i = 0; i < mTitles.length; i++) {
@@ -121,7 +114,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
     public void onPageScrollStateChanged(int i) {
 
     }
-//记录用户首次点击返回键的时间
+    //记录用户首次点击返回键的时间
     private long firstTime = 0;
 
     @Override

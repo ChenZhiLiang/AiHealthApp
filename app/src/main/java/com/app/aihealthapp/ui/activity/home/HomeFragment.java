@@ -1,9 +1,11 @@
 package com.app.aihealthapp.ui.activity.home;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -25,6 +27,7 @@ import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.PermissionHelper;
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.permission.Permission;
@@ -46,16 +49,19 @@ import com.app.aihealthapp.ui.mvvm.view.HomeView;
 import com.app.aihealthapp.ui.mvvm.viewmode.HomeViewMode;
 import com.app.aihealthapp.view.MyGridView;
 import com.crrepa.ble.CRPBleClient;
-import com.crrepa.ble.conn.CRPBleConnection;
-import com.crrepa.ble.conn.CRPBleDevice;
 import com.crrepa.ble.conn.bean.CRPStepInfo;
 import com.crrepa.ble.conn.listener.CRPBleConnectionStateListener;
 import com.crrepa.ble.conn.listener.CRPStepChangeListener;
+import com.crrepa.ble.conn.type.CRPBleMessageType;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static android.content.ContentValues.TAG;
+import static com.app.aihealthapp.ui.activity.service.ComeWxMessage.CALL;
+import static com.app.aihealthapp.ui.activity.service.ComeWxMessage.MMS;
+import static com.app.aihealthapp.ui.activity.service.ComeWxMessage.QQ;
+import static com.app.aihealthapp.ui.activity.service.ComeWxMessage.WX;
 
 /**
  * @Name：aihealthapp
@@ -66,7 +72,7 @@ import static android.content.ContentValues.TAG;
  * 修改时间：2019/7/22 22:57
  */
 public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Adapter<ImageView, AdvListBean>,
-        BGABanner.Delegate<ImageView, AdvListBean>, CRPStepChangeListener {
+        BGABanner.Delegate<ImageView, AdvListBean>, CRPStepChangeListener  {
 
     @BindView(R.id.banner_home_adv)
     BGABanner banner_home_adv;
@@ -128,8 +134,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
 
     private CRPBleClient mCRPBleClient;
-    private CRPBleDevice mBleDevice;
-    private CRPBleConnection mBleConnection;
+//    private CRPBleDevice mBleDevice;
+//    private CRPBleConnection mBleConnection;
 
     private HomeViewMode mHomeViewMode;
     private HealthManageAdapter mHealthManageAdapter;
@@ -161,14 +167,73 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         mHomeViewMode = new HomeViewMode(this);
         configRecycleView(recycler_shop_area, new LinearLayoutManager(getContext()));
         mCRPBleClient = AppContext.getBleClient();
+
+        /*监听广播 消息*/
+        IntentFilter intentFilter =new IntentFilter();
+        intentFilter.addAction("SEND_WX_BROADCAST");
+        intentFilter.addAction("action.bind_device_success");
+        intentFilter.addAction(Intent.ACTION_NEW_OUTGOING_CALL);
+        mActivity.registerReceiver(mNotificationReceiver, intentFilter);
+
+        if (SharedPreferenceHelper.getDeviceInfo(mActivity)!=null){
+            mDeviceInfoBean = SharedPreferenceHelper.getDeviceInfo(mActivity);
+        }
     }
 
+    private BroadcastReceiver mNotificationReceiver =new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("SEND_WX_BROADCAST")){
+                Bundle bundle=intent.getExtras();
+                String pachageName=bundle.getString("packageName");
+                String tickerText = bundle.getString("tickerText");
+                switch (pachageName){
+                    case WX:
+                        mDeviceInfoBean = SharedPreferenceHelper.getDeviceInfo(mActivity);//获取最新的设备信息
+                        if (mDeviceInfoBean!=null&&mDeviceInfoBean.getIs_open_wechat()==1){
+                            if (AppContext.mBleDevice!=null&&AppContext.mBleDevice.isConnected()){
+                                AppContext.mBleConnection.sendMessage(tickerText, CRPBleMessageType.MESSAGE_WECHAT,0);
+                            }
+                        }
+                        break;
+                    case QQ:
+                        mDeviceInfoBean = SharedPreferenceHelper.getDeviceInfo(mActivity);//获取最新的设备信息
+                        if (mDeviceInfoBean!=null&&mDeviceInfoBean.getIs_open_qq()==1){
+                            if (AppContext.mBleDevice!=null&&AppContext.mBleDevice.isConnected()){
+                                AppContext.mBleConnection.sendMessage(tickerText, CRPBleMessageType.MESSAGE_QQ,0);
+                            }
+                        }
+                        break;
+                    case MMS:
+                        mDeviceInfoBean = SharedPreferenceHelper.getDeviceInfo(mActivity);//获取最新的设备信息
+                        if (mDeviceInfoBean!=null&&mDeviceInfoBean.getIs_open_sms()==1){
+                            if (AppContext.mBleDevice!=null&&AppContext.mBleDevice.isConnected()){
+                                AppContext.mBleConnection.sendMessage(tickerText, CRPBleMessageType.MESSAGE_SMS,0);
+                            }
+                        }
+                        break;
+                    case CALL:
+
+                        break;
+                }
+            }else if (action.equals("action.bind_device_success")){
+                mHomeViewMode.getHomeDatas(false);
+            }
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mActivity.unregisterReceiver(mNotificationReceiver);
+
+    }
 
     @Override
     public void loadingData() {
         mHomeViewMode.getHomeDatas(true);
-        //获取设备信息
-        mHomeViewMode.getMineDeviceInfo();
+
     }
 
     @Override
@@ -201,106 +266,31 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             startActivity(new Intent(getActivity(), HealthAskActivity.class));
         } else if (v == btn_inquiry) {
             startActivity(new Intent(getActivity(), DoctorListActivity.class).putExtra("cate_id",16));
-        } else if (v == ll_syncStep) {
-            if (isLogin()) {
-                if (homeBean.getIs_bind_bracelet()== 1) {//已绑定
-                    ClickStep = true;
-                    mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
-                    mBleConnection = mBleDevice.connect();
-                    mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
-                        @Override
-                        public void onConnectionStateChange(int newState) {
-                            switch (newState) {
-                                case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            mBleConnection.setStepChangeListener(HomeFragment.this);
-                                            //运动记步
-                                            mBleConnection.syncStep();
-                                        }
-                                    });
-                                    break;
-                            }
-                        }
-                    });
-
-                } else {
-                    if (!mCRPBleClient.isBluetoothEnable()) {
-                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivity(enableBtIntent);
-                        return;
-                    } else {
-                        if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
-                            startActivity(new Intent(getContext(), BindDeviceActivity.class));
-                        }
-                    }
-                }
-            } else {
-                startActivity(new Intent(getContext(), LoginActivity.class));
-            }
-
-        } else if (v == ll_blood_pressure) {
-            if (isLogin()) {
-                if (homeBean.getIs_bind_bracelet()== 1) {
-                    startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 0));
-                } else {
-                    if (!mCRPBleClient.isBluetoothEnable()) {
-                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivity(enableBtIntent);
-                        return;
-                    } else {
-                        if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
-                            startActivity(new Intent(getContext(), BindDeviceActivity.class));
-                        }
-                    }
-                }
-            } else {
-                startActivity(new Intent(getContext(), LoginActivity.class));
-            }
-        } else if (v == ll_heart_rate) {
-            if (isLogin()) {
-                if (homeBean.getIs_bind_bracelet()== 1) {
-                    //心率测量
-                    startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 1));
-                } else {
-                    if (!mCRPBleClient.isBluetoothEnable()) {
-                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivity(enableBtIntent);
-                        return;
-                    } else {
-                        if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
-                            startActivity(new Intent(getContext(), BindDeviceActivity.class));
-                        }
-                    }
-                }
-            } else {
-                startActivity(new Intent(getContext(), LoginActivity.class));
-            }
-        } else if (v == ll_blood_oxygen) {
-
-            if (isLogin()) {
-                if (homeBean.getIs_bind_bracelet()== 1) {
-                    //血压测量
-                    startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 2));
-                } else {
-                    if (!mCRPBleClient.isBluetoothEnable()) {
-                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivity(enableBtIntent);
-                        return;
-                    } else {
-                        if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
-                            startActivity(new Intent(getContext(), BindDeviceActivity.class));
-                        }
-                    }
-                }
-            } else {
-                startActivity(new Intent(getContext(), LoginActivity.class));
-            }
-        }else if (v==btn_shop_index){
+        }  else if (v==btn_shop_index){
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index));
         }else if (v==btn_health_shop){
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Self_Support));
+        }else {
+            if (homeBean.getIs_bind_bracelet()==1) {
+                if (v == ll_syncStep) {
+                    ClickStep = true;
+                    AppContext.mBleConnection.setStepChangeListener(HomeFragment.this);
+                    //运动记步
+                    AppContext.mBleConnection.syncStep();
+                }  else if (v == ll_blood_oxygen) {
+                    //血压测量
+                    startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 2));
+                }else if (v == ll_heart_rate) {
+                    //心率测量
+                    startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 1));
+                }else if (v==ll_blood_pressure){
+
+                    startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 0));
+
+                }
+            }else {
+                ToastyHelper.toastyNormal(mActivity, "未绑定设备，请绑定设备");
+            }
         }
     }
 
@@ -320,12 +310,9 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             mHomeViewMode.getHomeDatas(false);
         } else if (event.getCode() == EventCode.Code.LOGOUT) {
             mHomeViewMode.getHomeDatas(false);
-        }else if (event.getCode()== EventCode.Code.BIND_DEVICE){
-            mHomeViewMode.getHomeDatas(false);
-            mHomeViewMode.getMineDeviceInfo();
         }else if(event.getCode()== EventCode.Code.UN_BIND_DEVICE){
+            AppContext.mBleDevice.disconnect();
             mHomeViewMode.getHomeDatas(false);
-
         }
     }
 
@@ -353,19 +340,16 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
         int ret = GsonHelper.GsonToInt(result.toString(), "ret");
         if (ret == 0) {
-
             String data = GsonHelper.GsonToData(result.toString(), "data").toString();
             homeBean = GsonHelper.GsonToBean(data, HomeBean.class);
-            if (homeBean.getIs_bind_bracelet() == 0) {
-//                rt_bind_device.setVisibility(View.VISIBLE);
-//                ll_device_info.setVisibility(View.GONE);
-            } else {
-//                rt_bind_device.setVisibility(View.GONE);
-//                ll_device_info.setVisibility(View.VISIBLE);
+            if (homeBean.getIs_bind_bracelet() == 0) {//未绑定手环
+                rt_bind_device.setVisibility(View.VISIBLE);
+
+            } else {//绑定手环
+                rt_bind_device.setVisibility(View.GONE);
                 tv_step.setText(homeBean.getRun_steps().getSteps());
                 tv_distance.setText(homeBean.getRun_steps().getDistance());
                 tv_calorie.setText(homeBean.getRun_steps().getCalories());
-
                 if (TextUtils.isEmpty(homeBean.getHealth_data().getBlood_pressure())) {
                     tv_blood_pressure.setText("0/0");
                 } else {
@@ -381,11 +365,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 } else {
                     tv_heart_rate.setText(homeBean.getHealth_data().getHeart_rate());
                 }
-               /* if (homeBean.getHealth_report() == 0) {
-                    rt_health_data.setVisibility(View.GONE);
-                } else {
-                    rt_health_data.setVisibility(View.VISIBLE);
-                }*/
+                //获取设备信息
+                mHomeViewMode.getMineDeviceInfo();
             }
 
             banner_home_adv.setData(homeBean.getAdv_list(), null);
@@ -442,40 +423,49 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         }
     }
 
+
     @Override
     public void MineDeviceInfo(Object result) {
         int ret = GsonHelper.GsonToInt(result.toString(), "ret");
         if (ret == 0) {
             String data = GsonHelper.GsonToData(result.toString(), "data").toString();
-            if (TextUtils.isEmpty(data)) {
+            if (data.equals("{}")) {
                 rt_bind_device.setVisibility(View.VISIBLE);
             } else {
                 rt_bind_device.setVisibility(View.GONE);
                 mDeviceInfoBean = GsonHelper.GsonToBean(data, DeviceInfoBean.class);
-                mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
-                mBleConnection = mBleDevice.connect();
-                mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
-                    @Override
-                    public void onConnectionStateChange(int newState) {
-                        switch (newState) {
-                            case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mBleConnection.setStepChangeListener(HomeFragment.this);
-                                    }
-                                });
-                                break;
+                SharedPreferenceHelper.setDeviceInfo(mActivity,mDeviceInfoBean);
+                AppContext.mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
+//                mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
+                if (!AppContext.mBleDevice.isConnected()){
+                    AppContext.mBleConnection = AppContext.mBleDevice.connect();
+                    AppContext.mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
+                        @Override
+                        public void onConnectionStateChange(int newState) {
+                            switch (newState) {
+                                case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            AppContext.mBleConnection.setStepChangeListener(HomeFragment.this);
+                                        }
+                                    });
+                                    break;
+                            }
                         }
-                    }
-                });
+                    });
+                }else {
+                    //运动记步
+                    AppContext.mBleConnection.syncStep();
+                    AppContext.mBleConnection.setStepChangeListener(this);
+                }
+
             }
 
         } else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(), "msg"));
         }
     }
-
     @Override
     public void runStepsResult(Object result) {
         int ret = GsonHelper.GsonToInt(result.toString(), "ret");
@@ -508,7 +498,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     @Override
     public void onBannerItemClick(BGABanner banner, ImageView itemView, AdvListBean model, int position) {
-        showLoadFailMsg("点击");
+//        showLoadFailMsg("点击");
 
     }
 

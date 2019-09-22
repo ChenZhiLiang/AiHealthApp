@@ -2,17 +2,15 @@ package com.app.aihealthapp.ui.activity.mine;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.aihealthapp.R;
@@ -22,18 +20,16 @@ import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.CircleDialogHelper;
 import com.app.aihealthapp.core.helper.EventBusHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
-import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.ui.AppContext;
-import com.app.aihealthapp.ui.AppManager;
 import com.app.aihealthapp.ui.activity.home.BindDeviceActivity;
 import com.app.aihealthapp.ui.bean.DeviceInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineDeviceView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineDeviceViewMode;
+import com.app.aihealthapp.util.utils;
 import com.crrepa.ble.CRPBleClient;
-import com.crrepa.ble.conn.CRPBleConnection;
-import com.crrepa.ble.conn.CRPBleDevice;
-import com.crrepa.ble.conn.listener.CRPBleConnectionStateListener;
+import com.crrepa.ble.conn.listener.CRPCameraOperationListener;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -49,7 +45,7 @@ import butterknife.OnClick;
  * 修改人：Chen
  * 修改时间：2019/7/26 21:53
  */
-public class MineDeviceActivity extends BaseActivity implements MineDeviceView, OnCheckedChangeListener {
+public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
 
 //    @BindView(R.id.rt_bind_device)
 //    RelativeLayout rt_bind_device;
@@ -58,23 +54,22 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
     @BindView(R.id.btn_bind)
     Button btn_bind;
     @BindView(R.id.check_open_phone)
-    CheckBox check_open_phone;
+    ImageView check_open_phone;
     @BindView(R.id.check_open_sms)
-    CheckBox check_open_sms;
+    ImageView check_open_sms;
     @BindView(R.id.check_open_qq)
-    CheckBox check_open_qq;
+    ImageView check_open_qq;
     @BindView(R.id.check_open_wx)
-    CheckBox check_open_wx;
+    ImageView check_open_wx;
     @BindView(R.id.check_open_photo)
-    CheckBox check_open_photo;
-//    @BindView(R.id.btn_unbind)
-//    Button btn_unbind;
-
+    ImageView check_open_photo;
     private MineDeviceViewMode mMineDeviceViewMode;
     private int id;
 
     private CRPBleClient mCRPBleClient;
-    private CRPBleDevice mBleDevice;
+//    private CRPBleDevice mBleDevice;
+//    private CRPBleConnection mBleConnection;
+
     private DeviceInfoBean mDeviceInfoBean;
 
     @Override
@@ -99,11 +94,27 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
         mMineDeviceViewMode = new MineDeviceViewMode(this);
         mCRPBleClient = AppContext.getBleClient();
 
-        check_open_phone.setOnCheckedChangeListener(this);
-        check_open_sms.setOnCheckedChangeListener(this);
-        check_open_qq.setOnCheckedChangeListener(this);
-        check_open_wx.setOnCheckedChangeListener(this);
-        check_open_photo.setOnCheckedChangeListener(this);
+        /*监听广播 消息*/
+        IntentFilter intentFilter =new IntentFilter();
+        intentFilter.addAction("action.bind_device_success");
+        registerReceiver(mNotificationReceiver, intentFilter);
+
+    }
+    private BroadcastReceiver mNotificationReceiver =new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.bind_device_success")){
+                mMineDeviceViewMode.getMineDeviceInfo(false);
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mNotificationReceiver);
+
     }
 
     @Override
@@ -111,8 +122,9 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
         mMineDeviceViewMode.getMineDeviceInfo(true);
     }
 
-    @OnClick({R.id.btn_bind})
+    @OnClick({R.id.btn_bind,R.id.check_open_phone,R.id.check_open_sms,R.id.check_open_qq,R.id.check_open_wx,R.id.check_open_photo})
     public void onClick(View v){
+
         if (v==btn_bind){
             if (btn_bind.getText().equals("绑定设备")){
                 if (!mCRPBleClient.isBluetoothEnable()){
@@ -126,9 +138,9 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
                 CircleDialogHelper.ShowDialog(this,"温馨提示","确定解除绑定该设备(Qs-05)?","确定","取消", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
-                        if (mBleDevice.isConnected()){
-                            mBleDevice.disconnect();
+//                        mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
+                        if (AppContext.mBleDevice.isConnected()){
+                            AppContext.mBleDevice.disconnect();
                         }
                         // 获取本地蓝牙适配器
                         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -145,10 +157,89 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
 
                     }
                 }, null);
-
             }
+        }else {
+            if (btn_bind.getText().equals("绑定设备")){
+                ToastyHelper.toastyNormal(this,"请先绑定设备");
+            }else {
+                switch (v.getId()){
+                    case R.id.check_open_phone:
+                        if (mDeviceInfoBean.getIs_open_phone()==0){
+                            if (!utils.isEnabledNotification(AppContext.getContext())){
+                                isShowNotification();
+                            }else {
+                                mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),1,-1,-1,
+                                        -1,-1);
+                            }
 
+                        }else {
+                            mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),0,-1,-1,
+                                    -1,-1);
+                        }
+                        break;
+                    case R.id.check_open_sms:
+                        if (mDeviceInfoBean.getIs_open_sms()==0){
+                            if (!utils.isEnabledNotification(AppContext.getContext())){
+                                isShowNotification();
+                            }else {
+                                mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,1,-1,
+                                        -1,-1);
+                            }
+
+                        }else {
+                            mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,0,-1,
+                                    -1,-1);
+                        }
+                        break;
+                    case R.id.check_open_qq:
+
+                        if (mDeviceInfoBean.getIs_open_qq()==0){
+                            if (!utils.isEnabledNotification(AppContext.getContext())){
+                                isShowNotification();
+                            }else {
+                                mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+                                        1,-1);
+                            }
+
+                        }else {
+                            mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+                                    0,-1);
+                        }
+                        break;
+                    case R.id.check_open_wx:
+                        if (mDeviceInfoBean.getIs_open_wechat()==0){
+                            if (!utils.isEnabledNotification(AppContext.getContext())){
+                                isShowNotification();
+                            }else {
+                                mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,1,
+                                        -1,-1);
+                            }
+
+                        }else {
+                            mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,0,
+                                    -1,-1);
+                        }
+                        break;
+                    case R.id.check_open_photo:
+                        if (mDeviceInfoBean.getIs_open_photo()==0){
+
+                            if (!utils.isEnabledNotification(AppContext.getContext())){
+                                isShowNotification();
+                            }else {
+                                mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+                                        -1,1);
+                            }
+
+                        }else {
+                            mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+                                    -1,1);
+                        }
+                        break;
+                }
+            }
         }
+
+
     }
 
     //反射来调用BluetoothDevice.removeBond取消设备的配对
@@ -169,44 +260,48 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
             if (data.equals("{}")){
                 btn_bind.setText("绑定设备");
                 tv_device_name.setText("您还未绑定设备");
+                check_open_phone.setBackgroundResource(R.mipmap.car_off);
+                check_open_sms.setBackgroundResource(R.mipmap.car_off);
+                check_open_qq.setBackgroundResource(R.mipmap.car_off);
+                check_open_wx.setBackgroundResource(R.mipmap.car_off);
+                check_open_photo.setBackgroundResource(R.mipmap.car_off);
 
-//                rt_bind_device.setVisibility(View.VISIBLE);
-//                btn_unbind.setVisibility(View.GONE);
             }else {
-                 mDeviceInfoBean = GsonHelper.GsonToBean(data,DeviceInfoBean.class);
+                mDeviceInfoBean = GsonHelper.GsonToBean(data,DeviceInfoBean.class);
+                /*保存设备信息在本地*/
+                SharedPreferenceHelper.setDeviceInfo(this,mDeviceInfoBean);
+//                AppContext.mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
+//                mBleConnection = mBleDevice.connect();
                 tv_device_name.setText("已绑定设备(Qs-05)");
                 btn_bind.setText("解除绑定");
-//                rt_bind_device.setVisibility(View.GONE);
-//                btn_unbind.setVisibility(View.VISIBLE);
-
                 id = mDeviceInfoBean.getId();
-
                 if (mDeviceInfoBean.getIs_open_phone()==0){
-                    check_open_phone.setChecked(false);
+                    check_open_phone.setBackgroundResource(R.mipmap.car_off);
                 }else {
-                    check_open_phone.setChecked(true);
+                    check_open_phone.setBackgroundResource(R.mipmap.car_on);
                 }
-
                 if (mDeviceInfoBean.getIs_open_sms()==0){
-                    check_open_sms.setChecked(false);
+                    check_open_sms.setBackgroundResource(R.mipmap.car_off);
                 }else {
-                    check_open_sms.setChecked(true);
+                    check_open_sms.setBackgroundResource(R.mipmap.car_on);
                 }
-
                 if (mDeviceInfoBean.getIs_open_qq()==0){
-                    check_open_qq.setChecked(false);
+                    check_open_qq.setBackgroundResource(R.mipmap.car_off);
+
                 }else {
-                    check_open_qq.setChecked(true);
+                    check_open_qq.setBackgroundResource(R.mipmap.car_on);
                 }
                 if (mDeviceInfoBean.getIs_open_wechat()==0){
-                    check_open_wx.setChecked(false);
+                    check_open_wx.setBackgroundResource(R.mipmap.car_off);
+
                 }else {
-                    check_open_wx.setChecked(true);
+                    check_open_wx.setBackgroundResource(R.mipmap.car_on);
                 }
                 if (mDeviceInfoBean.getIs_open_photo()==0){
-                    check_open_photo.setChecked(false);
+                    check_open_photo.setBackgroundResource(R.mipmap.car_off);
+
                 }else {
-                    check_open_photo.setChecked(true);
+                    check_open_photo.setBackgroundResource(R.mipmap.car_on);
                 }
             }
 
@@ -216,25 +311,25 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
     }
 
 
-    @Override
-    protected boolean isRegisterEventBus() {
-        return true;
+    private void isShowNotification(){
+        CircleDialogHelper.ShowDialog(this,"温馨提示","需要开启通知读取权限才能正常使用消息推送","开启","取消", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+                startActivity(intent);
+            }
+        }, null);
     }
 
-    @Override
-    protected void receiveEvent(Event event) {
-        super.receiveEvent(event);
-        if (event.getCode()== EventCode.Code.BIND_DEVICE){
-            mMineDeviceViewMode.getMineDeviceInfo(false);
-        }
-    }
     @Override
     public void UpdateDeviceResult(Object result) {
 
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
+            utils.toggleNotificationListenerService(this);
             //刷新
             mMineDeviceViewMode.getMineDeviceInfo(false);
+
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
 
@@ -246,6 +341,8 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
             EventBusHelper.sendEvent(new Event(EventCode.Code.UN_BIND_DEVICE));
+//            //清除本地设备信息
+            SharedPreferenceHelper.clearDevice(this);
             mMineDeviceViewMode.getMineDeviceInfo(false);
             showLoadFailMsg("解绑成功");
 
@@ -255,89 +352,6 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
         }
     }
 
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-        switch (buttonView.getId()){
-            case R.id.check_open_phone:
-                if (isChecked){
-                    if (mDeviceInfoBean.getIs_open_phone()==0){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),1,-1,-1,
-                                -1,-1);
-                    }
-
-                }else {
-                    if (mDeviceInfoBean.getIs_open_phone()==1){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),0,-1,-1,
-                                -1,-1);
-                    }
-
-                }
-                break;
-            case R.id.check_open_sms:
-                if (isChecked){
-                    if (mDeviceInfoBean.getIs_open_sms()==0){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,1,-1,
-                                -1,-1);
-                    }
-
-                }else {
-                    if (mDeviceInfoBean.getIs_open_sms()==1){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,0,-1,
-                                -1,-1);
-                    }
-
-                }
-
-                break;
-            case R.id.check_open_qq:
-
-                if (isChecked){
-                    if (mDeviceInfoBean.getIs_open_qq()==0){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
-                                1,-1);
-                    }
-
-                }else {
-                    if (mDeviceInfoBean.getIs_open_qq()==1){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
-                                0,-1);
-                    }
-
-                }
-                break;
-            case R.id.check_open_wx:
-                if (isChecked){
-                    if (mDeviceInfoBean.getIs_open_wechat()==0){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,1,
-                                -1,-1);
-                    }
-
-                }else {
-                    if (mDeviceInfoBean.getIs_open_wechat()==1){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,0,
-                                -1,-1);
-                    }
-
-                }
-                break;
-            case R.id.check_open_photo:
-                if (isChecked){
-                    if (mDeviceInfoBean.getIs_open_photo()==0){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
-                                -1,1);
-                    }
-
-                }else {
-                    if (mDeviceInfoBean.getIs_open_photo()==1){
-                        mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
-                                -1,0);
-                    }
-                }
-                break;
-        }
-    }
 
     @Override
     public void showProgress() {
@@ -353,9 +367,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView, 
 
     @Override
     public void showLoadFailMsg(String err) {
-
         ToastyHelper.toastyNormal(this,err);
     }
-
 
 }

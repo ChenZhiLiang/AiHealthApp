@@ -159,9 +159,11 @@
                     android:layout_height="1dp"
                     android:background="@color/view_line"/>
                 <RelativeLayout
+                    android:id="@+id/rt_open_photo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_16px"
+                    android:background="@drawable/selector_onclick"
                     >
                     <TextView
                         android:layout_width="wrap_content"
@@ -176,7 +178,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@mipmap/car_off"/>
+                        android:background="@mipmap/capture"/>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

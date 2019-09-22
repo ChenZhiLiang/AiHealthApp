@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.aihealthapp.R;
@@ -20,8 +21,11 @@ import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.CircleDialogHelper;
 import com.app.aihealthapp.core.helper.EventBusHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
+import com.app.aihealthapp.core.helper.PermissionHelper;
+import com.app.aihealthapp.core.helper.PreferenceHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.activity.home.BindDeviceActivity;
 import com.app.aihealthapp.ui.bean.DeviceInfoBean;
@@ -30,6 +34,9 @@ import com.app.aihealthapp.ui.mvvm.viewmode.MineDeviceViewMode;
 import com.app.aihealthapp.util.utils;
 import com.crrepa.ble.CRPBleClient;
 import com.crrepa.ble.conn.listener.CRPCameraOperationListener;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -61,8 +68,10 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
     ImageView check_open_qq;
     @BindView(R.id.check_open_wx)
     ImageView check_open_wx;
-    @BindView(R.id.check_open_photo)
-    ImageView check_open_photo;
+    @BindView(R.id.rt_open_photo)
+    RelativeLayout rt_open_photo;
+//    @BindView(R.id.check_open_photo)
+//    ImageView check_open_photo;
     private MineDeviceViewMode mMineDeviceViewMode;
     private int id;
 
@@ -122,7 +131,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
         mMineDeviceViewMode.getMineDeviceInfo(true);
     }
 
-    @OnClick({R.id.btn_bind,R.id.check_open_phone,R.id.check_open_sms,R.id.check_open_qq,R.id.check_open_wx,R.id.check_open_photo})
+    @OnClick({R.id.btn_bind,R.id.check_open_phone,R.id.check_open_sms,R.id.check_open_qq,R.id.check_open_wx,R.id.rt_open_photo})
     public void onClick(View v){
 
         if (v==btn_bind){
@@ -220,20 +229,24 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
                                     -1,-1);
                         }
                         break;
-                    case R.id.check_open_photo:
-                        if (mDeviceInfoBean.getIs_open_photo()==0){
+                    case R.id.rt_open_photo:
 
-                            if (!utils.isEnabledNotification(AppContext.getContext())){
-                                isShowNotification();
-                            }else {
-                                mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
-                                        -1,1);
-                            }
-
-                        }else {
-                            mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
-                                    -1,1);
+                        if (new PermissionHelper().RequestPermisson(this, Permission.CAMERA)){
+                            startActivity(new Intent(this,TakePhotoActivity.class));
                         }
+//                        if (mDeviceInfoBean.getIs_open_photo()==0){
+//
+//                            if (!utils.isEnabledNotification(AppContext.getContext())){
+//                                isShowNotification();
+//                            }else {
+//                                mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+//                                        -1,1);
+//                            }
+//
+//                        }else {
+//                            mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
+//                                    -1,1);
+//                        }
                         break;
                 }
             }
@@ -264,7 +277,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
                 check_open_sms.setBackgroundResource(R.mipmap.car_off);
                 check_open_qq.setBackgroundResource(R.mipmap.car_off);
                 check_open_wx.setBackgroundResource(R.mipmap.car_off);
-                check_open_photo.setBackgroundResource(R.mipmap.car_off);
+//                check_open_photo.setBackgroundResource(R.mipmap.car_off);
 
             }else {
                 mDeviceInfoBean = GsonHelper.GsonToBean(data,DeviceInfoBean.class);
@@ -297,12 +310,12 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
                 }else {
                     check_open_wx.setBackgroundResource(R.mipmap.car_on);
                 }
-                if (mDeviceInfoBean.getIs_open_photo()==0){
-                    check_open_photo.setBackgroundResource(R.mipmap.car_off);
-
-                }else {
-                    check_open_photo.setBackgroundResource(R.mipmap.car_on);
-                }
+//                if (mDeviceInfoBean.getIs_open_photo()==0){
+//                    check_open_photo.setBackgroundResource(R.mipmap.car_off);
+//
+//                }else {
+//                    check_open_photo.setBackgroundResource(R.mipmap.car_on);
+//                }
             }
 
         }else {

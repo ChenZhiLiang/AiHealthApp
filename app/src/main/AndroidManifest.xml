@@ -69,6 +69,7 @@
         <activity android:name=".ui.activity.mine.SearchRecordDetailsActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.home.PayCentreActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.mine.InterrogationDetailsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.mine.TakePhotoActivity" android:screenOrientation="portrait"/>
 
         <!--手环-->
         <activity android:name="com.crrepa.ble.trans.upgrade.NotificationActivity"/> />

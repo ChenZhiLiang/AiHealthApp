@@ -1,11 +1,16 @@
 package com.app.aihealthapp.ui.activity.home;
 
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -17,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
@@ -24,6 +30,7 @@ import com.app.aihealthapp.core.base.BaseXRecyclerViewAdapter;
 import com.app.aihealthapp.core.bgabanner.BGABanner;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
+import com.app.aihealthapp.core.helper.CircleDialogHelper;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.PermissionHelper;
@@ -32,6 +39,7 @@ import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.MainActivity;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.mine.LoginActivity;
 import com.app.aihealthapp.ui.adapter.HealthManageAdapter;
@@ -47,6 +55,7 @@ import com.app.aihealthapp.ui.bean.HomeBean;
 import com.app.aihealthapp.ui.bean.ShopListBean;
 import com.app.aihealthapp.ui.mvvm.view.HomeView;
 import com.app.aihealthapp.ui.mvvm.viewmode.HomeViewMode;
+import com.app.aihealthapp.util.utils;
 import com.app.aihealthapp.view.MyGridView;
 import com.crrepa.ble.CRPBleClient;
 import com.crrepa.ble.conn.bean.CRPStepInfo;
@@ -251,8 +260,17 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                     startActivity(enableBtIntent);
                     return;
                 } else {
-                    if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
+                    if (utils.isLocServiceEnable(mActivity)){
                         startActivity(new Intent(getContext(), BindDeviceActivity.class));
+                    }else {
+
+                        CircleDialogHelper.ShowDialog((AppCompatActivity) mActivity, "温馨提示", "扫描附近蓝牙设备需要开启定位服务", "开启", "取消", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(intent);
+                            }
+                        },null);
                     }
                 }
             } else {

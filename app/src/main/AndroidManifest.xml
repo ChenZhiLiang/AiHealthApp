@@ -70,7 +70,11 @@
         <activity android:name=".ui.activity.home.PayCentreActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.mine.InterrogationDetailsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.mine.TakePhotoActivity" android:screenOrientation="portrait"/>
-
+        <activity
+            android:name="com.app.aihealthapp.core.permission.PermissionActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/permission_PermissionActivity"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!--手环-->
         <activity android:name="com.crrepa.ble.trans.upgrade.NotificationActivity"/> />
 

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -141,7 +143,17 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
                     startActivity(enableBtIntent);
                     return;
                 }else {
-                    startActivity(new Intent(this, BindDeviceActivity.class));
+                    if (utils.isLocServiceEnable(this)){
+                        startActivity(new Intent(this, BindDeviceActivity.class));
+                    }else {
+                        CircleDialogHelper.ShowDialog(this, "温馨提示", "扫描附近蓝牙设备需要开启定位服务", "开启", "取消", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(intent);
+                            }
+                        },null);
+                    }
                 }
             }else {
                 CircleDialogHelper.ShowDialog(this,"温馨提示","确定解除绑定该设备(Qs-05)?","确定","取消", new View.OnClickListener() {

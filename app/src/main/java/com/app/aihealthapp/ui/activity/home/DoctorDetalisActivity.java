@@ -76,7 +76,8 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
     private DoctorDetalisViewMode mDoctorDetalisViewMode;
     private int id;
     private int Is_valid;
-    private String advice_price;
+    private int advice_price;
+    private String price_hek;
     private String doctor_name;
     @Override
     public int getLayoutId() {
@@ -99,7 +100,8 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
     public void initView() {
         id  =getIntent().getIntExtra("id",0);
         Is_valid = getIntent().getIntExtra("Is_valid",0);
-        advice_price = getIntent().getStringExtra("advice_price");
+        advice_price = getIntent().getIntExtra("advice_price",0);
+        price_hek = getIntent().getStringExtra("price_hek");
         doctor_name = getIntent().getStringExtra("doctor_name");
         mDoctorDetalisViewMode = new DoctorDetalisViewMode(this);
         webview.setWebTitleView(this);
@@ -174,7 +176,7 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
             tv_hospital_name.setText(mDoctorDetalisBean.getHospital());
             tv_ask_num.setText(mDoctorDetalisBean.getPerson_time());
             tv_good_evaluation.setText(mDoctorDetalisBean.getGood_rate());
-            tv_price.setText("¥"+mDoctorDetalisBean.getAdvice_price());
+            tv_price.setText(mDoctorDetalisBean.getPrice_hek());
             webview.loadUrl(ApiUrl.WebApi.DoctorDetail+id);//加载网址
 
         }else {

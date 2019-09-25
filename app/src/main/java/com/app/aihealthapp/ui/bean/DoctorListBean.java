@@ -10,22 +10,28 @@ package com.app.aihealthapp.ui.bean;
  */
 public class DoctorListBean {
 
+
     /**
-     * id : 41
-     * nickname : 张三
-     * avatar : http://aijiankang.cacpo.com/wap/images/default.png
-     * department_name : 产科
-     * position : 副主任医师
-     * obtain : 从业20年
-     * hospital : 南宁中医学院仁爱医院北院
-     * hospital_hot : 不孕不育，脐带绕颈，产前检查，产后恢复
-     * introduce : 不孕不育，脐带绕颈，产前检查，产后恢复
-     * doctor_skill : 不孕不育，脐带绕颈，产前检查，产后恢复
-     * advice_price : 10.00
-     * buy_count : 0
+     * id : 62
+     * cat_id : 16
+     * nickname : 张医生
+     * avatar : http://aijiankang.cacpo.com/upload/pic/20190827/28edde523ec77719cc51f96939996790.jpg
+     * department_name : 外科
+     * position : 主任医生
+     * obtain : 外科
+     * hospital : 外科医院
+     * hospital_hot :
+     * introduce : 外科
+     * doctor_skill : 外科
+     * advice_price : 1
+     * advice_hek : 0
+     * price_hek : ¥1+0健康密钥
+     * buy_count : 8
+     * is_valid : 0
      */
 
     private int id;
+    private int cat_id;
     private String nickname;
     private String avatar;
     private String department_name;
@@ -35,7 +41,9 @@ public class DoctorListBean {
     private String hospital_hot;
     private String introduce;
     private String doctor_skill;
-    private String advice_price;
+    private int advice_price;
+    private int advice_hek;
+    private String price_hek;
     private int buy_count;
     private int is_valid;
 
@@ -45,6 +53,14 @@ public class DoctorListBean {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(int cat_id) {
+        this.cat_id = cat_id;
     }
 
     public String getNickname() {
@@ -119,12 +135,28 @@ public class DoctorListBean {
         this.doctor_skill = doctor_skill;
     }
 
-    public String getAdvice_price() {
+    public int getAdvice_price() {
         return advice_price;
     }
 
-    public void setAdvice_price(String advice_price) {
+    public void setAdvice_price(int advice_price) {
         this.advice_price = advice_price;
+    }
+
+    public int getAdvice_hek() {
+        return advice_hek;
+    }
+
+    public void setAdvice_hek(int advice_hek) {
+        this.advice_hek = advice_hek;
+    }
+
+    public String getPrice_hek() {
+        return price_hek;
+    }
+
+    public void setPrice_hek(String price_hek) {
+        this.price_hek = price_hek;
     }
 
     public int getBuy_count() {

@@ -24,12 +24,12 @@ public class PayCentreViewMode {
         mBaseMode = new BaseMode();
     }
 
-    public void buy(int doctor_id,String advice_price,int pay_type){
+    public void buy(int doctor_id,int pay_type){
         mPayCentreView.showProgress();
         String url = ApiUrl.HomeApi.Buy;
         RequestParams params = new RequestParams();
         params.put("doctor_id",String.valueOf(doctor_id));
-        params.put("advice_price",advice_price);
+//        params.put("advice_price",advice_price);
         params.put("pay_type",String.valueOf(pay_type));
 
         mBaseMode.GetRequest(url, params, new ResultCallback() {

@@ -19,7 +19,9 @@ import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.kprogresshud.KProgressHUD;
+import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.bean.UserInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.LoginView;
 import com.app.aihealthapp.ui.mvvm.viewmode.LoginViewMode;
@@ -44,6 +46,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @BindView(R.id.edit_input_pass)
     EditText edit_input_pass;
 
+    @BindView(R.id.tv_forget_password)
+    TextView tv_forget_password;
     @BindView(R.id.tv_register)
     TextView tv_register;
     @BindView(R.id.btn_login)
@@ -82,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
         mLoginViewMode = new LoginViewMode(this);
     }
-    @OnClick({R.id.tv_register,R.id.btn_login})
+    @OnClick({R.id.tv_register,R.id.btn_login,R.id.tv_forget_password})
     public void onClick(View v){
         if (v==tv_register){
             startActivity(new Intent(this,RegisterActivity.class));
@@ -94,6 +98,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             }else {
                 mLoginViewMode.Login(edit_input_phone.getText().toString(),edit_input_pass.getText().toString());
             }
+        }else if (v==tv_forget_password){
+            startActivity(new Intent(this, WebActyivity.class).putExtra("url", ApiUrl.WebApi.FORGET_PASSWORD));
         }
     }
 

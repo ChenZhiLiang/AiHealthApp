@@ -83,7 +83,7 @@ public class HomeShopAdapter extends BaseAdapter {
         GlideHelper.loadImageView(activity,data.get(position).getPic(),viewHolder.image_goods);
         viewHolder.tv_title.setText(data.get(position).getTitle());
         viewHolder.tv_content.setText(data.get(position).getSubtitle());
-        viewHolder.tv_shop_price.setText("¥ "+data.get(position).getPrice());
+        viewHolder.tv_shop_price.setText("¥ "+data.get(position).getPrice_hek());
         viewHolder.tv_shop_original_price.setText("¥ "+data.get(position).getMarkey_price());
         viewHolder.tv_shop_original_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
 

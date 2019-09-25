@@ -29,6 +29,7 @@ public class BindDeviceViewMode {
         String url = ApiUrl.DeviceApi.BindDevice;
         RequestParams params = new RequestParams();
         params.put("device_no",device_no);
+        params.put("device_id","");
         mBaseMode.GetRequest(url, params, new ResultCallback() {
             @Override
             public void onSuccess(Object result) {

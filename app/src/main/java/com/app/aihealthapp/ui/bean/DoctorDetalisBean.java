@@ -39,6 +39,7 @@ public class DoctorDetalisBean {
     private String advice_price;
     private String good_rate;
     private String person_time;
+    private String price_hek;
 
     public int getId() {
         return id;
@@ -142,5 +143,13 @@ public class DoctorDetalisBean {
 
     public void setPerson_time(String person_time) {
         this.person_time = person_time;
+    }
+
+    public String getPrice_hek() {
+        return price_hek;
+    }
+
+    public void setPrice_hek(String price_hek) {
+        this.price_hek = price_hek;
     }
 }

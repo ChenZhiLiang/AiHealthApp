@@ -225,14 +225,15 @@ public class ProgressWebView extends WebView {
             }else if (url.startsWith(ApiUrl.HOST+"order/cart")
                     ||url.startsWith(ApiUrl.HOST+"order/submit")
                     ||url.startsWith(ApiUrl.HOST+"user/user_address")
-                    ||url.startsWith(ApiUrl.HOST+"user/login")){
+                    ||url.startsWith(ApiUrl.HOST+"user/login")
+                    ||url.startsWith(ApiUrl.HOST+"index/shop/apply")){
                 if (UserHelper.getUserInfo()==null){
                     context.startActivity(new Intent(context, LoginActivity.class));
+                    return true;
                 }
             }
             return false;
         }
-
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);

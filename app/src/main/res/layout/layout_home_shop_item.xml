@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
-        android:layout_margin="@dimen/dimen_2px"
+        android:layout_margin="1dp"
+        android:background="@mipmap/aio_image_fail_round"
         />
 
 
@@ -38,7 +39,7 @@
         android:layout_marginRight="@dimen/dimen_10px"
         android:layout_marginTop="@dimen/dimen_8px"
         android:maxEms="12"
-        android:maxLines="2"
+        android:maxLines="1"
         android:ellipsize="end"
         android:textSize="@dimen/text_12px"
         android:textColor="@color/default_hint_color"
@@ -64,7 +65,8 @@
             android:layout_marginTop="@dimen/dimen_4px"
             android:text="¥ 400"
             android:textSize="@dimen/text_12px"
-            android:textColor="@color/default_hint_color"/>
+            android:textColor="@color/default_hint_color"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_buy"

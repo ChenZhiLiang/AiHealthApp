@@ -18,8 +18,9 @@ import java.util.List;
  */
 public class SelectViewMode {
 
-    public static String[] parking_pay = {"微信扫码支付","支付宝扫码支付","健康密钥支付"};
+    public static String[] cash_pay = {"微信扫码支付","支付宝扫码支付"};
 
+    public static String[]  key_pay = {"健康密钥支付"};
 
 
 
@@ -28,24 +29,40 @@ public class SelectViewMode {
     }
 
 
-    public static List<SelectedBean> getDatas(){
+    public static List<SelectedBean> getCashPayDatas(){
         List<SelectedBean> datas = new ArrayList<>();
-        for (int i=0;i<parking_pay.length;i++){
+        for (int i=0;i<cash_pay.length;i++){
             SelectedBean bean = new SelectedBean();
             switch (i){
                 case 0:
-                    bean.setName(parking_pay[i]);
+                    bean.setName(cash_pay[i]);
                     bean.setBitmap(R.mipmap.weixin_icon);
                     break;
                 case 1:
-                    bean.setName(parking_pay[i]);
+                    bean.setName(cash_pay[i]);
                     bean.setBitmap(R.mipmap.zhifubao_icon);
                     break;
-                case 2:
+             /*   case 2:
                     bean.setName(parking_pay[i]);
                     bean.setBitmap(R.mipmap.miyao_icon);
-                    break;
+                    break;*/
 
+            }
+
+            bean.setSelected(i==0?true:false);
+            datas.add(bean);
+        }
+        return datas;
+    }
+    public static List<SelectedBean> getKeyPayDatas(){
+        List<SelectedBean> datas = new ArrayList<>();
+        for (int i=0;i<key_pay.length;i++){
+            SelectedBean bean = new SelectedBean();
+            switch (i){
+                case 0:
+                    bean.setName(key_pay[i]);
+                    bean.setBitmap(R.mipmap.miyao_icon);
+                    break;
             }
 
             bean.setSelected(i==0?true:false);

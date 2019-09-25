@@ -53,7 +53,8 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
     private int doctor_id;
 
     private String doctor_name;
-    private String advice_price;
+    private int advice_price;
+    private String price_hek;
     private int pay_type;
     private PayUtils mPayUtil;//支付工具
 
@@ -76,15 +77,17 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
 
     @Override
     public void initView() {
-        payment_mode_layout.setLayoutManager(new LinearLayoutManager(this));//设置布局管理器 为线性布局
-        paymentModeAdapter = new PaymentModeAdapter(SelectViewMode.getDatas(), this);
-        payment_mode_layout.setAdapter(paymentModeAdapter);
 
         doctor_id = getIntent().getIntExtra("doctor_id",0);
-        advice_price =getIntent().getStringExtra("advice_price");
+        advice_price =getIntent().getIntExtra("advice_price",0);
+        price_hek = getIntent().getStringExtra("price_hek");
         doctor_name = getIntent().getStringExtra("doctor_name");
         tv_doctor_name.setText("咨询医生："+doctor_name);
-        tv_price.setText("¥"+advice_price);
+        tv_price.setText(price_hek);
+
+        payment_mode_layout.setLayoutManager(new LinearLayoutManager(this));//设置布局管理器 为线性布局
+        paymentModeAdapter = new PaymentModeAdapter(advice_price>0?SelectViewMode.getCashPayDatas():SelectViewMode.getKeyPayDatas(), this);
+        payment_mode_layout.setAdapter(paymentModeAdapter);
 
         mPayCentreViewMode = new PayCentreViewMode(this);
         mPayUtil = new PayUtils(this);//初始化支付工具
@@ -103,14 +106,16 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
     @OnClick({R.id.btn_pay})
     public void onClick(View v){
         if (v==btn_pay){
-            if (paymentModeAdapter.getSelectedPos() == 0){
-                pay_type = 2;
-            }else if (paymentModeAdapter.getSelectedPos() == 1){
-                pay_type=1;
-            }else if (paymentModeAdapter.getSelectedPos() == 2){
+            if (advice_price>0){
+                if (paymentModeAdapter.getSelectedPos() == 0){
+                    pay_type = 2;
+                }else if (paymentModeAdapter.getSelectedPos() == 1){
+                    pay_type=1;
+                }
+            }else {
                 pay_type=3;
             }
-            mPayCentreViewMode.buy(doctor_id,advice_price,pay_type);
+            mPayCentreViewMode.buy(doctor_id,pay_type);
         }
     }
 

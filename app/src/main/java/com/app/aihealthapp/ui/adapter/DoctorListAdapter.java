@@ -87,7 +87,7 @@ public class DoctorListAdapter extends BaseXRecyclerViewAdapter<DoctorListBean> 
             tv_doctor_experience.setText(data.getPosition());
             tv_hospital_name.setText(data.getHospital());
             tv_adept_content.setText(data.getDoctor_skill());
-            tv_price.setText("¥"+data.getAdvice_price());
+            tv_price.setText(data.getPrice_hek());
             tv_buy_number.setText("（"+data.getBuy_count()+"人购买）");
             btn_ask.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,6 +95,7 @@ public class DoctorListAdapter extends BaseXRecyclerViewAdapter<DoctorListBean> 
                     if (data.getIs_valid()==0){
                         mActivity.startActivity(new Intent(mActivity, PayCentreActivity.class).putExtra("doctor_id",data.getId())
                                 .putExtra("advice_price",data.getAdvice_price())
+                                .putExtra("price_hek",data.getPrice_hek())
                                 .putExtra("doctor_name",data.getNickname()));
                     }else {
                         mActivity.startActivity(new Intent(mActivity, HealthAskActivity.class).putExtra("doctor_id",data.getId()));
@@ -110,6 +111,7 @@ public class DoctorListAdapter extends BaseXRecyclerViewAdapter<DoctorListBean> 
                     mActivity.startActivityForResult(new Intent(mActivity, DoctorDetalisActivity.class)
                             .putExtra("id",data.getId()).putExtra("Is_valid",data.getIs_valid())
                             .putExtra("advice_price",data.getAdvice_price())
+                            .putExtra("price_hek",data.getPrice_hek())
                             .putExtra("doctor_name",data.getNickname()),100);
 
                 }

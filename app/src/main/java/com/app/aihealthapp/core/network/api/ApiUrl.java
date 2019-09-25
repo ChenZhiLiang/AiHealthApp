@@ -51,6 +51,7 @@ public final class ApiUrl {
     }
 
     public static class WebApi{
+        public static final String FORGET_PASSWORD = HOST + "wap/find_pwd.html?type=1";
         public static final String CONTROL_CENTER = HOST + "wap/control_center.html";//健康管理中心
         public static final String COMMUNITY = HOST +"wap/community.html";//健康社区
         public static final String HeadLine = HOST +"wap/headline_list.html?cate_id=";//首页健康管理分类进入页面

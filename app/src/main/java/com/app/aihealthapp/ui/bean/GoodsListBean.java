@@ -10,13 +10,17 @@ package com.app.aihealthapp.ui.bean;
  */
 public class GoodsListBean {
 
+
     /**
-     * id : 119
-     * title :  白帆鱼 500g
-     * subtitle :  白帆鱼
-     * pic : shop/1/20190709/a6a27c52416d890782b5103896b3a029.jpg
+     * id : 217
+     * title : 锦汇健康手环
+     * subtitle : 健康中国行动推广使用手环，健康密钥专用手环
+     * pic : http://aijiankang.cacpo.com/upload/pic/shop/1/20190916/d83c8d51cbb44af6ce9d5c2358e9547f.png
      * markey_price : 0.00
      * price : 0.00
+     * hek : 1
+     * url : http://aijiankang.cacpo.com/goods/item/217
+     * price_hek : 0.00+1健康密钥
      */
 
     private int id;
@@ -25,7 +29,9 @@ public class GoodsListBean {
     private String pic;
     private String markey_price;
     private String price;
+    private int hek;
     private String url;
+    private String price_hek;
 
     public int getId() {
         return id;
@@ -75,11 +81,27 @@ public class GoodsListBean {
         this.price = price;
     }
 
+    public int getHek() {
+        return hek;
+    }
+
+    public void setHek(int hek) {
+        this.hek = hek;
+    }
+
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPrice_hek() {
+        return price_hek;
+    }
+
+    public void setPrice_hek(String price_hek) {
+        this.price_hek = price_hek;
     }
 }

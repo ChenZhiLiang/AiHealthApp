@@ -61,6 +61,7 @@
                         android:id="@+id/tv_my_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10px"
                         android:text="福建省东方嘉盛都批发价见风使舵废旧塑料东方嘉盛连接方式来对付建设路口连接方式来的空间了实间了实际发生际发间了实际发生生了快递放假"
                         android:textColor="@color/default_hint_color" />
 
@@ -106,7 +107,8 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:orientation="vertical"
-                        android:layout_marginTop="@dimen/dimen_16px">
+                        android:layout_marginTop="@dimen/dimen_16px"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -126,6 +128,7 @@
                             android:id="@+id/tv_reply_content"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_10px"
                             android:text="福建省东方嘉盛都批发价见风使舵废旧塑料东方嘉盛连接方式来对付建设路口连接方式来的空间了实间了实际发生际发间了实际发生生了快递放假"
                             android:textColor="@color/default_hint_color"
                             android:layout_marginTop="@dimen/dimen_10px"/>
@@ -148,6 +151,7 @@
                 android:visibility="gone">
 
                 <EditText
+                    android:id="@+id/edit_input_content"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_40px"
                     android:layout_marginLeft="@dimen/dimen_10px"

@@ -37,7 +37,7 @@ class ItemsButton extends ScaleTextView {
         setLayoutParams(layoutParams);
 
         setClickable(true);
-        setOnClickListener(new View.OnClickListener() {
+        setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 buttonParams.dismiss();

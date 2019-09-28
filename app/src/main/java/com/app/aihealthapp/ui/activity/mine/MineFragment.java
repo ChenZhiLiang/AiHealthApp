@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,10 +35,12 @@ import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
 import com.app.aihealthapp.ui.bean.UserInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineViewMode;
+import com.app.aihealthapp.wxapi.WXShareUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -85,6 +89,10 @@ public class MineFragment extends BaseFragment implements MineView {
 
     @BindView(R.id.rt_myfriend_list)
     RelativeLayout rt_myfriend_list;//我的健康朋友圈
+    @BindView(R.id.rt_my_members)
+    RelativeLayout rt_my_members;
+    @BindView(R.id.rt_share_friend)
+    RelativeLayout rt_share_friend;//推荐给好友
     @BindView(R.id.rt_about)
     RelativeLayout rt_about;//关于健康秘钥
 
@@ -99,6 +107,10 @@ public class MineFragment extends BaseFragment implements MineView {
     private MineViewMode mMineViewMode;
     private List<LocalMedia> selectList = new ArrayList<>();
     private String loading_img;
+
+    private BottomSheetDialog dialogs_share;
+    private LinearLayout weChat_friend_layout;
+    private LinearLayout weChat_moments_layout;
 
     public static MineFragment getInstance(String title) {
         MineFragment hf = new MineFragment();
@@ -134,6 +146,11 @@ public class MineFragment extends BaseFragment implements MineView {
                 tv_user_name.setText(UserHelper.getUserInfo().getNickname());
                 btn_authentication.setText("已认证");
             }
+            if (11<=UserHelper.getUserInfo().getLevel_id()&&UserHelper.getUserInfo().getLevel_id()<=16){
+                rt_my_members.setVisibility(View.VISIBLE);
+            }else {
+                rt_my_members.setVisibility(View.GONE);
+            }
         }else {
             tv_user_name.setText("点击登录");
             btn_authentication.setVisibility(View.GONE);
@@ -152,7 +169,7 @@ public class MineFragment extends BaseFragment implements MineView {
     }
 
     @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,R.id.rt_healthy_report,
-            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_feedback,R.id.rt_editpaw,R.id.btn_logout})
+            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_share_friend,R.id.rt_my_members,R.id.rt_feedback,R.id.rt_editpaw,R.id.btn_logout})
     public void onClick(View v){
 
         if (v==rt_about){
@@ -211,6 +228,19 @@ public class MineFragment extends BaseFragment implements MineView {
                 }else if (v==rt_editpaw){
                     startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.EditPwd + UserHelper.getUserInfo().getId()));
 
+                }else if (v==rt_share_friend){
+                    View view = View.inflate(getContext(), R.layout.dialog_custom, null);
+                    weChat_friend_layout = view.findViewById(R.id.weChat_friend_layout);
+                    weChat_moments_layout = view.findViewById(R.id.weChat_moments_layout);
+                    onShareClick shareClick = new onShareClick();
+                    weChat_friend_layout.setOnClickListener(shareClick);
+                    weChat_moments_layout.setOnClickListener(shareClick);
+                    dialogs_share = new BottomSheetDialog(getContext());
+                    dialogs_share.setContentView(view);
+                    dialogs_share.show();
+//                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.ShareFriend));
+                }else if (v==rt_my_members){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyMembers));
                 }else if (v==btn_logout){
                     CircleDialogHelper.ShowDialogHint((AppCompatActivity)mActivity, "确定注销吗?", new View.OnClickListener() {
                         @Override
@@ -244,6 +274,11 @@ public class MineFragment extends BaseFragment implements MineView {
             }else {
                 tv_user_name.setText(UserHelper.getUserInfo().getNickname());
                 btn_authentication.setText("已认证");
+            }
+            if (11<=UserHelper.getUserInfo().getLevel_id()&&UserHelper.getUserInfo().getLevel_id()<=16){
+                rt_my_members.setVisibility(View.VISIBLE);
+            }else {
+                rt_my_members.setVisibility(View.GONE);
             }
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
@@ -349,7 +384,20 @@ public class MineFragment extends BaseFragment implements MineView {
             }
         }
     }
-
+    /**
+     * 分享dialog 点击事件
+     */
+    private class onShareClick implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            if (v == weChat_friend_layout) {//微信好友分享
+                WXShareUtil.WXShare(getContext(), SendMessageToWX.Req.WXSceneSession);
+            } else {//微信朋友圈分享
+                WXShareUtil.WXShare(getContext(),SendMessageToWX.Req.WXSceneTimeline);
+            }
+            dialogs_share.dismiss();
+        }
+    }
     @Override
     public void showProgress() {
 

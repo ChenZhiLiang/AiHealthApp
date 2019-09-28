@@ -164,6 +164,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_16px"
                     android:background="@drawable/selector_onclick"
+                    android:visibility="gone"
                     >
                     <TextView
                         android:layout_width="wrap_content"

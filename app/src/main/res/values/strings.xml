@@ -37,5 +37,6 @@
     <string name="qrcode">将条码放入框内，即可自动扫描</string>
 
     <string name="toast_message">Toast message</string>
-
+    <string name="share_title">健康密钥邀请您加入健康中国行动</string>
+    <string name="share_description">让我们一起分享健康，传递健康，收获健康</string>
 </resources>

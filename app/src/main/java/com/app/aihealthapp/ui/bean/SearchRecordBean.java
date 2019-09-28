@@ -41,7 +41,7 @@ public class SearchRecordBean implements Serializable {
     private String medical_pic;
     private String affected_part_pic;
     private String other_pic;
-    private Object reply_info;
+    private String reply_info;
     private int is_reply;
     private String doctor_name;
     private String doctor_avatar;
@@ -134,11 +134,11 @@ public class SearchRecordBean implements Serializable {
         this.other_pic = other_pic;
     }
 
-    public Object getReply_info() {
+    public String getReply_info() {
         return reply_info;
     }
 
-    public void setReply_info(Object reply_info) {
+    public void setReply_info(String reply_info) {
         this.reply_info = reply_info;
     }
 

@@ -35,6 +35,7 @@ import com.crrepa.ble.CRPBleClient;
 import com.crrepa.ble.conn.CRPBleConnection;
 import com.crrepa.ble.conn.CRPBleDevice;
 import com.crrepa.ble.conn.listener.CRPBleConnectionStateListener;
+import com.crrepa.ble.conn.type.CRPDeviceLanguageType;
 import com.crrepa.ble.scan.bean.CRPScanDevice;
 import com.crrepa.ble.scan.callback.CRPScanCallback;
 
@@ -136,6 +137,8 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
                         switch (newState) {
                             case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
                                 AppContext.mBleConnection.syncTime();
+                                //设置手环语言--简体中文
+                                AppContext.mBleConnection.sendDeviceLanguage(CRPDeviceLanguageType.LANGUAGE_CHINESE);
                                 AppContext.mBleConnection.findDevice();
                                 mBindDeviceViewMode.BindDevice(AppContext.mBleDevice.getMacAddress());
                                 mCRPBleClient.cancelScan();

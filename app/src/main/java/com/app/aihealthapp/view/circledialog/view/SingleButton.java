@@ -47,7 +47,7 @@ class SingleButton extends ScaleTextView {
     }
 
     private void regOnClickListener() {
-        setOnClickListener(new View.OnClickListener() {
+        setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mButtonParams.dismiss();
@@ -57,7 +57,7 @@ class SingleButton extends ScaleTextView {
     }
 
     public void regOnInputClickListener(final EditText input) {
-        setOnClickListener(new View.OnClickListener() {
+        setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 String text = input.getText().toString();

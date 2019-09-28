@@ -80,6 +80,32 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none"/>
 
+            <LinearLayout
+                android:id="@+id/ll_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_10px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="登陆密码"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_16px"/>
+                <EditText
+                    android:id="@+id/edit_passowrd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dimen_10px"
+                    android:hint="请输入登录密码"
+                    android:background="@color/white"
+                    android:textSize="@dimen/text_16px"
+                    android:inputType="textPassword"
+                    android:textColor="@color/default_hint_color"/>
+            </LinearLayout>
         </LinearLayout>
 
         <Button

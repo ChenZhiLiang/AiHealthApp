@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Handler;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -22,7 +23,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
+import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseMode;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
@@ -37,9 +40,12 @@ import com.app.aihealthapp.ui.activity.home.DoctorListActivity;
 import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
 import com.app.aihealthapp.ui.activity.home.PayCentreActivity;
 import com.app.aihealthapp.ui.activity.mine.LoginActivity;
+import com.app.aihealthapp.ui.activity.mine.MineFragment;
 import com.app.aihealthapp.ui.bean.PaymentBean;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 import com.app.aihealthapp.util.PayUtils;
+import com.app.aihealthapp.wxapi.WXShareUtil;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 
 /**
  * @Name：AiHealth
@@ -55,6 +61,10 @@ public class ProgressWebView extends WebView {
     private Handler handler;
     private Context context;
     private WebTitleView mWebTitleView;
+
+    private BottomSheetDialog dialogs_share;
+    private LinearLayout weChat_friend_layout;
+    private LinearLayout weChat_moments_layout;
 
     public ProgressWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -127,12 +137,38 @@ public class ProgressWebView extends WebView {
         public int jsCallUId() {
             return UserHelper.getUserInfo().getId();
         }
+        @JavascriptInterface
+        public void share(final String title, final String content, final String url) {
+            View view = View.inflate(getContext(), R.layout.dialog_custom, null);
+            weChat_friend_layout = view.findViewById(R.id.weChat_friend_layout);
+            weChat_moments_layout = view.findViewById(R.id.weChat_moments_layout);
+            weChat_friend_layout.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WXShareUtil.WXShare(getContext(),SendMessageToWX.Req.WXSceneSession,title,content,url);
+                    dialogs_share.dismiss();
+
+                }
+            });
+            weChat_moments_layout.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WXShareUtil.WXShare(getContext(),SendMessageToWX.Req.WXSceneTimeline,title,content,url);
+                    dialogs_share.dismiss();
+
+                }
+            });
+            dialogs_share = new BottomSheetDialog(getContext());
+            dialogs_share.setContentView(view);
+            dialogs_share.show();
+        }
 
         @JavascriptInterface
-        public void jsCallPay(String order_no, final String pay_type){
+        public void jsCallPay(String order_no, final String pay_type,String pwd){
             String url = ApiUrl.HomeApi.Pay;
             RequestParams params = new RequestParams();
             params.put("order_no",order_no);
+            params.put("pwd",pwd);
             params.put("pay_type",String.valueOf(pay_type));
             new BaseMode().GetRequest(url, params, new ResultCallback() {
                 @Override

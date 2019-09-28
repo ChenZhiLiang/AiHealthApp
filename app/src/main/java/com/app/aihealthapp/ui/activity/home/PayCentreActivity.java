@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.aihealthapp.R;
@@ -45,6 +48,10 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
 
     @BindView(R.id.payment_mode_layout)
     RecyclerView payment_mode_layout;
+    @BindView(R.id.ll_password)
+    LinearLayout ll_password;
+    @BindView(R.id.edit_passowrd)
+    EditText edit_passowrd;
     @BindView(R.id.btn_pay)
     Button btn_pay;
     private PaymentModeAdapter paymentModeAdapter;
@@ -87,6 +94,11 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
 
         payment_mode_layout.setLayoutManager(new LinearLayoutManager(this));//设置布局管理器 为线性布局
         paymentModeAdapter = new PaymentModeAdapter(advice_price>0?SelectViewMode.getCashPayDatas():SelectViewMode.getKeyPayDatas(), this);
+        if (advice_price>0){
+            ll_password.setVisibility(View.GONE);
+        }else {
+            ll_password.setVisibility(View.VISIBLE);
+        }
         payment_mode_layout.setAdapter(paymentModeAdapter);
 
         mPayCentreViewMode = new PayCentreViewMode(this);
@@ -112,10 +124,16 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
                 }else if (paymentModeAdapter.getSelectedPos() == 1){
                     pay_type=1;
                 }
+                mPayCentreViewMode.buy(doctor_id,pay_type,"");
+
             }else {
-                pay_type=3;
+                if (TextUtils.isEmpty(edit_passowrd.getText().toString())){
+                    showLoadFailMsg("请输入登录密码");
+                }else {
+                    pay_type=3;
+                    mPayCentreViewMode.buy(doctor_id,pay_type,edit_passowrd.getText().toString());
+                }
             }
-            mPayCentreViewMode.buy(doctor_id,pay_type);
         }
     }
 
@@ -126,7 +144,11 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
         if (ret==0){
             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
             String order_no = GsonHelper.GsonToString(data,"order_no");
-            mPayCentreViewMode.pay(order_no,pay_type);
+            if (advice_price>0){
+                mPayCentreViewMode.pay(order_no,pay_type,"");
+            }else {
+                mPayCentreViewMode.pay(order_no,pay_type,edit_passowrd.getText().toString());
+            }
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
         }

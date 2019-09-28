@@ -33,6 +33,12 @@ public final class ApiUrl {
         public static final String SearchRecord = HOST +"api/my/doctor/list";
         public static final String InterrogationRecord = HOST +"api/my/user/list";
 
+        public static final String AdviceDetail = HOST + "api/advice/detail";//咨询详情
+        public static final String AdviceComment = HOST +"api/advice/comment";//会员评论咨询回复问题
+        public static final String ReplyList = HOST +"api/advice/reply/list";//咨询医生回复记录
+        public static final String AdviceReply = HOST +"api/advice/reply";//医生回复咨询问题
+
+
     }
 
     public static class DeviceApi{
@@ -45,9 +51,6 @@ public final class ApiUrl {
         public static final String Heartrate = HOST+"api/measure/heartrate";
         public static final String Bloodpressure = HOST+"api/measure/bloodpressure";
         public static final String UnBind = HOST +"api/un/bind";//解绑
-
-
-
     }
 
     public static class WebApi{
@@ -69,6 +72,8 @@ public final class ApiUrl {
         public static final String Index = HOST + "index";//健康商圈
         public static final String Community = HOST + "wap/community.html";//健康论坛
         public static final String EditPwd = HOST +"user/editpwd?uid=";
+        public static final String ShareFriend = HOST + "wap/qrcode.html?uid=";//推荐给好友
+        public static final String MyMembers = HOST +"wap/myagent_list.html";//我的代理商会员
       }
 
     public static class DoctorApi{

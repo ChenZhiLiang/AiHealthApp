@@ -106,7 +106,30 @@
                         android:paddingLeft="@dimen/dimen_10px"
                         android:textSize="@dimen/text_14px"/>
                 </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_40px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dimen_10px"
+                        android:text="年龄"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_14px"/>
 
+                    <EditText
+                        android:id="@+id/edit_input_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:hint="请输入年龄"
+                        android:gravity="right|center_vertical"
+                        android:background="@null"
+                        android:layout_marginRight="@dimen/dimen_10px"
+                        android:paddingLeft="@dimen/dimen_10px"
+                        android:textSize="@dimen/text_14px"/>
+                </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

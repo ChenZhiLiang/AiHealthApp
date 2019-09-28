@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/mind_wallet"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="健康钱包"
                     android:textColor="@color/text_color"
@@ -173,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_wddd_icon"
+                    android:drawableLeft="@mipmap/mind_jkzs_icon"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="我的体检报告"
                     android:textColor="@color/text_color"
@@ -268,7 +268,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/mind_jkfa_icon"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="我的健康方案"
                     android:textColor="@color/text_color"
@@ -331,7 +331,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/mind_wddd_icon"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="我的订单"
                     android:textColor="@color/text_color"
@@ -361,7 +361,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/mind_address"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="收货地址"
                     android:textColor="@color/text_color"
@@ -391,7 +391,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/mind_circle"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="我的健康朋友圈"
                     android:textColor="@color/text_color"
@@ -411,19 +411,52 @@
                 android:layout_height="@dimen/dimen_0.5px"
                 android:background="@color/view_line"
                 android:visibility="gone"/>
-
             <RelativeLayout
+                android:id="@+id/rt_my_members"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick"
-                android:visibility="gone">
+                android:visibility="gone"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/mind_msn"
+                    android:drawablePadding="@dimen/text_10px"
+                    android:text="我的代理商会员"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_16px"
+                    android:background="@mipmap/my_arrow" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_0.5px"
+                android:background="@color/view_line"
+                android:visibility="gone"/>
+            <RelativeLayout
+                android:id="@+id/rt_share_friend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50px"
+                android:background="@drawable/selector_onclick"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_16px"
+                    android:drawableLeft="@mipmap/mind_tj_icon"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="推荐给好友"
                     android:textColor="@color/text_color"
@@ -486,7 +519,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/ming_gy_icon"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="关于健康密钥"
                     android:textColor="@color/text_color"
@@ -517,7 +550,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/mind_help_icon"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="帮助与反馈"
                     android:textColor="@color/text_color"
@@ -548,7 +581,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/mind_password"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="修改密码"
                     android:textColor="@color/text_color"

@@ -55,6 +55,7 @@
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10px"
                 android:text="福建省东方嘉盛都批发价见风使舵废旧塑料东方嘉盛连接方式来对付建设路口连接方式来的空间了实间了实际发生际发间了实际发生生了快递放假"
                 android:textColor="@color/default_hint_color"/>
             <LinearLayout
@@ -62,7 +63,8 @@
                 android:layout_height="@dimen/dimen_80px"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/dimen_10px"
-                android:layout_marginBottom="@dimen/dimen_10px">
+                android:layout_marginBottom="@dimen/dimen_10px"
+                android:layout_marginLeft="@dimen/dimen_10px">
 
                 <ImageView
                     android:id="@+id/image_checklist_pic"
@@ -91,14 +93,39 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
             </LinearLayout>
-            <TextView
-                android:id="@+id/tv_reply"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_doctor_reply"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="回复"
-                android:textColor="@color/default_text_color"
-                android:textSize="@dimen/text_14px"/>
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/dimen_16px"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_16px"
+                    android:text="医生解答"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_16px" />
+
+                <View
+                    android:layout_width="@dimen/dimen_70px"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="@dimen/text_16px"
+                    android:layout_marginRight="@dimen/text_16px"
+                    android:background="@color/default_text_color" />
+                <TextView
+                    android:id="@+id/tv_reply_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="福建省东方嘉盛都批发价见风使舵废旧塑料东方嘉盛连接方式来对付建设路口连接方式来的空间了实间了实际发生际发间了实际发生生了快递放假"
+                    android:textColor="@color/default_hint_color"
+                    android:layout_marginTop="@dimen/dimen_10px"
+                    android:layout_marginLeft="@dimen/dimen_10px"/>
+            </LinearLayout>
+
         </LinearLayout>
         </ScrollView>
         <RelativeLayout
@@ -112,6 +139,7 @@
             android:visibility="visible">
 
             <EditText
+                android:id="@+id/edit_reply_content"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40px"
                 android:background="@drawable/bg_white"

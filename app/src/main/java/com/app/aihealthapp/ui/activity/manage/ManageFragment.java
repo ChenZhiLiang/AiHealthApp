@@ -1,7 +1,12 @@
 package com.app.aihealthapp.ui.activity.manage;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -11,6 +16,7 @@ import android.widget.TextView;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
+import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.uitrarefresh.UTRefreshLayout;
@@ -18,6 +24,7 @@ import com.app.aihealthapp.core.uitrarefresh.ptr.PtrFrameLayout;
 import com.app.aihealthapp.core.uitrarefresh.ptr.PtrHandler;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.AppManager;
+import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.forum.ForumFragment;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 import com.app.aihealthapp.view.ProgressWebView;
@@ -58,6 +65,10 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
 
+        IntentFilter intentFilter =new IntentFilter();
+        intentFilter.addAction("action.pay.success");
+        mActivity.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+
     }
     @Override
     public void loadingData() {
@@ -73,7 +84,31 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
     public void initData() {
 
     }
+    private BroadcastReceiver mRefreshBroadcastReceiver =new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("action.pay.success")){
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastyHelper.toastyNormal(mActivity, "支付成功");
+//                        webView.loadUrl(ApiUrl.WebApi.MyOrder);
+                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder+UserHelper.getUserInfo().getId()));
 
+
+                    }
+                },100);
+
+            }
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mActivity.unregisterReceiver(mRefreshBroadcastReceiver);
+    }
 
     @Override
     public void onTitleResult(String title) {

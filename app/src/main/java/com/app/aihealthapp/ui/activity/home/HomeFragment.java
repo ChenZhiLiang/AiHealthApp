@@ -453,31 +453,35 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 rt_bind_device.setVisibility(View.GONE);
                 mDeviceInfoBean = GsonHelper.GsonToBean(data, DeviceInfoBean.class);
                 SharedPreferenceHelper.setDeviceInfo(mActivity,mDeviceInfoBean);
-                AppContext.mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
-//                mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
-                if (!AppContext.mBleDevice.isConnected()){
-                    AppContext.mBleConnection = AppContext.mBleDevice.connect();
-                    AppContext.mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
-                        @Override
-                        public void onConnectionStateChange(int newState) {
-                            switch (newState) {
-                                case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            AppContext.mBleConnection.setStepChangeListener(HomeFragment.this);
-                                        }
-                                    });
-                                    break;
-                            }
-                        }
-                    });
+                if (TextUtils.isEmpty(mDeviceInfoBean.getDevice_no())){
+                    rt_bind_device.setVisibility(View.VISIBLE);
+                    ToastyHelper.toastyNormal(mActivity,"已绑定的设备不存在，请重新绑定！");
                 }else {
-                    //运动记步
-                    AppContext.mBleConnection.syncStep();
-                    AppContext.mBleConnection.setStepChangeListener(this);
+                    AppContext.mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
+//                mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
+                    if (!AppContext.mBleDevice.isConnected()){
+                        AppContext.mBleConnection = AppContext.mBleDevice.connect();
+                        AppContext.mBleConnection.setConnectionStateListener(new CRPBleConnectionStateListener() {
+                            @Override
+                            public void onConnectionStateChange(int newState) {
+                                switch (newState) {
+                                    case CRPBleConnectionStateListener.STATE_CONNECTED://连接成功
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                AppContext.mBleConnection.setStepChangeListener(HomeFragment.this);
+                                            }
+                                        });
+                                        break;
+                                }
+                            }
+                        });
+                    }else {
+                        //运动记步
+                        AppContext.mBleConnection.syncStep();
+                        AppContext.mBleConnection.setStepChangeListener(this);
+                    }
                 }
-
             }
 
         } else {

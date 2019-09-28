@@ -70,6 +70,7 @@
         <activity android:name=".ui.activity.home.PayCentreActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.mine.InterrogationDetailsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.mine.TakePhotoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.mine.AdvisoryDetailsActivity" />
         <activity
             android:name="com.app.aihealthapp.core.permission.PermissionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

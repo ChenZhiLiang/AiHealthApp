@@ -113,7 +113,7 @@ class BodyProgressView extends ScaleLinearLayout {
             mProgressParams.progressHeight = CircleDimen.PROGRESS_HEIGHT_SPINNER;
         }
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mProgressParams
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, mProgressParams
                 .progressHeight);
         int[] margins = mProgressParams.margins;
         if (margins != null)

@@ -86,6 +86,14 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
     public void loadingData() {
         mSearchRecordViewMode.SearchRecord(page,kind_type,true);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSearchRecordViewMode.SearchRecord(page,kind_type,false);
+
+    }
+
     @Override
     public void initData() {
 
@@ -124,6 +132,7 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
         }
     }
+
 
     @Override
     public void showProgress() {

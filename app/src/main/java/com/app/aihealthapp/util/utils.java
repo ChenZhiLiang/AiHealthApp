@@ -3,10 +3,12 @@ package com.app.aihealthapp.util;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,6 +21,19 @@ import java.util.Date;
  * 修改时间：2019/8/18 16:26
  */
 public class utils {
+
+    /**
+     * 将Bitmap对象读到字节数组中
+     *
+     * @param bitmap
+     * @return
+     */
+    public static byte[] bmpToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] datas = baos.toByteArray();
+        return datas;
+    }
     /**
      * @return
      */

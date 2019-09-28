@@ -245,6 +245,13 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
             @Override
             public void run() {
                 //血氧
+                if (i<94){
+                    tv_measure_result_status.setText("过低");
+                }else if (i>98){
+                    tv_measure_result_status.setText("过高");
+                }else {
+                    tv_measure_result_status.setText("正常");
+                }
                 tv_blood_oxygen.setText(String.valueOf(i)+"%");
                 tv_measure_value.setText(String.valueOf(i)+"%");
                 mMeasureViewMode.MeasureBloodOxygen(String.valueOf(i));
@@ -268,6 +275,14 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
             @Override
             public void run() {
                 //血压
+                if (i < 90 || i1 < 60 ){
+                    tv_measure_result_status.setText("血压过低");
+                } else if(i > 140 || i1 > 90) {
+                    tv_measure_result_status.setText("血压过高");
+                } else {
+                    tv_measure_result_status.setText("正常");
+                }
+
                 tv_blood_pressure.setText(i+"/"+i1);
                 tv_measure_value.setText(i+"/"+i1);
                 mMeasureViewMode.MeasureBloodPressure(String.valueOf(i),String.valueOf(i1));
@@ -297,6 +312,13 @@ public class MeasureActivity extends Activity implements CRPBloodPressureChangeL
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if (rate<60){
+                        tv_measure_result_status.setText("过低");
+                    }else if (rate>100){
+                        tv_measure_result_status.setText("过高");
+                    }else {
+                        tv_measure_result_status.setText("正常");
+                    }
                     //心率
                     tv_heart_rate.setText(String.valueOf(rate));
                     tv_measure_value.setText(String.valueOf(rate));

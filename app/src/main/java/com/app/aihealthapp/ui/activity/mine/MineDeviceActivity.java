@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -246,19 +247,6 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
                         if (new PermissionHelper().RequestPermisson(this, Permission.CAMERA)){
                             startActivity(new Intent(this,TakePhotoActivity.class));
                         }
-//                        if (mDeviceInfoBean.getIs_open_photo()==0){
-//
-//                            if (!utils.isEnabledNotification(AppContext.getContext())){
-//                                isShowNotification();
-//                            }else {
-//                                mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
-//                                        -1,1);
-//                            }
-//
-//                        }else {
-//                            mMineDeviceViewMode.UpdateDevice(mDeviceInfoBean.getId(),-1,-1,-1,
-//                                    -1,1);
-//                        }
                         break;
                 }
             }
@@ -297,31 +285,43 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
                 SharedPreferenceHelper.setDeviceInfo(this,mDeviceInfoBean);
 //                AppContext.mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
 //                mBleConnection = mBleDevice.connect();
-                tv_device_name.setText("已绑定设备(Qs-05)");
-                btn_bind.setText("解除绑定");
-                id = mDeviceInfoBean.getId();
-                if (mDeviceInfoBean.getIs_open_phone()==0){
+                if (TextUtils.isEmpty(mDeviceInfoBean.getDevice_no())){
+                    btn_bind.setText("绑定设备");
+                    tv_device_name.setText("您还未绑定设备");
                     check_open_phone.setBackgroundResource(R.mipmap.car_off);
-                }else {
-                    check_open_phone.setBackgroundResource(R.mipmap.car_on);
-                }
-                if (mDeviceInfoBean.getIs_open_sms()==0){
                     check_open_sms.setBackgroundResource(R.mipmap.car_off);
-                }else {
-                    check_open_sms.setBackgroundResource(R.mipmap.car_on);
-                }
-                if (mDeviceInfoBean.getIs_open_qq()==0){
                     check_open_qq.setBackgroundResource(R.mipmap.car_off);
-
-                }else {
-                    check_open_qq.setBackgroundResource(R.mipmap.car_on);
-                }
-                if (mDeviceInfoBean.getIs_open_wechat()==0){
                     check_open_wx.setBackgroundResource(R.mipmap.car_off);
-
+                    ToastyHelper.toastyNormal(MineDeviceActivity.this,"已绑定的设备不存在，请重新绑定！");
                 }else {
-                    check_open_wx.setBackgroundResource(R.mipmap.car_on);
+                    tv_device_name.setText("已绑定设备(Qs-05)");
+                    btn_bind.setText("解除绑定");
+                    id = mDeviceInfoBean.getId();
+                    if (mDeviceInfoBean.getIs_open_phone()==0){
+                        check_open_phone.setBackgroundResource(R.mipmap.car_off);
+                    }else {
+                        check_open_phone.setBackgroundResource(R.mipmap.car_on);
+                    }
+                    if (mDeviceInfoBean.getIs_open_sms()==0){
+                        check_open_sms.setBackgroundResource(R.mipmap.car_off);
+                    }else {
+                        check_open_sms.setBackgroundResource(R.mipmap.car_on);
+                    }
+                    if (mDeviceInfoBean.getIs_open_qq()==0){
+                        check_open_qq.setBackgroundResource(R.mipmap.car_off);
+
+                    }else {
+                        check_open_qq.setBackgroundResource(R.mipmap.car_on);
+                    }
+                    if (mDeviceInfoBean.getIs_open_wechat()==0){
+                        check_open_wx.setBackgroundResource(R.mipmap.car_off);
+
+                    }else {
+                        check_open_wx.setBackgroundResource(R.mipmap.car_on);
+                    }
                 }
+
+
 //                if (mDeviceInfoBean.getIs_open_photo()==0){
 //                    check_open_photo.setBackgroundResource(R.mipmap.car_off);
 //

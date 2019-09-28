@@ -1,61 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/dimen_10px"
-    android:id="@+id/rt_search_record">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <com.app.aihealthapp.view.CircleImageView
-        android:id="@+id/img_doctor_head"
-        android:layout_width="@dimen/dimen_50px"
-        android:layout_height="@dimen/dimen_50px"
-        android:background="@mipmap/my_head"
-        android:layout_centerVertical="true"
-        app:border_color="@color/transparent"
-        />
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rt_doctor_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/dimen_10px"
-        android:orientation="vertical"
-        android:layout_toRightOf="@+id/img_doctor_head"
-        >
-        <TextView
-            android:id="@+id/tv_doctor_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="林医生"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/text_14px"
-            />
+        android:padding="@dimen/dimen_10px"
+        android:visibility="visible">
+
+        <com.app.aihealthapp.view.CircleImageView
+            android:id="@+id/img_doctor_head"
+            android:layout_width="@dimen/dimen_50px"
+            android:layout_height="@dimen/dimen_50px"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/my_head"
+            app:border_color="@color/transparent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/dimen_8px"
-            android:gravity="center_vertical">
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10px"
+            android:layout_toRightOf="@+id/img_doctor_head"
+            android:orientation="vertical">
+
             <TextView
+                android:id="@+id/tv_doctor_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="咨询问题:"
+                android:text="林医生"
                 android:textColor="@color/text_color"
-                android:textSize="@dimen/text_14px"/>
+                android:textSize="@dimen/text_14px" />
+
+
             <TextView
-                android:id="@+id/tv_content"
+                android:id="@+id/tv_doctor_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_8px"
-                android:singleLine="true"
+                android:layout_marginTop="@dimen/dimen_8px"
                 android:ellipsize="end"
+                android:singleLine="true"
                 android:text="小腹时常通小腹时常通小腹时常通小腹时常通"
                 android:textColor="@color/default_hint_color"
-                android:textSize="@dimen/text_12px"/>
+                android:textSize="@dimen/text_12px" />
+
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_interrogation_record"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_16px"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/default_text_color"
+            android:padding="@dimen/dimen_4px"
+            android:text="已回答"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_10px" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_8px"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="平时痛疼平时痛疼平时痛疼平时痛疼平时痛疼平时痛疼"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_14px" />
+    </LinearLayout>
 </RelativeLayout>

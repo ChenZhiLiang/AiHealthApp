@@ -62,6 +62,8 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
     TextView tv_content;
     @BindView(R.id.edit_input_name)
     EditText edit_input_name;
+    @BindView(R.id.edit_input_age)
+    EditText edit_input_age;
     @BindView(R.id.edit_input_nickname)
     EditText edit_input_nickname;
     @BindView(R.id.edit_input_height)
@@ -141,13 +143,16 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
         }else if (v==btn_submit){
             if (TextUtils.isEmpty(edit_input_name.getText().toString())){
                 showLoadFailMsg("请输入真实姓名");
+            }else if (TextUtils.isEmpty(edit_input_age.getText().toString())){
+                showLoadFailMsg("请输入年龄");
             }else if (TextUtils.isEmpty(edit_input_nickname.getText().toString())){
                 showLoadFailMsg("请输入昵称");
             }else if (TextUtils.isEmpty(edit_input_height.getText().toString())){
                 showLoadFailMsg("请输入身高");
             }else if (TextUtils.isEmpty(edit_input_weight.getText().toString())){
                 showLoadFailMsg("请输入体重");
-            }else if (TextUtils.isEmpty(edit_input_card_no.getText().toString())){
+            }
+         /*   else if (TextUtils.isEmpty(edit_input_card_no.getText().toString())){
                 showLoadFailMsg("请输入身份证号");
             }else if (TextUtils.isEmpty(edit_input_bank_no.getText().toString())){
                 showLoadFailMsg("请输入银行卡号");
@@ -155,8 +160,9 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
                 showLoadFailMsg("请输入银行卡号");
             }else if (TextUtils.isEmpty(edit_input_alipay_no.getText().toString())){
                 showLoadFailMsg("请输入支付宝账号");
-            }else {
-                mAuthenticationUserViewMode.AuthenticationUser(edit_input_name.getText().toString(),edit_input_nickname.getText().toString(),sex,
+            }*/
+            else {
+                mAuthenticationUserViewMode.AuthenticationUser(edit_input_name.getText().toString(),edit_input_age.getText().toString(),edit_input_nickname.getText().toString(),sex,
                         edit_input_height.getText().toString(),edit_input_weight.getText().toString(),edit_input_card_no.getText().toString(),edit_input_bank_name.getText().toString(),
                         edit_input_bank_no.getText().toString(),edit_input_alipay_no.getText().toString(),alipay_pay_pic);
             }

@@ -11,6 +11,7 @@ import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseHolder;
 import com.app.aihealthapp.core.base.BaseXRecyclerViewAdapter;
 import com.app.aihealthapp.core.helper.GlideHelper;
+import com.app.aihealthapp.ui.activity.mine.AdvisoryDetailsActivity;
 import com.app.aihealthapp.ui.activity.mine.InterrogationDetailsActivity;
 import com.app.aihealthapp.ui.activity.mine.SearchRecordDetailsActivity;
 import com.app.aihealthapp.ui.bean.InterrogationRecordBean;
@@ -80,7 +81,7 @@ public class InterrogationRecordAdapter extends BaseXRecyclerViewAdapter<Interro
                 rt_doctor_record.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        context.startActivity(new Intent(context, InterrogationDetailsActivity.class).putExtra("datas",data));
+                        context.startActivity(new Intent(context, AdvisoryDetailsActivity.class).putExtra("id",String.valueOf(data.getId())));
                     }
                 });
 

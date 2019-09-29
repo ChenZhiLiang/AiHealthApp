@@ -104,7 +104,8 @@
                         android:background="@null"
                         android:layout_marginRight="@dimen/dimen_10px"
                         android:paddingLeft="@dimen/dimen_10px"
-                        android:textSize="@dimen/text_14px"/>
+                        android:textSize="@dimen/text_14px"
+                        android:textColor="@color/text_color"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"

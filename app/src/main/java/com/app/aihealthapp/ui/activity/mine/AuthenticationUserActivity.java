@@ -238,9 +238,18 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
             UserInfoBean mUserInfo = GsonHelper.GsonToBean(data,UserInfoBean.class);
             SharedPreferenceHelper.setUserInfo(AppContext.getContext(),mUserInfo);
             if (!TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
-                edit_input_name.setText(UserHelper.getUserInfo().getOauth_nickname());
-                edit_input_name.setSelection(UserHelper.getUserInfo().getOauth_nickname().length());
-                edit_input_nickname.setText(UserHelper.getUserInfo().getNickname());
+
+                edit_input_name.setText(UserHelper.getUserInfo().getNickname());
+                edit_input_name.setSelection(UserHelper.getUserInfo().getNickname().length());
+                if (UserHelper.getUserInfo().getIs_auth()==0){
+                    edit_input_name.setEnabled(false);
+                    rt_sex.setEnabled(false);
+                }else {
+                    edit_input_name.setEnabled(true);
+                    rt_sex.setEnabled(true);
+
+                }
+                edit_input_nickname.setText(UserHelper.getUserInfo().getOauth_nickname());
                 if (UserHelper.getUserInfo().getSex()==1){
                     tv_sex.setText("男");
                 }else {

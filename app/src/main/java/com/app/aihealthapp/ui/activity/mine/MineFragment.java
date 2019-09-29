@@ -139,7 +139,7 @@ public class MineFragment extends BaseFragment implements MineView {
             GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
             tv_invite_code.setVisibility(View.VISIBLE);
             tv_invite_code.setText("邀请码："+UserHelper.getUserInfo().getInvite_code());
-            if (UserHelper.getUserInfo().getIs_auth()==0){
+            if (UserHelper.getUserInfo().getIs_auth()==1){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
                 btn_authentication.setText("实名认证");
             }else {

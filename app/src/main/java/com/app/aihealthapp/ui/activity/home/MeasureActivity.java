@@ -43,6 +43,7 @@ import com.crrepa.ble.conn.listener.CRPBleConnectionStateListener;
 import com.crrepa.ble.conn.listener.CRPBloodOxygenChangeListener;
 import com.crrepa.ble.conn.listener.CRPBloodPressureChangeListener;
 import com.crrepa.ble.conn.listener.CRPHeartRateChangeListener;
+import com.crrepa.ble.conn.type.CRPBleMessageType;
 import com.dinuscxj.progressbar.CircleProgressBar;
 
 import java.util.List;

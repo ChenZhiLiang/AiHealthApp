@@ -140,6 +140,7 @@ public class AdvisoryDetailsActivity extends BaseActivity implements AdvisoryDet
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
             showLoadFailMsg("回复成功");
+            edit_input_content.setText("");
             mAdvisoryDetailsViewMode.getAdvisoryDetails(id,false);
 
         }else {

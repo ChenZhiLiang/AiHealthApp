@@ -19,8 +19,6 @@ import okhttp3.RequestBody;
  * 创建Request请求
  */
 public class OkHttpRequest {
-
-
 	/**
 	 * ressemble the params to the url
 	 *  Get 请求

@@ -128,7 +128,7 @@ public class RegisterActivity extends BaseActivity implements VerifyView , Regis
         if (ret==0){
             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
             String code = GsonHelper.GsonToString(data,"code");
-            showLoadFailMsg("验证码已发送，请注意查收"+code);
+            showLoadFailMsg("验证码已发送，请注意查收");
             CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(this, 60000, 1000, tv_get_verify);
             mCountDownTimerUtils.start();
         }else {

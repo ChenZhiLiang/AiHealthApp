@@ -142,13 +142,6 @@ public class ForumFragment extends BaseFragment implements WebTitleView ,AMapLoc
     @Override
     public void loadingData() {
 
-        if (isLogin()){
-            String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId();
-            webview.loadUrl(url);//加载网址
-        }else {
-            webview.loadUrl(ApiUrl.WebApi.Index);//加载网址
-        }
-
         if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
             mLocationClient.startLocation();
         }
@@ -174,12 +167,24 @@ public class ForumFragment extends BaseFragment implements WebTitleView ,AMapLoc
                 /*发送定位成功事件，保存获取定位到的信息*/
                 Log.e("aaaaa", aMapLocation.getAdCode());
                 SharedPreferenceHelper.setCityId(AppContext.getContext(),aMapLocation.getAdCode());
+                if (isLogin()){
+                    String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+aMapLocation.getAdCode();
+                    webview.loadUrl(url);//加载网址
+                }else {
+                    webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+aMapLocation.getAdCode());//加载网址
+                }
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"
                         + aMapLocation.getErrorCode() + ", errInfo:"
                         + aMapLocation.getErrorInfo());
                 SharedPreferenceHelper.setCityId(AppContext.getContext(), AppConfig.CITY_ID_DEF);
+                if (isLogin()){
+                    String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+AppConfig.CITY_ID_DEF;
+                    webview.loadUrl(url);//加载网址
+                }else {
+                    webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+AppConfig.CITY_ID_DEF);//加载网址
+                }
 
             }
         }

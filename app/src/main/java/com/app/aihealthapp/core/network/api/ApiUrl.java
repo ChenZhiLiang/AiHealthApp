@@ -74,6 +74,7 @@ public final class ApiUrl {
         public static final String EditPwd = HOST +"user/editpwd?uid=";
         public static final String ShareFriend = HOST + "wap/qrcode.html?uid=";//推荐给好友
         public static final String MyMembers = HOST +"wap/myagent_list.html";//我的代理商会员
+        public static final String MyWallet = HOST +"user/mywallet?uid=";//现金明细
       }
 
     public static class DoctorApi{

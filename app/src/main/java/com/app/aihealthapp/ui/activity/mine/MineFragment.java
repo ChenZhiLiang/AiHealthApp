@@ -72,6 +72,8 @@ public class MineFragment extends BaseFragment implements MineView {
     Button btn_authentication;
     @BindView(R.id.rt_my_key)
     RelativeLayout rt_my_key;//我的健康秘钥
+    @BindView(R.id.rt_cash_details)
+    RelativeLayout rt_cash_details;
     @BindView(R.id.rt_mine_device)
     RelativeLayout rt_mine_device;//我的健康设备
     @BindView(R.id.rt_mine_ask)
@@ -169,7 +171,7 @@ public class MineFragment extends BaseFragment implements MineView {
     }
 
     @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,R.id.rt_healthy_report,
-            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_share_friend,R.id.rt_my_members,R.id.rt_feedback,R.id.rt_editpaw,R.id.btn_logout})
+            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_share_friend,R.id.rt_my_members,R.id.rt_feedback,R.id.rt_editpaw,R.id.rt_cash_details,R.id.btn_logout})
     public void onClick(View v){
 
         if (v==rt_about){
@@ -204,6 +206,9 @@ public class MineFragment extends BaseFragment implements MineView {
                     });
                 }else if (v==btn_authentication){
                     startActivity(new Intent(getContext(),AuthenticationUserActivity.class));
+                }else if (v==rt_cash_details){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyWallet+UserHelper.getUserInfo().getId()));
+
                 }else if (v==rt_my_key){
                     startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyKeyList+UserHelper.getUserInfo().getId()));
                 }else if (v==rt_mine_device){

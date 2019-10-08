@@ -103,7 +103,7 @@
                 android:background="@color/view_line" />
 
             <RelativeLayout
-                android:id="@+id/rt_mine_device"
+                android:id="@+id/rt_cash_details"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick">
@@ -113,9 +113,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_device_icon"
+                    android:drawableLeft="@mipmap/cash_details"
                     android:drawablePadding="@dimen/text_10px"
-                    android:text="我的健康设备"
+                    android:text="现金明细"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px" />
 
@@ -131,7 +131,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0.5px"
                 android:background="@color/view_line" />
+            <RelativeLayout
+                android:id="@+id/rt_mine_device"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50px"
+                android:background="@drawable/selector_onclick">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_16px"
+                    android:drawableLeft="@mipmap/mind_device_icon"
+                    android:drawablePadding="@dimen/text_10px"
+                    android:text="我的健康手环"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_16px"
+                    android:background="@mipmap/my_arrow" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_0.5px"
+                android:background="@color/view_line" />
             <RelativeLayout
                 android:id="@+id/rt_mine_ask"
                 android:layout_width="match_parent"
@@ -145,7 +173,7 @@
                     android:layout_marginLeft="@dimen/dimen_16px"
                     android:drawableLeft="@mipmap/mind_xxtx_icon"
                     android:drawablePadding="@dimen/text_10px"
-                    android:text="我的咨询"
+                    android:text="我的咨询问诊"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px" />
 
@@ -175,7 +203,7 @@
                     android:layout_marginLeft="@dimen/dimen_16px"
                     android:drawableLeft="@mipmap/mind_jkzs_icon"
                     android:drawablePadding="@dimen/text_10px"
-                    android:text="我的体检报告"
+                    android:text="我的检测报告"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px" />
 
@@ -224,7 +252,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0.5px"
                 android:background="@color/view_line"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -282,27 +310,57 @@
                     android:layout_marginRight="@dimen/dimen_16px"
                     android:background="@mipmap/my_arrow" />
             </RelativeLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0.5px"
-                android:background="@color/view_line"
-                android:visibility="gone"/>
+                android:background="@color/view_line" />
 
             <RelativeLayout
+                android:id="@+id/rt_share_friend"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_xxtx_icon"
+                    android:drawableLeft="@mipmap/mind_tj_icon"
                     android:drawablePadding="@dimen/text_10px"
-                    android:text="我的健康档案"
+                    android:text="邀请好友有奖"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_16px"
+                    android:background="@mipmap/my_arrow" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_0.5px"
+                android:background="@color/view_line" />
+
+            <RelativeLayout
+                android:id="@+id/rt_myfriend_list"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50px"
+                android:background="@drawable/selector_onclick">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_16px"
+                    android:drawableLeft="@mipmap/mind_circle"
+                    android:drawablePadding="@dimen/text_10px"
+                    android:text="我的健康朋友圈"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px" />
 
@@ -375,42 +433,9 @@
                     android:layout_marginRight="@dimen/dimen_16px"
                     android:background="@mipmap/my_arrow" />
             </RelativeLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_0.5px"
-                android:background="@color/view_line" />
 
-            <RelativeLayout
-                android:id="@+id/rt_myfriend_list"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50px"
-                android:background="@drawable/selector_onclick">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_circle"
-                    android:drawablePadding="@dimen/text_10px"
-                    android:text="我的健康朋友圈"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_14px" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dimen_16px"
-                    android:background="@mipmap/my_arrow" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_0.5px"
-                android:background="@color/view_line"
-                android:visibility="gone"/>
             <RelativeLayout
                 android:id="@+id/rt_my_members"
                 android:layout_width="match_parent"
@@ -444,38 +469,7 @@
                 android:layout_height="@dimen/dimen_0.5px"
                 android:background="@color/view_line"
                 android:visibility="gone"/>
-            <RelativeLayout
-                android:id="@+id/rt_share_friend"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50px"
-                android:background="@drawable/selector_onclick"
-                android:visibility="visible">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_tj_icon"
-                    android:drawablePadding="@dimen/text_10px"
-                    android:text="推荐给好友"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_14px" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dimen_16px"
-                    android:background="@mipmap/my_arrow" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_0.5px"
-                android:background="@color/view_line"
-                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

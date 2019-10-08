@@ -38,5 +38,7 @@
 
     <string name="toast_message">Toast message</string>
     <string name="share_title">健康密钥邀请您加入健康中国行动</string>
-    <string name="share_description">让我们一起分享健康，传递健康，收获健康</string>
+    <string name="share_description">让我们一起分享健康，传递健康，收获健康，为健康中国建设贡献一份力量。</string>
+    <string name="viewpager_indicator">%1$d/%2$d</string>
+
 </resources>

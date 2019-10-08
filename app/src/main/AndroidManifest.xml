@@ -117,6 +117,11 @@
             android:screenOrientation="portrait"
             android:launchMode="singleInstance"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--高德地图-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="2b922c40d6162ab5a2231d656b7a0638" />
+        <service android:name="com.amap.api.location.APSService" />
 
     </application>
 

@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.app.aihealthapp.R;
+import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseMode;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
@@ -134,6 +135,14 @@ public class ProgressWebView extends WebView {
             return SharedPreferenceHelper.getUserToken(AppContext.getContext());
         }
         @JavascriptInterface
+        public String andoridCity(){
+            if (TextUtils.isEmpty(SharedPreferenceHelper.getCityId(AppContext.getContext()))){
+                return AppConfig.CITY_ID_DEF;
+            }else {
+                return SharedPreferenceHelper.getCityId(AppContext.getContext());
+            }
+        }
+        @JavascriptInterface
         public int jsCallUId() {
             return UserHelper.getUserInfo().getId();
         }
@@ -196,6 +205,7 @@ public class ProgressWebView extends WebView {
                     ToastyHelper.toastyNormal((Activity) context,result.toString());
                 }
             });
+
         }
     }
 
@@ -312,6 +322,7 @@ public class ProgressWebView extends WebView {
             }else {
                 mUrl = url;
             }
+            Log.e("Web_url",mUrl);
             super.onPageStarted(view, mUrl, favicon);
         }
 

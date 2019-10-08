@@ -1,5 +1,6 @@
 package com.app.aihealthapp.ui.activity.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.app.aihealthapp.core.base.BaseActivity;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.pictureviewer.ImagePagerActivity;
 import com.app.aihealthapp.ui.adapter.AdvisoryReplyAdapter;
 import com.app.aihealthapp.ui.bean.AdvisoryDetailsBean;
 import com.app.aihealthapp.ui.bean.ReplyItemBean;
@@ -62,6 +64,7 @@ public class AdvisoryDetailsActivity extends BaseActivity implements AdvisoryDet
     private List<ReplyItemBean> ReplyItem = new ArrayList<>();
     private String id;
     private int kind_type;//0 当前身份是患者 1当前身份是医生
+    private  AdvisoryDetailsBean mAdvisoryDetailsBean;
     @Override
     public int getLayoutId() {
         return R.layout.activity_advisory_details;
@@ -106,7 +109,7 @@ public class AdvisoryDetailsActivity extends BaseActivity implements AdvisoryDet
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
-            AdvisoryDetailsBean mAdvisoryDetailsBean = GsonHelper.GsonToBean(data,AdvisoryDetailsBean.class);
+             mAdvisoryDetailsBean = GsonHelper.GsonToBean(data,AdvisoryDetailsBean.class);
             tv_my_question.setText(mAdvisoryDetailsBean.getInfo());
             GlideHelper.loadImageView(this,mAdvisoryDetailsBean.getChecklist_pic(),image_checklist_pic);
             GlideHelper.loadImageView(this,mAdvisoryDetailsBean.getMedical_pic(),image_medical_pic);
@@ -149,13 +152,40 @@ public class AdvisoryDetailsActivity extends BaseActivity implements AdvisoryDet
 
     }
 
-    @OnClick({R.id.btn_send})
+    @OnClick({R.id.btn_send,R.id.image_checklist_pic,R.id.image_medical_pic,R.id.image_affected_part_pic,R.id.image_other_pic})
     public void onClick(View v){
-        if (TextUtils.isEmpty(edit_input_content.getText().toString())){
-            ToastyHelper.toastyNormal(this,"请输入回复内容");
-        }else {
-            mAdvisoryDetailsViewMode.adviceComment(id,edit_input_content.getText().toString());
+        if (v==btn_send){
+            if (TextUtils.isEmpty(edit_input_content.getText().toString())){
+                ToastyHelper.toastyNormal(this,"请输入回复内容");
+            }else {
+                mAdvisoryDetailsViewMode.adviceComment(id,edit_input_content.getText().toString());
+            }
+        }else if (v==image_checklist_pic){
+            Intent intent = new Intent(this, ImagePagerActivity.class);
+            // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,  mAdvisoryDetailsBean.getChecklist_pic());
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
+            startActivity(intent);
+        }else if (v==image_medical_pic){
+            Intent intent = new Intent(this, ImagePagerActivity.class);
+            // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,  mAdvisoryDetailsBean.getMedical_pic());
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
+            startActivity(intent);
+        }else if (v==image_affected_part_pic){
+            Intent intent = new Intent(this, ImagePagerActivity.class);
+            // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,  mAdvisoryDetailsBean.getAffected_part_pic());
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
+            startActivity(intent);
+        }else if (v==image_other_pic){
+            Intent intent = new Intent(this, ImagePagerActivity.class);
+            // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,  mAdvisoryDetailsBean.getOther_pic());
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
+            startActivity(intent);
         }
+
     }
     @Override
     public void showProgress() {

@@ -8,7 +8,7 @@
 
 
     <include layout="@layout/include_main_toolbar"/>
-    <com.app.aihealthapp.view.ProgressWebView
+    <com.app.aihealthapp.view.FragmentProgressWebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

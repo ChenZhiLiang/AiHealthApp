@@ -249,6 +249,7 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
                     rt_sex.setEnabled(true);
 
                 }
+                edit_input_age.setText(UserHelper.getUserInfo().getAge()+"");
                 edit_input_nickname.setText(UserHelper.getUserInfo().getOauth_nickname());
                 if (UserHelper.getUserInfo().getSex()==1){
                     tv_sex.setText("男");

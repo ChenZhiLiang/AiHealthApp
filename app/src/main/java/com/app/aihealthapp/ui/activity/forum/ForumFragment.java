@@ -14,11 +14,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.model.CameraPosition;
-import com.amap.api.maps.model.LatLng;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseFragment;
@@ -31,7 +27,7 @@ import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
-import com.app.aihealthapp.view.ProgressWebView;
+import com.app.aihealthapp.view.FragmentProgressWebView;
 
 import butterknife.BindView;
 
@@ -47,7 +43,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView ,AMapLoc
     @BindView(R.id.tv_title_bar)
     TextView tv_title_bar;
     @BindView(R.id.webview)
-    ProgressWebView webview;
+    FragmentProgressWebView webview;
 
     //声明AMapLocationClient类对象，定位发起端
     private AMapLocationClient mLocationClient = null;

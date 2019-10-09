@@ -141,11 +141,11 @@ public class MineFragment extends BaseFragment implements MineView {
             GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
             tv_invite_code.setVisibility(View.VISIBLE);
             tv_invite_code.setText("邀请码："+UserHelper.getUserInfo().getInvite_code());
-            if (UserHelper.getUserInfo().getIs_auth()==1){
+            if (UserHelper.getUserInfo().getIs_auth()==0){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
                 btn_authentication.setText("实名认证");
             }else {
-                tv_user_name.setText(UserHelper.getUserInfo().getNickname());
+                tv_user_name.setText(UserHelper.getUserInfo().getOauth_nickname());
                 btn_authentication.setText("已认证");
             }
             if (11<=UserHelper.getUserInfo().getLevel_id()&&UserHelper.getUserInfo().getLevel_id()<=16){
@@ -277,7 +277,7 @@ public class MineFragment extends BaseFragment implements MineView {
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
                 btn_authentication.setText("实名认证");
             }else {
-                tv_user_name.setText(UserHelper.getUserInfo().getNickname());
+                tv_user_name.setText(UserHelper.getUserInfo().getOauth_nickname());
                 btn_authentication.setText("已认证");
             }
             if (11<=UserHelper.getUserInfo().getLevel_id()&&UserHelper.getUserInfo().getLevel_id()<=16){

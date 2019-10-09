@@ -126,6 +126,7 @@ public class UserInfoBean implements Serializable {
     private String weight;
     private int cat_id;
     private int level_id;
+    private int age;
 
     public int getId() {
         return id;
@@ -573,5 +574,13 @@ public class UserInfoBean implements Serializable {
 
     public void setLevel_id(int level_id) {
         this.level_id = level_id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

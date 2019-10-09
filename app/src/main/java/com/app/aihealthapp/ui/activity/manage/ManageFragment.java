@@ -27,6 +27,7 @@ import com.app.aihealthapp.ui.AppManager;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.forum.ForumFragment;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
+import com.app.aihealthapp.view.FragmentProgressWebView;
 import com.app.aihealthapp.view.ProgressWebView;
 import com.app.aihealthapp.view.WebViewProgressBar;
 
@@ -46,7 +47,7 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
     @BindView(R.id.tv_title_bar)
     TextView tv_title_bar;
     @BindView(R.id.webview)
-    ProgressWebView webview;
+    FragmentProgressWebView webview;
     public static ManageFragment getInstance(String title) {
         ManageFragment hf = new ManageFragment();
         hf.mTitle = title;

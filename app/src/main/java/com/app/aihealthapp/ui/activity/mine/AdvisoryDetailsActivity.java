@@ -24,6 +24,7 @@ import com.app.aihealthapp.ui.bean.ReplyItemBean;
 import com.app.aihealthapp.ui.mvvm.view.AdvisoryDetailsView;
 import com.app.aihealthapp.ui.mvvm.viewmode.AdvisoryDetailsViewMode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,25 +164,33 @@ public class AdvisoryDetailsActivity extends BaseActivity implements AdvisoryDet
         }else if (v==image_checklist_pic){
             Intent intent = new Intent(this, ImagePagerActivity.class);
             // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,  mAdvisoryDetailsBean.getChecklist_pic());
+            List<String> strings = new ArrayList<>();
+            strings.add(mAdvisoryDetailsBean.getChecklist_pic());
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (Serializable) strings);
             intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
             startActivity(intent);
         }else if (v==image_medical_pic){
             Intent intent = new Intent(this, ImagePagerActivity.class);
             // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,  mAdvisoryDetailsBean.getMedical_pic());
+            List<String> strings = new ArrayList<>();
+            strings.add(mAdvisoryDetailsBean.getMedical_pic());
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (Serializable) strings);
             intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
             startActivity(intent);
         }else if (v==image_affected_part_pic){
             Intent intent = new Intent(this, ImagePagerActivity.class);
             // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,  mAdvisoryDetailsBean.getAffected_part_pic());
+            List<String> strings = new ArrayList<>();
+            strings.add(mAdvisoryDetailsBean.getAffected_part_pic());
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (Serializable) strings);
             intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
             startActivity(intent);
         }else if (v==image_other_pic){
             Intent intent = new Intent(this, ImagePagerActivity.class);
             // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,  mAdvisoryDetailsBean.getOther_pic());
+            List<String> strings = new ArrayList<>();
+            strings.add(mAdvisoryDetailsBean.getOther_pic());
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (Serializable) strings);
             intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, 0);
             startActivity(intent);
         }

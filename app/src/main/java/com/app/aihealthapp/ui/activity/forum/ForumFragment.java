@@ -144,6 +144,13 @@ public class ForumFragment extends BaseFragment implements WebTitleView ,AMapLoc
 
         if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
             mLocationClient.startLocation();
+        }else {
+            if (isLogin()){
+                String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+AppConfig.CITY_ID_DEF;
+                webview.loadUrl(url);//加载网址
+            }else {
+                webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+AppConfig.CITY_ID_DEF);//加载网址
+            }
         }
     }
 

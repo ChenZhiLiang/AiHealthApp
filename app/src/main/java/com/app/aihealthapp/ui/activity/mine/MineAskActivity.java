@@ -66,8 +66,8 @@ public class MineAskActivity extends BaseActivity implements ViewPager.OnPageCha
             mFragments.add(SearchRecordFragment.getInstance(1));
             mFragments.add(SearchRecordFragment.getInstance(0));
         }else {
-            mFragments.add(InterrogationRecordFragment.getInstance(1));
             mFragments.add(InterrogationRecordFragment.getInstance(0));
+            mFragments.add(InterrogationRecordFragment.getInstance(1));
         }
         mBaseFragmentPageAdapter = new BaseFragmentPageAdapter(getSupportFragmentManager(), mFragments);
         viewpage_ask.setNoScroll(false);//设置viewpage 是否可以左右滑动

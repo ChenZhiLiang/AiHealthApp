@@ -251,10 +251,13 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
                 }
                 edit_input_age.setText(UserHelper.getUserInfo().getAge()+"");
                 edit_input_nickname.setText(UserHelper.getUserInfo().getOauth_nickname());
-                if (UserHelper.getUserInfo().getSex()==1){
+                sex = UserHelper.getUserInfo().getSex();
+                if (sex==1){
                     tv_sex.setText("男");
-                }else {
+                }else if(sex==2) {
                     tv_sex.setText("女");
+                }else {
+                    tv_sex.setText("保密");
                 }
                 edit_input_height.setText(UserHelper.getUserInfo().getHeight()+"");
                 edit_input_weight.setText(UserHelper.getUserInfo().getWeight()+"");

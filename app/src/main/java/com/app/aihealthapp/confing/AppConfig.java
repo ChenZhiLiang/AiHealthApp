@@ -15,11 +15,15 @@ public class AppConfig {
     public static final String USER_INFO = "user_info";
     public static final String DEVICE_INFO = "device_info";
     public static final String CITY_ID_DEF = "450100";//默认城市id
+    public static final String CITY_DEF = "南宁市";
+
 
     public static final String TOKEN_NAME = "token";
     public static final String WALLET_TOKEN = "wallet_token";
     public static final String MAC_ADDRESS = "mac_address";//设备mac地址
     public static final String CITY_ID = "city_id";
+    public static final String CITY = "city";
+
 
     public static final String USER_NAME = "mobile";
     public static final String USER_PASS = "passsword";

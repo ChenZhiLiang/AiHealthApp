@@ -86,7 +86,7 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
     TextView tv_sex;
     @BindView(R.id.btn_submit)
     Button btn_submit;
-    private int sex = 1;//0保密 1男 2女
+    private int sex = 1;//1男 2女
     private String alipay_pay_pic;
 
     private AuthenticationUserViewMode mAuthenticationUserViewMode;
@@ -131,12 +131,9 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
                     if (position==0){
                        tv_sex.setText("男");
                         sex = 1;
-                    }else if (position==1){
+                    }else {
                         sex = 2;
                         tv_sex.setText("女");
-                    }else {
-                        sex = 0;
-                        tv_sex.setText("保密");
                     }
                 }
             });
@@ -254,10 +251,8 @@ public class AuthenticationUserActivity extends BaseActivity implements Authenti
                 sex = UserHelper.getUserInfo().getSex();
                 if (sex==1){
                     tv_sex.setText("男");
-                }else if(sex==2) {
+                }else{
                     tv_sex.setText("女");
-                }else {
-                    tv_sex.setText("保密");
                 }
                 edit_input_height.setText(UserHelper.getUserInfo().getHeight()+"");
                 edit_input_weight.setText(UserHelper.getUserInfo().getWeight()+"");

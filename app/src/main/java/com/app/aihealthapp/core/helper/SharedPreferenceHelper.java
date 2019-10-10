@@ -138,6 +138,14 @@ public class SharedPreferenceHelper {
         return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY_ID);
 
     }
+    public static void setCity(Context context, String city) {
+        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY, city);
+    }
+
+    public static String getCity(Context context){
+        return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY);
+
+    }
     /**
      * 清除 Token
      *

@@ -6,29 +6,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps.LocationSource;
 import com.app.aihealthapp.R;
-import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseFragment;
-import com.app.aihealthapp.core.helper.PermissionHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
-import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 import com.app.aihealthapp.view.FragmentProgressWebView;
-
 import butterknife.BindView;
 
 /**
@@ -39,27 +28,19 @@ import butterknife.BindView;
  * 修改人：Chen
  * 修改时间：2019/7/24 22:07
  */
-public class ForumFragment extends BaseFragment implements WebTitleView ,AMapLocationListener{
+public class ForumFragment extends BaseFragment implements WebTitleView {
+    @BindView(R.id.tv_location)
+    TextView tv_location;
     @BindView(R.id.tv_title_bar)
     TextView tv_title_bar;
     @BindView(R.id.webview)
     FragmentProgressWebView webview;
 
-    //声明AMapLocationClient类对象，定位发起端
-    private AMapLocationClient mLocationClient = null;
-    //声明mLocationOption对象，定位参数
-    public AMapLocationClientOption mLocationOption = null;
-
-    //声明mListener对象，定位监听器
-    private LocationSource.OnLocationChangedListener mListener = null;
-    //标识，用于判断是否只显示一次定位信息和用户重新定位
-    private boolean isFirstLoc = true;
     public static ForumFragment getInstance(String title) {
         ForumFragment hf = new ForumFragment();
         hf.mTitle = title;
         return hf;
     }
-
 
 
 
@@ -71,6 +52,9 @@ public class ForumFragment extends BaseFragment implements WebTitleView ,AMapLoc
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
+
+        tv_location.setVisibility(View.VISIBLE);
+        tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
@@ -78,38 +62,13 @@ public class ForumFragment extends BaseFragment implements WebTitleView ,AMapLoc
         IntentFilter intentFilter =new IntentFilter();
         intentFilter.addAction("action.pay.success");
         mActivity.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
-        initLocation();
     }
 
     @Override
     public void initData() {
 
     }
-    /*初始化定位参数*/
-    private void initLocation() {
-        //初始化定位
-        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
-        //设置定位回调监听
-        mLocationClient.setLocationListener(this);
-        //初始化定位参数
-        mLocationOption = new AMapLocationClientOption();
-        //设置定位模式为Hight_Accuracy高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        //设置是否返回地址信息（默认返回地址信息）
-        mLocationOption.setNeedAddress(true);
-        //设置是否只定位一次,默认为false
-        mLocationOption.setOnceLocation(true);
-//        mLocationOption.setOnceLocationLatest(true);
 
-        //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(2000);
-        //设置是否强制刷新WIFI，默认为强制刷新
-        mLocationOption.setWifiActiveScan(true);
-        //设置是否允许模拟位置,默认为false，不允许模拟位置
-        mLocationOption.setMockEnable(false);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
-    }
     private BroadcastReceiver mRefreshBroadcastReceiver =new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
@@ -137,59 +96,18 @@ public class ForumFragment extends BaseFragment implements WebTitleView ,AMapLoc
 
     @Override
     public void loadingData() {
-
-        if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
-            mLocationClient.startLocation();
+        String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+        if (isLogin()){
+            String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+city_code;
+            webview.loadUrl(url);//加载网址
         }else {
-            if (isLogin()){
-                String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+AppConfig.CITY_ID_DEF;
-                webview.loadUrl(url);//加载网址
-            }else {
-                webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+AppConfig.CITY_ID_DEF);//加载网址
-            }
+            webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+city_code);//加载网址
         }
     }
 
     @Override
     public void onTitleResult(String title) {
         tv_title_bar.setText(title);
-
     }
 
-
-    /**
-     * 定位成功
-     *  @author
-     *  @time
-     *  @describe
-     */
-    @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
-        if (aMapLocation != null) {
-            if (aMapLocation.getErrorCode() == 0) {
-                /*发送定位成功事件，保存获取定位到的信息*/
-                Log.e("aaaaa", aMapLocation.getAdCode());
-                SharedPreferenceHelper.setCityId(AppContext.getContext(),aMapLocation.getAdCode());
-                if (isLogin()){
-                    String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+aMapLocation.getAdCode();
-                    webview.loadUrl(url);//加载网址
-                }else {
-                    webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+aMapLocation.getAdCode());//加载网址
-                }
-            } else {
-                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-                Log.e("AmapError", "location Error, ErrCode:"
-                        + aMapLocation.getErrorCode() + ", errInfo:"
-                        + aMapLocation.getErrorInfo());
-                SharedPreferenceHelper.setCityId(AppContext.getContext(), AppConfig.CITY_ID_DEF);
-                if (isLogin()){
-                    String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+AppConfig.CITY_ID_DEF;
-                    webview.loadUrl(url);//加载网址
-                }else {
-                    webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+AppConfig.CITY_ID_DEF);//加载网址
-                }
-
-            }
-        }
-    }
 }

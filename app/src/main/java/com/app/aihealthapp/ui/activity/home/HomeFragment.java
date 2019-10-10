@@ -24,7 +24,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.app.aihealthapp.R;
+import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseFragment;
 import com.app.aihealthapp.core.base.BaseXRecyclerViewAdapter;
 import com.app.aihealthapp.core.bgabanner.BGABanner;
@@ -36,6 +41,7 @@ import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.PermissionHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
@@ -81,8 +87,10 @@ import static com.app.aihealthapp.ui.activity.service.ComeWxMessage.WX;
  * 修改时间：2019/7/22 22:57
  */
 public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Adapter<ImageView, AdvListBean>,
-        BGABanner.Delegate<ImageView, AdvListBean>, CRPStepChangeListener  {
+        BGABanner.Delegate<ImageView, AdvListBean>, CRPStepChangeListener , AMapLocationListener {
 
+    @BindView(R.id.tv_location)
+    TextView tv_location;
     @BindView(R.id.banner_home_adv)
     BGABanner banner_home_adv;
     @BindView(R.id.tv_title_bar)
@@ -156,6 +164,10 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     private boolean ClickStep = false;//判断是否点击运动记rt_health_data步
     private HomeBean homeBean;
 
+    //声明AMapLocationClient类对象，定位发起端
+    private AMapLocationClient mLocationClient = null;
+    //声明mLocationOption对象，定位参数
+    public AMapLocationClientOption mLocationOption = null;
 
     public static HomeFragment getInstance(String title) {
         HomeFragment hf = new HomeFragment();
@@ -170,6 +182,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
+        tv_location.setVisibility(View.VISIBLE);
         tv_title_bar.setText("首页");
         banner_home_adv.setAdapter(this);
         banner_home_adv.setDelegate(this);
@@ -187,6 +200,15 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         if (SharedPreferenceHelper.getDeviceInfo(mActivity)!=null){
             mDeviceInfoBean = SharedPreferenceHelper.getDeviceInfo(mActivity);
         }
+        initLocation();
+
+        if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
+            mLocationClient.startLocation();
+        }else {
+            SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_ID_DEF);
+            tv_location.setText(AppConfig.CITY_ID_DEF);
+        }
+
     }
 
     private BroadcastReceiver mNotificationReceiver =new BroadcastReceiver() {
@@ -248,6 +270,31 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     @Override
     public void initData() {
 
+    }
+    /*初始化定位参数*/
+    private void initLocation() {
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(this);
+        //初始化定位参数
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为Hight_Accuracy高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //设置是否只定位一次,默认为false
+        mLocationOption.setOnceLocation(true);
+//        mLocationOption.setOnceLocationLatest(true);
+
+        //设置定位间隔,单位毫秒,默认为2000ms
+        mLocationOption.setInterval(2000);
+        //设置是否强制刷新WIFI，默认为强制刷新
+        mLocationOption.setWifiActiveScan(true);
+        //设置是否允许模拟位置,默认为false，不允许模拟位置
+        mLocationOption.setMockEnable(false);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
     }
 
     @OnClick({R.id.btn_add_wristband, R.id.ll_syncStep, R.id.ll_blood_pressure, R.id.ll_heart_rate, R.id.ll_blood_oxygen, R.id.btn_look_report, R.id.btn_ask,
@@ -528,5 +575,26 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     public void fillBannerItem(BGABanner banner, ImageView itemView, AdvListBean model, int position) {
         GlideHelper.loadImageView(mActivity, model.getPic(), itemView);
 
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null) {
+            if (aMapLocation.getErrorCode() == 0) {
+                /*发送定位成功事件，保存获取定位到的信息*/
+                Log.e("aaaaa", aMapLocation.getAdCode());
+                SharedPreferenceHelper.setCityId(AppContext.getContext(),aMapLocation.getAdCode());
+                SharedPreferenceHelper.setCity(AppContext.getContext(),aMapLocation.getDistrict());
+                tv_location.setText(aMapLocation.getDistrict());
+            } else {
+                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                Log.e("AmapError", "location Error, ErrCode:"
+                        + aMapLocation.getErrorCode() + ", errInfo:"
+                        + aMapLocation.getErrorInfo());
+                SharedPreferenceHelper.setCityId(AppContext.getContext(), AppConfig.CITY_ID_DEF);
+                SharedPreferenceHelper.setCity(AppContext.getContext(),AppConfig.CITY_DEF);
+                tv_location.setText(AppConfig.CITY_DEF);
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="@dimen/dimen_70px"
         android:layout_height="@dimen/dimen_70px"
-        android:background="@mipmap/logo"
+        android:background="@mipmap/login_logo1"
         android:layout_gravity="center_horizontal"
         android:layout_margin="32dp"/>
 

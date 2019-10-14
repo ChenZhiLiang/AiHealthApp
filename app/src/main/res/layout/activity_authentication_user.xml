@@ -291,7 +291,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_10px"
-                        android:text="身份证号"
+                        android:text="身份证号（可选填）"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/text_14px"/>
 
@@ -322,7 +322,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_10px"
-                        android:text="银行卡号"
+                        android:text="银行卡号（可选填）"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/text_14px"/>
 
@@ -353,7 +353,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_10px"
-                        android:text="银行名称"
+                        android:text="银行名称（可选填）"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/text_14px"/>
 
@@ -384,7 +384,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_10px"
-                        android:text="支付宝账号"
+                        android:text="支付宝账号（可选填）"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/text_14px"/>
 
@@ -414,7 +414,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_10px"
-                        android:text="付款码"
+                        android:text="付款码（可选填）"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/text_14px"/>
 

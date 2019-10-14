@@ -41,7 +41,8 @@
                 android:layout_marginLeft="@dimen/dimen_10px"
                 android:text="儿科"
                 android:textSize="@dimen/text_12px"
-                android:textColor="@color/default_hint_color"/>
+                android:textColor="@color/default_hint_color"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/tv_doctor_level"
                 android:layout_width="wrap_content"

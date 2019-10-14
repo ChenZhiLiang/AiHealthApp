@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class SelectViewMode {
 
-    public static String[] cash_pay = {"微信扫码支付","支付宝扫码支付"};
+    public static String[] cash_pay = {"微信支付","支付宝支付"};
 
     public static String[]  key_pay = {"健康密钥支付"};
 

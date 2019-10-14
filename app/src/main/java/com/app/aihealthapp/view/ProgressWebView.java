@@ -36,6 +36,7 @@ import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
 import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
 import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.AppManager;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.home.DoctorListActivity;
 import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
@@ -60,18 +61,18 @@ public class ProgressWebView extends WebView {
 
     private WebViewProgressBar progressBar;//进度条的矩形（进度线）
     private Handler handler;
-    private Context context;
+    private Activity activity;
     private WebTitleView mWebTitleView;
 
     private BottomSheetDialog dialogs_share;
     private LinearLayout weChat_friend_layout;
     private LinearLayout weChat_moments_layout;
 
-    public ProgressWebView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.context = context;
+    public ProgressWebView(Activity activity, AttributeSet attrs) {
+        super(activity, attrs);
+        this.activity = activity;
         //实例化进度条
-        progressBar = new WebViewProgressBar(context);
+        progressBar = new WebViewProgressBar(activity);
         //设置进度条的size
         progressBar.setLayoutParams(new ViewGroup.LayoutParams
                 (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -170,6 +171,7 @@ public class ProgressWebView extends WebView {
             dialogs_share = new BottomSheetDialog(getContext());
             dialogs_share.setContentView(view);
             dialogs_share.show();
+
         }
 
         @JavascriptInterface
@@ -187,25 +189,30 @@ public class ProgressWebView extends WebView {
                         if(pay_type.equals("1")){//支付宝支付
                             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
                             String alipay_sdk  = GsonHelper.GsonToString(data,"alipay_str");
-                            new PayUtils((Activity) context).Alipay(alipay_sdk);
+                            new PayUtils(activity).Alipay(alipay_sdk);
                         }else if (pay_type.equals("2")){//微信支付
                             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
                             PaymentBean paymentBean = GsonHelper.GsonToBean(data,PaymentBean.class);
-                            new PayUtils((Activity) context).WXPay(paymentBean);//调用微信支付
+                            new PayUtils(activity).WXPay(paymentBean);//调用微信支付
                         }else {//密钥支付
-                            ToastyHelper.toastyNormal((Activity) context,"密钥支付成功");
+                            ToastyHelper.toastyNormal(activity,"密钥支付成功");
                         }
                     }else {
-                        ToastyHelper.toastyNormal((Activity) context,GsonHelper.GsonToString(result.toString(),"msg"));
+                        ToastyHelper.toastyNormal(activity,GsonHelper.GsonToString(result.toString(),"msg"));
                     }
                 }
 
                 @Override
                 public void onFailure(Object result) {
-                    ToastyHelper.toastyNormal((Activity) context,result.toString());
+                    ToastyHelper.toastyNormal(activity,result.toString());
                 }
             });
 
+        }
+
+        @JavascriptInterface
+        public void Exit(){
+            AppManager.getAppManager().finishActivity(activity);
         }
     }
 
@@ -260,13 +267,13 @@ public class ProgressWebView extends WebView {
         public boolean shouldOverrideUrlLoading(WebView view, final String url) {
 
             if (url.startsWith("navigation://question")){//立即咨询
-                context.startActivity(new Intent(context, HealthAskActivity.class));
+                activity.startActivity(new Intent(activity, HealthAskActivity.class));
                 return true;
             }else if (url.startsWith("navigation://doctor?cate_id=16")){//中医问诊
-                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16));
+                activity.startActivity(new Intent(activity, DoctorListActivity.class).putExtra("cate_id",16));
                 return true;
             }else if (url.startsWith("navigation://doctor?cate_id=10")){//疑难杂症
-                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",10));
+                activity.startActivity(new Intent(activity, DoctorListActivity.class).putExtra("cate_id",10));
                 return true;
             }else if (url.startsWith(ApiUrl.HOST+"order/cart")
                     ||url.startsWith(ApiUrl.HOST+"order/submit")
@@ -274,7 +281,7 @@ public class ProgressWebView extends WebView {
                     ||url.startsWith(ApiUrl.HOST+"user/login")
                     ||url.startsWith(ApiUrl.HOST+"index/shop/apply")){
                 if (UserHelper.getUserInfo()==null){
-                    context.startActivity(new Intent(context, LoginActivity.class));
+                    activity.startActivity(new Intent(activity, LoginActivity.class));
                     return true;
                 }
             }

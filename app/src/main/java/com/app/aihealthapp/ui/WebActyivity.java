@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
@@ -112,8 +113,8 @@ public class WebActyivity extends BaseActivity implements  WebTitleView {
                     @Override
                     public void run() {
                         ToastyHelper.toastyNormal(WebActyivity.this, "支付成功");
-                        webView.loadUrl(ApiUrl.WebApi.MyOrder);
-
+                        startActivity(new Intent(WebActyivity.this, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder+UserHelper.getUserInfo().getId()));
+                        AppManager.getAppManager().finishActivity(WebActyivity.this);
                     }
                 },100);
 

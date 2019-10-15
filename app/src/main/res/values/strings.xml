@@ -40,5 +40,13 @@
     <string name="share_title">健康密钥邀请您加入健康中国行动</string>
     <string name="share_description">让我们一起分享健康，传递健康，收获健康，为健康中国建设贡献一份力量。</string>
     <string name="viewpager_indicator">%1$d/%2$d</string>
-
+    <!--pickerview-->
+    <string name="pickerview_cancel">取消</string>
+    <string name="pickerview_submit">确定</string>
+    <string name="pickerview_year">年</string>
+    <string name="pickerview_month">月</string>
+    <string name="pickerview_day">日</string>
+    <string name="pickerview_hours">时</string>
+    <string name="pickerview_minutes">分</string>
+    <string name="pickerview_seconds">秒</string>
 </resources>

@@ -137,7 +137,8 @@
                         android:layout_marginLeft="@dimen/dimen_16px"
                         android:text="好评率："
                         android:textSize="@dimen/text_14px"
-                        android:textColor="@color/default_hint_color"/>
+                        android:textColor="@color/default_hint_color"
+                        android:visibility="gone"/>
                     <TextView
                         android:id="@+id/tv_good_evaluation"
                         android:layout_width="wrap_content"
@@ -146,7 +147,8 @@
                         android:ellipsize="end"
                         android:text="90%"
                         android:textSize="@dimen/text_14px"
-                        android:textColor="@color/default_text_color"/>
+                        android:textColor="@color/default_text_color"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
             </RelativeLayout>

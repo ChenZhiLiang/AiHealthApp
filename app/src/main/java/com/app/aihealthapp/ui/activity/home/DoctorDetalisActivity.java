@@ -172,7 +172,7 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
             tv_doctor_name.setText(mDoctorDetalisBean.getNickname());
             tv_doctor_type.setText(mDoctorDetalisBean.getDepartment_name());
             tv_doctor_level.setText(mDoctorDetalisBean.getPosition());
-            tv_doctor_experience.setText(mDoctorDetalisBean.getObtain());
+            tv_doctor_experience.setText("从业"+mDoctorDetalisBean.getObtain()+"年");
             tv_hospital_name.setText(mDoctorDetalisBean.getHospital());
             tv_ask_num.setText(mDoctorDetalisBean.getPerson_time());
             tv_good_evaluation.setText(mDoctorDetalisBean.getGood_rate());

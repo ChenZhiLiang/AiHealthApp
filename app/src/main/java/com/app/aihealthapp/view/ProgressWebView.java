@@ -61,18 +61,18 @@ public class ProgressWebView extends WebView {
 
     private WebViewProgressBar progressBar;//进度条的矩形（进度线）
     private Handler handler;
-    private Activity activity;
+    private Context context;
     private WebTitleView mWebTitleView;
 
     private BottomSheetDialog dialogs_share;
     private LinearLayout weChat_friend_layout;
     private LinearLayout weChat_moments_layout;
 
-    public ProgressWebView(Activity activity, AttributeSet attrs) {
-        super(activity, attrs);
-        this.activity = activity;
+    public ProgressWebView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
         //实例化进度条
-        progressBar = new WebViewProgressBar(activity);
+        progressBar = new WebViewProgressBar(context);
         //设置进度条的size
         progressBar.setLayoutParams(new ViewGroup.LayoutParams
                 (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -189,22 +189,22 @@ public class ProgressWebView extends WebView {
                         if(pay_type.equals("1")){//支付宝支付
                             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
                             String alipay_sdk  = GsonHelper.GsonToString(data,"alipay_str");
-                            new PayUtils(activity).Alipay(alipay_sdk);
+                            new PayUtils((Activity) context).Alipay(alipay_sdk);
                         }else if (pay_type.equals("2")){//微信支付
                             String data = GsonHelper.GsonToData(result.toString(),"data").toString();
                             PaymentBean paymentBean = GsonHelper.GsonToBean(data,PaymentBean.class);
-                            new PayUtils(activity).WXPay(paymentBean);//调用微信支付
+                            new PayUtils((Activity) context).WXPay(paymentBean);//调用微信支付
                         }else {//密钥支付
-                            ToastyHelper.toastyNormal(activity,"密钥支付成功");
+                            ToastyHelper.toastyNormal((Activity) context,"密钥支付成功");
                         }
                     }else {
-                        ToastyHelper.toastyNormal(activity,GsonHelper.GsonToString(result.toString(),"msg"));
+                        ToastyHelper.toastyNormal((Activity) context,GsonHelper.GsonToString(result.toString(),"msg"));
                     }
                 }
 
                 @Override
                 public void onFailure(Object result) {
-                    ToastyHelper.toastyNormal(activity,result.toString());
+                    ToastyHelper.toastyNormal((Activity) context,result.toString());
                 }
             });
 
@@ -212,7 +212,7 @@ public class ProgressWebView extends WebView {
 
         @JavascriptInterface
         public void Exit(){
-            AppManager.getAppManager().finishActivity(activity);
+            AppManager.getAppManager().finishActivity((Activity) context);
         }
     }
 
@@ -267,13 +267,13 @@ public class ProgressWebView extends WebView {
         public boolean shouldOverrideUrlLoading(WebView view, final String url) {
 
             if (url.startsWith("navigation://question")){//立即咨询
-                activity.startActivity(new Intent(activity, HealthAskActivity.class));
+                context.startActivity(new Intent(context, HealthAskActivity.class));
                 return true;
             }else if (url.startsWith("navigation://doctor?cate_id=16")){//中医问诊
-                activity.startActivity(new Intent(activity, DoctorListActivity.class).putExtra("cate_id",16));
+                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16));
                 return true;
             }else if (url.startsWith("navigation://doctor?cate_id=10")){//疑难杂症
-                activity.startActivity(new Intent(activity, DoctorListActivity.class).putExtra("cate_id",10));
+                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",10));
                 return true;
             }else if (url.startsWith(ApiUrl.HOST+"order/cart")
                     ||url.startsWith(ApiUrl.HOST+"order/submit")
@@ -281,7 +281,7 @@ public class ProgressWebView extends WebView {
                     ||url.startsWith(ApiUrl.HOST+"user/login")
                     ||url.startsWith(ApiUrl.HOST+"index/shop/apply")){
                 if (UserHelper.getUserInfo()==null){
-                    activity.startActivity(new Intent(activity, LoginActivity.class));
+                    context.startActivity(new Intent(context, LoginActivity.class));
                     return true;
                 }
             }

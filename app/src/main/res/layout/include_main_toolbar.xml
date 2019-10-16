@@ -18,19 +18,34 @@
         android:src="@mipmap/arrow"
         android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/tv_location"
+    <LinearLayout
+        android:id="@+id/ll_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/location_icon"
-        android:drawablePadding="@dimen/dimen_8px"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/dimen_16px"
+        android:layout_marginLeft="@dimen/text_16px"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:text="南宁市"
-        android:textSize="@dimen/text_14px"
-        android:textColor="@color/text_color"
-        android:visibility="gone"/>
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dimen_16px"
+            android:layout_height="@dimen/dimen_24px"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/location"
+            android:scaleType="centerCrop"/>
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10px"
+            android:text="南宁市"
+            android:textSize="@dimen/text_14px"
+            android:textColor="@color/text_color"
+            android:visibility="visible"/>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tv_title_bar"
         style="@style/WrapWrap"

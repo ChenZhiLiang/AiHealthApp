@@ -1,15 +1,12 @@
 package com.app.aihealthapp.ui.activity.home;
 
-import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,8 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -41,11 +36,9 @@ import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.PermissionHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
-import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
-import com.app.aihealthapp.ui.MainActivity;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.mine.LoginActivity;
 import com.app.aihealthapp.ui.adapter.HealthManageAdapter;
@@ -89,6 +82,8 @@ import static com.app.aihealthapp.ui.activity.service.ComeWxMessage.WX;
 public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Adapter<ImageView, AdvListBean>,
         BGABanner.Delegate<ImageView, AdvListBean>, CRPStepChangeListener , AMapLocationListener {
 
+    @BindView(R.id.ll_location)
+    LinearLayout ll_location;
     @BindView(R.id.tv_location)
     TextView tv_location;
     @BindView(R.id.banner_home_adv)
@@ -104,8 +99,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     Button btn_add_wristband;
 
 
-    @BindView(R.id.ll_syncStep)
-    LinearLayout ll_syncStep;
+    @BindView(R.id.ll_sleep)
+    LinearLayout ll_sleep;
     @BindView(R.id.tv_step)
     TextView tv_step;
     @BindView(R.id.tv_distance)
@@ -161,7 +156,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     private HomeShopAdapter mHomeShopAdapter;
 
     private DeviceInfoBean mDeviceInfoBean = null;
-    private boolean ClickStep = false;//判断是否点击运动记rt_health_data步
+//    private boolean ClickStep = false;//判断是否点击运动记rt_health_data步
     private HomeBean homeBean;
 
     //声明AMapLocationClient类对象，定位发起端
@@ -182,7 +177,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     @Override
     public void initView(View view, Bundle savedInstanceState) {
-        tv_location.setVisibility(View.VISIBLE);
+        ll_location.setVisibility(View.VISIBLE);
         tv_title_bar.setText("首页");
         banner_home_adv.setAdapter(this);
         banner_home_adv.setDelegate(this);
@@ -297,7 +292,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         mLocationClient.setLocationOption(mLocationOption);
     }
 
-    @OnClick({R.id.btn_add_wristband, R.id.ll_syncStep, R.id.ll_blood_pressure, R.id.ll_heart_rate, R.id.ll_blood_oxygen, R.id.btn_look_report, R.id.btn_ask,
+    @OnClick({R.id.btn_add_wristband, R.id.ll_sleep, R.id.ll_blood_pressure, R.id.ll_heart_rate, R.id.ll_blood_oxygen, R.id.btn_look_report, R.id.btn_ask,
             R.id.btn_inquiry,R.id.btn_shop_index,R.id.btn_health_shop})
     public void onClick(View v) {
         if (v == btn_add_wristband) {
@@ -337,11 +332,13 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Self_Support));
         }else {
             if (homeBean.getIs_bind_bracelet()==1) {
-                if (v == ll_syncStep) {
-                    ClickStep = true;
-                    AppContext.mBleConnection.setStepChangeListener(HomeFragment.this);
-                    //运动记步
-                    AppContext.mBleConnection.syncStep();
+                if (v == ll_sleep) {
+                    startActivity(new Intent(mActivity, SleepActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()));
+
+//                    ClickStep = true;
+//                    AppContext.mBleConnection.setStepChangeListener(HomeFragment.this);
+//                    //运动记步
+//                    AppContext.mBleConnection.syncStep();
                 }  else if (v == ll_blood_oxygen) {
                     //血压测量
                     startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 2));
@@ -387,7 +384,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mHomeViewMode.runSteps(crpStepInfo.getSteps(), crpStepInfo.getDistance(), crpStepInfo.getCalories(), ClickStep);
+                mHomeViewMode.runSteps(crpStepInfo.getSteps(), crpStepInfo.getDistance(), crpStepInfo.getCalories());
                 tv_step.setText(crpStepInfo.getSteps() + "");
                 tv_distance.setText(crpStepInfo.getDistance() + "");
                 tv_calorie.setText(crpStepInfo.getCalories() + "");
@@ -538,7 +535,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     @Override
     public void runStepsResult(Object result) {
         int ret = GsonHelper.GsonToInt(result.toString(), "ret");
-        ClickStep = false;
         if (ret == 0) {
             Log.i("runSteps", "上传步数成功");
         } else {

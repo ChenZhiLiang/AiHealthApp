@@ -63,11 +63,10 @@ public class HomeViewMode {
         });
     }
 
-    public void runSteps(int steps,int distanc,int calories,boolean isShow){
-        if (isShow){
-            mHomeView.showProgress();
+    public void runSteps(int steps,int distanc,int calories){
 
-        }
+        mHomeView.showProgress();
+
         String url = ApiUrl.DeviceApi.RunSteps;
         RequestParams params = new RequestParams();
         params.put("steps",String.valueOf(steps));

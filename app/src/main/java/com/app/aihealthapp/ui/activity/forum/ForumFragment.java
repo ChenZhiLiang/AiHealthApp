@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
@@ -29,6 +30,8 @@ import butterknife.BindView;
  * 修改时间：2019/7/24 22:07
  */
 public class ForumFragment extends BaseFragment implements WebTitleView {
+    @BindView(R.id.ll_location)
+    LinearLayout ll_location;
     @BindView(R.id.tv_location)
     TextView tv_location;
     @BindView(R.id.tv_title_bar)
@@ -53,7 +56,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     @Override
     public void initView(View view, Bundle savedInstanceState) {
 
-        tv_location.setVisibility(View.VISIBLE);
+        ll_location.setVisibility(View.VISIBLE);
         tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点

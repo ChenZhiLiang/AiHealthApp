@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_text_color"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48px"
+        android:background="@color/default_text_color"
+        android:fitsSystemWindows="true">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_20px"
+            android:paddingRight="@dimen/dimen_20px"
+            android:src="@mipmap/jpush_ic_richpush_actionbar_back" />
+
+        <TextView
+            android:id="@+id/tv_title_bar"
+            style="@style/WrapWrap"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:singleLine="true"
+            android:text="睡眠测量"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18px" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f8f8f6">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll_quality"
+            android:layout_marginBottom="@dimen/dimen_32px"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/ll_look_history">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_sleep_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="05小时30分钟"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_16px" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dimen_10px"
+                        android:text="2019年10月16日，星期三"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_14px" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_0.5px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/view_line" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_look_history"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50px"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/text_16px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="查看历史数据"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_16px" />
+
+                <TextView
+                    android:id="@+id/tv_check_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_32px"
+                    android:hint="选择时间"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_quality"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_16px">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="睡眠质量评分"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_16px" />
+
+                <TextView
+                    android:id="@+id/tv_sleep_time_grade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_10px"
+                    android:layout_toLeftOf="@+id/tv_sleep_time_unit"
+                    android:text="--"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="@dimen/text_16px"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_sleep_time_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="分"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_14px" />
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/dimen_10px"
+                android:layout_marginBottom="@dimen/dimen_10px"
+                android:background="@color/view_line" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32px"
+                android:layout_marginBottom="@dimen/dimen_32px"
+                android:background="@mipmap/slleep_reference" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_purple"
+                android:orientation="vertical"
+                android:padding="@dimen/text_16px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="了解睡眠质量评分"
+                    android:textColor="#a58bfb"
+                    android:textSize="@dimen/text_16px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10px"
+                    android:text="睡眠质量评分是基于匹兹堡睡眠质量指数计算基本原则，通过手环所测得的睡眠规律性、睡眠时长、深睡眠比例、夜里醒来次数和醒来时间等因子来评估睡眠质量并进行评分。"
+                    android:textColor="#a58bfb"
+                    android:textSize="@dimen/text_14px" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

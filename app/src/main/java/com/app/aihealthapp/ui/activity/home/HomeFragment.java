@@ -47,6 +47,7 @@ import com.app.aihealthapp.ui.adapter.HomeShopAdapter;
 import com.app.aihealthapp.ui.adapter.HomeShopAreaAdapter;
 import com.app.aihealthapp.ui.bean.AdvListBean;
 import com.app.aihealthapp.ui.bean.ArticleCateListBean;
+import com.app.aihealthapp.ui.bean.CountryCityBean;
 import com.app.aihealthapp.ui.bean.DeviceInfoBean;
 import com.app.aihealthapp.ui.bean.GoodsCateListBean;
 import com.app.aihealthapp.ui.bean.GoodsListBean;
@@ -61,6 +62,12 @@ import com.crrepa.ble.conn.bean.CRPStepInfo;
 import com.crrepa.ble.conn.listener.CRPBleConnectionStateListener;
 import com.crrepa.ble.conn.listener.CRPStepChangeListener;
 import com.crrepa.ble.conn.type.CRPBleMessageType;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -164,6 +171,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     //声明mLocationOption对象，定位参数
     public AMapLocationClientOption mLocationOption = null;
 
+    private InputStream mInputStream;
     public static HomeFragment getInstance(String title) {
         HomeFragment hf = new HomeFragment();
         hf.mTitle = title;
@@ -203,7 +211,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_ID_DEF);
             tv_location.setText(AppConfig.CITY_ID_DEF);
         }
-
     }
 
     private BroadcastReceiver mNotificationReceiver =new BroadcastReceiver() {
@@ -264,7 +271,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     @Override
     public void initData() {
-
+        initCity();
     }
     /*初始化定位参数*/
     private void initLocation() {
@@ -292,6 +299,16 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         mLocationClient.setLocationOption(mLocationOption);
     }
 
+    /*
+    * 初始化城市
+    * */
+    private void initCity(){
+        List<CountryCityBean> mCountryCityBean = GsonHelper.GsonToList(utils.InitAssetsData(mActivity,"city.json"),CountryCityBean.class,"city");
+        for (int i = 0; i < mCountryCityBean.size(); i++) {
+
+            Log.e("aaaaaaaa",mCountryCityBean.get(i).getName());
+        }
+    }
     @OnClick({R.id.btn_add_wristband, R.id.ll_sleep, R.id.ll_blood_pressure, R.id.ll_heart_rate, R.id.ll_blood_oxygen, R.id.btn_look_report, R.id.btn_ask,
             R.id.btn_inquiry,R.id.btn_shop_index,R.id.btn_health_shop})
     public void onClick(View v) {

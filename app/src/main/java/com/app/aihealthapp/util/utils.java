@@ -1,14 +1,18 @@
 package com.app.aihealthapp.util;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -134,5 +138,33 @@ public class utils {
                 break;
         }
         return yearStr + "年" + monthStr + "月" + dayStr + "日" + ", " + weekStr;
+    }
+
+    /**
+     * 从asset目录下读取城市json文件转化为String类型
+     *
+     * @Title: InitData
+     * @param
+     * @return void
+     * @throws @date
+     *             [2015年8月21日 上午9:40:00]
+     */
+    public static String InitAssetsData(Activity mActivity,String fileName) {
+        StringBuffer sb = new StringBuffer();
+        AssetManager mAssetManager = mActivity.getAssets();
+        try {
+            InputStream is = mAssetManager.open(fileName);
+            byte[] data = new byte[is.available()];
+            int len = -1;
+            while ((len = is.read(data)) != -1) {
+                sb.append(new String(data, 0, len, "utf-8"));
+            }
+            is.close();
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        return null;
     }
 }

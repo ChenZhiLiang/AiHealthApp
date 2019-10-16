@@ -26,7 +26,7 @@
         android:layout_marginLeft="@dimen/text_16px"
         android:orientation="horizontal"
         android:gravity="center"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:layout_width="@dimen/dimen_16px"
@@ -39,6 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:drawableRight="@mipmap/down"
+            android:drawablePadding="8dp"
             android:layout_marginLeft="@dimen/dimen_10px"
             android:text="南宁市"
             android:textSize="@dimen/text_14px"

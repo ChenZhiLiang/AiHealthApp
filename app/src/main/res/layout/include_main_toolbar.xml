@@ -26,7 +26,7 @@
         android:layout_marginLeft="@dimen/text_16px"
         android:orientation="horizontal"
         android:gravity="center"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="@dimen/dimen_16px"

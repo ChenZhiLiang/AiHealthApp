@@ -4,12 +4,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
@@ -31,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @Name：AiHealth
@@ -41,6 +45,9 @@ import butterknife.BindView;
  * 修改时间：2019/7/24 22:07
  */
 public class ForumFragment extends BaseFragment implements WebTitleView {
+
+    @BindView(R.id.toolbar)
+    RelativeLayout toolbar;
     @BindView(R.id.ll_location)
     LinearLayout ll_location;
     @BindView(R.id.tv_location)
@@ -75,7 +82,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     public void initView(View view, Bundle savedInstanceState) {
 
         ll_location.setVisibility(View.VISIBLE);
-        tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
+        tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
@@ -87,12 +94,13 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
 
     @Override
     public void initData() {
-        initCity();
+
     }
     /*
      * 初始化城市
      * */
     private void initCity(){
+        mGridviewAreaAdapter = new GridviewAreaAdapter(mActivity,AreaList);
 
         mCountryCityBean = GsonHelper.GsonToList(utils.InitAssetsData(mActivity,"city.json"),CountryCityBean.class,"city");
         popView = getLayoutInflater().inflate(R.layout.layout_popupwindow, null);
@@ -128,12 +136,13 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
                 }
             }
         }
-        mGridviewAreaAdapter = new GridviewAreaAdapter(mActivity,AreaList);
         mGridView.setAdapter(mGridviewAreaAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ToastyHelper.toastyNormal(mActivity, AreaList.get(position).getName());
+                tv_location.setText(AreaList.get(position).getName());
+
                 window_city.dismiss();
             }
         });
@@ -166,6 +175,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
 
     @Override
     public void loadingData() {
+        initCity();
         String city_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
         if (isLogin()){
             String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+city_code;
@@ -175,6 +185,21 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         }
     }
 
+    @OnClick({R.id.ll_location})
+    public void onClick(View v){
+        if (v==ll_location){
+            /*Android N上Popwindow显示位置不正确问题*/
+            if (Build.VERSION.SDK_INT >= 24) {
+                Rect visibleFrame = new Rect();
+                toolbar.getGlobalVisibleRect(visibleFrame);
+                int height = toolbar.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
+                window_city.setHeight(height);
+                window_city.showAsDropDown(toolbar, 0, 0);
+            } else {
+                window_city.showAsDropDown(toolbar, 0, 0);
+            }
+        }
+    }
     @Override
     public void onTitleResult(String title) {
         tv_title_bar.setText(title);

@@ -8,7 +8,13 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.location.LocationManager;
 import android.provider.Settings;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+
+import com.app.aihealthapp.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -166,5 +172,61 @@ public class utils {
 
         }
         return null;
+    }
+
+    /**
+     *  @author
+     *  @time
+     *  @describe  分转小时 除以
+     */
+    public static String MinuteToHours(int TotalTime){
+        String hours;
+        if (TotalTime<60){
+            hours = "00";
+            return hours;
+        }else {
+            int temp_hours = TotalTime/60;
+            if (temp_hours<10){
+                hours = "0"+temp_hours;
+                return hours;
+            }else {
+                hours = TotalTime+"";
+                return hours;
+            }
+        }
+    }
+
+    /**
+     *  @author
+     *  @time    分小时 求于
+     *  @describe
+     */
+    public static String MinuteInHours(int TotalTime){
+        String minute;
+        if (TotalTime<10){
+            minute = "0"+TotalTime;
+            return minute;
+        }else if (10<=TotalTime&&TotalTime<60){
+            minute = TotalTime+"";
+            return minute;
+        }else {
+            int temp_minute = (int)(TotalTime%60);
+            if (temp_minute<10){
+                minute = "0"+temp_minute;
+                return minute;
+            }else {
+                minute = temp_minute+"";
+                return minute;
+            }
+        }
+    }
+
+    public static Spannable SleepTime(Context context,String str){
+        Spannable span = new SpannableString(str);
+        span.setSpan(new AbsoluteSizeSpan(40), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.sleep_time)), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.setSpan(new AbsoluteSizeSpan(40), 4, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.sleep_time)), 4, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return span;
     }
 }

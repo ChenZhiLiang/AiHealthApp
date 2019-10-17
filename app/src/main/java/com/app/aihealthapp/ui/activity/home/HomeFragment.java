@@ -353,6 +353,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 showLoadFailMsg(AreaList.get(position).getName());
+                tv_location.setText(AreaList.get(position).getName());
                 window_city.dismiss();
             }
         });

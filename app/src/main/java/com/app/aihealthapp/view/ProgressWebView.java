@@ -137,10 +137,10 @@ public class ProgressWebView extends WebView {
         }
         @JavascriptInterface
         public String andoridCity(){
-            if (TextUtils.isEmpty(SharedPreferenceHelper.getCityId(AppContext.getContext()))){
+            if (TextUtils.isEmpty(SharedPreferenceHelper.getAreaId(AppContext.getContext()))){
                 return AppConfig.CITY_ID_DEF;
             }else {
-                return SharedPreferenceHelper.getCityId(AppContext.getContext());
+                return SharedPreferenceHelper.getAreaId(AppContext.getContext());
             }
         }
         @JavascriptInterface
@@ -317,7 +317,7 @@ public class ProgressWebView extends WebView {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
 
 
-            String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+            String city_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
             String mUrl;
             if (UserHelper.getUserInfo()!=null){
                 if (url.contains("uid")){

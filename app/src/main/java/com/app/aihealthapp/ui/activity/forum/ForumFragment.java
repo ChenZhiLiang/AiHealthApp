@@ -7,18 +7,29 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
+import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
+import com.app.aihealthapp.ui.adapter.GridviewAreaAdapter;
+import com.app.aihealthapp.ui.bean.CountryCityBean;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
+import com.app.aihealthapp.util.utils;
 import com.app.aihealthapp.view.FragmentProgressWebView;
+import com.app.aihealthapp.view.MyPopWindow;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -39,14 +50,21 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     @BindView(R.id.webview)
     FragmentProgressWebView webview;
 
+    private MyPopWindow window_city;
+    private View popView;
+    private View view_empty;
+    TextView tvPresentCity;
+    TextView tvCheckArea;
+    GridView mGridView;
+    private boolean isShowArea = false;
+    private List<CountryCityBean> mCountryCityBean;
+    private  List<CountryCityBean.CityListBean.AreaListBean> AreaList = new ArrayList<>();
+    private GridviewAreaAdapter mGridviewAreaAdapter;
     public static ForumFragment getInstance(String title) {
         ForumFragment hf = new ForumFragment();
         hf.mTitle = title;
         return hf;
     }
-
-
-
 
     @Override
     public int getLayoutId() {
@@ -69,9 +87,58 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
 
     @Override
     public void initData() {
-
+        initCity();
     }
+    /*
+     * 初始化城市
+     * */
+    private void initCity(){
 
+        mCountryCityBean = GsonHelper.GsonToList(utils.InitAssetsData(mActivity,"city.json"),CountryCityBean.class,"city");
+        popView = getLayoutInflater().inflate(R.layout.layout_popupwindow, null);
+        view_empty = popView.findViewById(R.id.view_empty);
+        tvPresentCity = popView.findViewById(R.id.tv_present_city);
+        tvCheckArea = popView.findViewById(R.id.tv_check_area);
+        mGridView = popView.findViewById(R.id.gridview_area);
+        view_empty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                window_city.dismiss();
+            }
+        });
+        tvCheckArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isShowArea){
+                    isShowArea = false;
+                    mGridView.setVisibility(View.GONE);
+                }else {
+                    isShowArea = true;
+                    mGridView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        for (int i = 0; i < mCountryCityBean.size(); i++) {
+            if (SharedPreferenceHelper.getProvince(AppContext.getContext()).equals(mCountryCityBean.get(i).getName())){
+                for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
+                    if (SharedPreferenceHelper.getCity(AppContext.getContext()).equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
+                        AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
+                        mGridviewAreaAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }
+        mGridviewAreaAdapter = new GridviewAreaAdapter(mActivity,AreaList);
+        mGridView.setAdapter(mGridviewAreaAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ToastyHelper.toastyNormal(mActivity, AreaList.get(position).getName());
+                window_city.dismiss();
+            }
+        });
+        window_city = new MyPopWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+    }
     private BroadcastReceiver mRefreshBroadcastReceiver =new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
@@ -99,7 +166,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
 
     @Override
     public void loadingData() {
-        String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+        String city_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
         if (isLogin()){
             String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+city_code;
             webview.loadUrl(url);//加载网址

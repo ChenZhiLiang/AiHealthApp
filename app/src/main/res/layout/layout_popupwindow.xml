@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5000"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_16px"
+        android:background="@color/default_bg_color"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_present_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:text="您正在看：南宁"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16px"
+            />
+        <TextView
+            android:id="@+id/tv_check_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@mipmap/down"
+            android:layout_centerVertical="true"
+            android:drawablePadding="8dp"
+            android:text="选择县区"
+            android:textColor="@color/default_hint_color"
+            android:textSize="@dimen/text_14px"/>
+    </RelativeLayout>
+    <GridView
+        android:id="@+id/gridview_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dimen_16px"
+        android:paddingRight="@dimen/dimen_16px"
+        android:paddingBottom="@dimen/dimen_16px"
+        android:numColumns="3"
+        android:horizontalSpacing="@dimen/dimen_10px"
+        android:verticalSpacing="@dimen/dimen_10px"
+        android:stretchMode="columnWidth"
+        android:background="@color/white"
+        android:visibility="visible"
+        />
+
+    <View
+        android:id="@+id/view_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

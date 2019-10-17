@@ -16,13 +16,18 @@ public class AppConfig {
     public static final String DEVICE_INFO = "device_info";
     public static final String CITY_ID_DEF = "450100";//默认城市id
     public static final String CITY_DEF = "南宁市";
+    public static final String PROVINCE_DEF="广西壮族自治区";
+    public static final String AREA_DEF="青秀区";
 
 
     public static final String TOKEN_NAME = "token";
     public static final String WALLET_TOKEN = "wallet_token";
     public static final String MAC_ADDRESS = "mac_address";//设备mac地址
-    public static final String CITY_ID = "city_id";
+    public static final String PROVINCE="province";
     public static final String CITY = "city";
+    public static final String AREA_ID = "area_id";
+    public static final String AREA = "area";
+
 
 
     public static final String USER_NAME = "mobile";

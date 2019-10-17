@@ -130,20 +130,36 @@ public class SharedPreferenceHelper {
         return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.TOKEN_NAME);
     }
 
-    public static void setCityId(Context context, String city_id) {
-        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY_ID, city_id);
+
+    public static void setProvince(Context context, String province) {
+        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.PROVINCE, province);
+    }
+    public static String getProvince(Context context) {
+        return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.PROVINCE);
     }
 
-    public static String getCityId(Context context){
-        return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY_ID);
-
-    }
     public static void setCity(Context context, String city) {
         PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY, city);
     }
 
     public static String getCity(Context context){
         return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY);
+
+    }
+    public static void setAreaId(Context context, String city_id) {
+        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.AREA_ID, city_id);
+    }
+
+    public static String getAreaId(Context context){
+        return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.AREA_ID);
+
+    }
+    public static void setArea(Context context, String area) {
+        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.AREA, area);
+    }
+
+    public static String getArea(Context context){
+        return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.AREA);
 
     }
     /**

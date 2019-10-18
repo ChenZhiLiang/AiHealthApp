@@ -305,18 +305,20 @@ public class FragmentProgressWebView extends WebView {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
 
-            String city_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
+            String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+            String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
+
             String mUrl;
             if (UserHelper.getUserInfo()!=null){
                 if (url.contains("uid")){
-                    mUrl = url+"&city_code="+city_code;
+                    mUrl = url+"&city_code="+city_code+"&area_code="+area_code;
                 }else if (url.contains("?")){
-                    mUrl = url+"&uid="+UserHelper.getUserInfo().getId()+"&city_code="+city_code;
+                    mUrl = url+"&uid="+UserHelper.getUserInfo().getId()+"&city_code="+city_code+"&area_code="+area_code;
                 }else {
-                    mUrl = url+"?uid="+UserHelper.getUserInfo().getId()+"&city_code="+city_code;
+                    mUrl = url+"?uid="+UserHelper.getUserInfo().getId()+"&city_code="+city_code+"&area_code="+area_code;
                 }
             }else {
-                mUrl = url+"?city_code="+city_code;
+                mUrl = url+"?city_code="+city_code+"&area_code="+area_code;
             }
             Log.e("Web_url",mUrl);
             super.onPageStarted(view, mUrl, favicon);

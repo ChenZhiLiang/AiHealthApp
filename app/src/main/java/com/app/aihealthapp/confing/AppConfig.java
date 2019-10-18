@@ -25,6 +25,8 @@ public class AppConfig {
     public static final String MAC_ADDRESS = "mac_address";//设备mac地址
     public static final String PROVINCE="province";
     public static final String CITY = "city";
+    public static final String CITY_ID = "city_id";
+
     public static final String AREA_ID = "area_id";
     public static final String AREA = "area";
 

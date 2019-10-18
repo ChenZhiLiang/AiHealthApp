@@ -144,10 +144,18 @@ public class SharedPreferenceHelper {
 
     public static String getCity(Context context){
         return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY);
+    }
+
+    public static void setCityId(Context context, String city_id) {
+        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY_ID, city_id);
+    }
+
+    public static String getCityId(Context context){
+        return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.CITY_ID);
 
     }
-    public static void setAreaId(Context context, String city_id) {
-        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.AREA_ID, city_id);
+    public static void setAreaId(Context context, String area_id) {
+        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.AREA_ID, area_id);
     }
 
     public static String getAreaId(Context context){

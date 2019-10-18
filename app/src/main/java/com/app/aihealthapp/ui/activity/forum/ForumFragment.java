@@ -82,13 +82,14 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     public void initView(View view, Bundle savedInstanceState) {
 
         ll_location.setVisibility(View.VISIBLE);
-        tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+        tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
 
         IntentFilter intentFilter =new IntentFilter();
         intentFilter.addAction("action.pay.success");
+        intentFilter.addAction("action.check.location");
         mActivity.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
 
@@ -140,10 +141,14 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastyHelper.toastyNormal(mActivity, AreaList.get(position).getName());
                 tv_location.setText(AreaList.get(position).getName());
-
+                SharedPreferenceHelper.setAreaId(mActivity,AreaList.get(position).getCode());
+                SharedPreferenceHelper.setArea(mActivity,AreaList.get(position).getName());
                 window_city.dismiss();
+
+                Intent intent =new Intent();
+                intent.setAction("action.check.location");
+                mActivity.sendBroadcast(intent);
             }
         });
         window_city = new MyPopWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -162,6 +167,10 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
                     }
                 },100);
 
+            }else if (action.equals("action.check.location")){
+                tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+                //刷新 重载
+                webview.reload();
             }
         }
     };
@@ -176,12 +185,13 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     @Override
     public void loadingData() {
         initCity();
-        String city_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
+        String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+        String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
         if (isLogin()){
-            String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+city_code;
+            String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+city_code+"area_code="+area_code;
             webview.loadUrl(url);//加载网址
         }else {
-            webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+city_code);//加载网址
+            webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+city_code+"area_code="+area_code);//加载网址
         }
     }
 

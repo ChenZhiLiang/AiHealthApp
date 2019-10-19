@@ -19,9 +19,15 @@ import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.PickerView.TimePickerView;
+import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.PickerViewHelper;
+import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.kprogresshud.KProgressHUD;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.AppManager;
+import com.app.aihealthapp.ui.bean.SleepBean;
+import com.app.aihealthapp.ui.mvvm.view.SleepView;
+import com.app.aihealthapp.ui.mvvm.viewmode.SleepViewMode;
 import com.app.aihealthapp.util.utils;
 import com.crrepa.ble.CRPBleClient;
 import com.crrepa.ble.conn.CRPBleConnection;
@@ -44,7 +50,7 @@ import butterknife.OnClick;
  * 修改人：Chen
  * 修改时间：2019/10/15 22:40
  */
-public class SleepActivity extends Activity implements CRPSleepChangeListener{
+public class SleepActivity extends Activity implements CRPSleepChangeListener, SleepView {
     @BindView(R.id.img_back)
     ImageView img_back;
     @BindView(R.id.tv_title_bar)
@@ -73,7 +79,9 @@ public class SleepActivity extends Activity implements CRPSleepChangeListener{
 
     private String hours;
     private String minute;
+    public KProgressHUD hud;
 
+    private SleepViewMode mSleepViewMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,20 +117,24 @@ public class SleepActivity extends Activity implements CRPSleepChangeListener{
                             mBleConnection.setSleepChangeListener(SleepActivity.this);
                             //获取今日睡眠时间
                             mBleConnection.syncSleep();
-
                         }
                     });
                 }
             }
         });
-        tv_sleep_total_time.setText(Html.fromHtml("<font color='#01d1b1'><big><big>--</big></big></font>小时<font color='#01d1b1'><big><big>--</big></big></font>分钟"));
-        tv_sleep_restful_time.setText(Html.fromHtml("<font color='#01d1b1'><big><big>--</big></big></font>小时<font color='#01d1b1'><big><big>--</big></big></font>分钟"));
-        tv_sleep_light_time.setText(Html.fromHtml("<font color='#01d1b1'><big><big>--</big></big></font>小时<font color='#01d1b1'><big><big>--</big></big></font>分钟"));
-        tv_sleep_sober_time.setText(Html.fromHtml("<font color='#01d1b1'><big><big>--</big></big></font>小时<font color='#01d1b1'><big><big>--</big></big></font>分钟"));
-
+        initSleepTime(0,0,0,0);
         tv_date.setText(utils.parseDateToYearMonthDayWeek(new Date()));
+        hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel(getString(R.string.loading),this.getResources().getColor(R.color.white))
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .setCancellable(true);
 
+        mSleepViewMode = new SleepViewMode(this);
     }
+
+
     @OnClick({R.id.img_back,R.id.tv_check_time})
     public void onClick(View v){
         if (v==img_back){
@@ -134,6 +146,7 @@ public class SleepActivity extends Activity implements CRPSleepChangeListener{
                     String time = PickerViewHelper.getYesMonthDayTime(date);
                     tv_check_time.setText(time);
                     tv_date.setText(utils.parseDateToYearMonthDayWeek(date));
+                    mSleepViewMode.QueryMeasureSleep(time);
                 }
             });
         }
@@ -141,50 +154,92 @@ public class SleepActivity extends Activity implements CRPSleepChangeListener{
 
     @Override
     public void onSleepChange(final CRPSleepInfo crpSleepInfo) {
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //睡眠总时间
-                int TotalTime = crpSleepInfo.getTotalTime();
-                String total = String.format(getResources().getString(R.string.sleep_time), utils.MinuteToHours(TotalTime), utils.MinuteInHours(TotalTime));
-                tv_sleep_total_time.setText(utils.SleepTime(SleepActivity.this,total));
-
-                //深睡眠时间
-                int restfulTime = crpSleepInfo.getRestfulTime();
-                String restful = String.format(getResources().getString(R.string.sleep_time), utils.MinuteToHours(restfulTime), utils.MinuteInHours(restfulTime));
-                tv_sleep_restful_time.setText(utils.SleepTime(SleepActivity.this,restful));
-
-                //浅睡眠时间
-                int lightTime = crpSleepInfo.getLightTime();
-                String light = String.format(getResources().getString(R.string.sleep_time), utils.MinuteToHours(lightTime), utils.MinuteInHours(lightTime));
-                tv_sleep_light_time.setText(utils.SleepTime(SleepActivity.this,light));
-                //清醒时间
-                int soberTime = crpSleepInfo.getSoberTime();
-                String sober = String.format(getResources().getString(R.string.sleep_time), utils.MinuteToHours(soberTime), utils.MinuteInHours(soberTime));
-                tv_sleep_sober_time.setText(utils.SleepTime(SleepActivity.this,sober));
-
-                //睡眠质量分四个等级，主要参照深睡眠时间来确定睡眠质量：
-                // 深睡眠时间大于等于2.2小时，睡眠质量为优；
-                // 深度睡眠时间大于等于1.75小时，睡眠质量为良；
-                // 深度睡眠时间大于等于1.3小时，睡眠质量为中，
-                // 深度睡眠时间小于1.3小时，睡眠质量为差
-                if (crpSleepInfo.getRestfulTime()>132){
-                    tv_sleep_quality.setText("优");
-                }else if (crpSleepInfo.getRestfulTime()>105&&crpSleepInfo.getRestfulTime()<=132){
-                    tv_sleep_quality.setText("良");
-                }else if (crpSleepInfo.getRestfulTime()>78&&crpSleepInfo.getRestfulTime()<=105){
-                    tv_sleep_quality.setText("中");
-                }else {
-                    tv_sleep_quality.setText("差");
-                }
+                mSleepViewMode.UploadMeasureSleep(crpSleepInfo.getTotalTime(),crpSleepInfo.getRestfulTime(),crpSleepInfo.getLightTime(),crpSleepInfo.getSoberTime());
+                initSleepTime(crpSleepInfo.getTotalTime(),crpSleepInfo.getRestfulTime(),crpSleepInfo.getLightTime(),crpSleepInfo.getSoberTime());
             }
         });
 
     }
 
+    private void initSleepTime(int total_time, int restfull_time, int light_time, int sober_time){
+
+        //睡眠总时间
+        String total = String.format(getResources().getString(R.string.sleep_time), utils.MinuteToHours(total_time), utils.MinuteInHours(total_time));
+        tv_sleep_total_time.setText(utils.SleepTime(SleepActivity.this,total));
+
+        //深睡眠时间
+        String restful = String.format(getResources().getString(R.string.sleep_time), utils.MinuteToHours(restfull_time), utils.MinuteInHours(restfull_time));
+        tv_sleep_restful_time.setText(utils.SleepTime(SleepActivity.this,restful));
+
+        //浅睡眠时间
+        String light = String.format(getResources().getString(R.string.sleep_time), utils.MinuteToHours(light_time), utils.MinuteInHours(light_time));
+        tv_sleep_light_time.setText(utils.SleepTime(SleepActivity.this,light));
+
+        String sober = String.format(getResources().getString(R.string.sleep_time), utils.MinuteToHours(sober_time), utils.MinuteInHours(sober_time));
+        tv_sleep_sober_time.setText(utils.SleepTime(SleepActivity.this,sober));
+
+        //睡眠质量分四个等级，主要参照深睡眠时间来确定睡眠质量：
+        // 深睡眠时间大于等于2.2小时，睡眠质量为优；
+        // 深度睡眠时间大于等于1.75小时，睡眠质量为良；
+        // 深度睡眠时间大于等于1.3小时，睡眠质量为中，
+        // 深度睡眠时间小于1.3小时，睡眠质量为差
+        if (restfull_time>132){
+            tv_sleep_quality.setText("优");
+        }else if (restfull_time>105&&restfull_time<=132){
+            tv_sleep_quality.setText("良");
+        }else if (restfull_time>78&&restfull_time<=105){
+            tv_sleep_quality.setText("中");
+        }else {
+            tv_sleep_quality.setText("差");
+        }
+    }
     @Override
     public void onPastSleepChange(int i, CRPSleepInfo crpSleepInfo) {
 
+    }
+
+    @Override
+    public void UploadMeasureSleepResult(Object result) {
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            Log.e("sleep","睡眠监测上传成功");
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+        }
+    }
+
+    @Override
+    public void CheckSleepResult(Object result) {
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            SleepBean mSleepBean = GsonHelper.GsonToBean(result.toString(),SleepBean.class);
+            if (mSleepBean.getData()!=null){
+                initSleepTime(mSleepBean.getData().getTotal_time(),mSleepBean.getData().getRestfull_time(),mSleepBean.getData().getLight_time(),mSleepBean.getData().getSober_time());
+            }else {
+                initSleepTime(0,0,0,0);
+            }
+        }else {
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+        }
+    }
+
+    @Override
+    public void showProgress() {
+        hud.show();
+    }
+
+    @Override
+    public void hideProgress() {
+
+        hud.dismiss();
+    }
+
+    @Override
+    public void showLoadFailMsg(String err) {
+
+        ToastyHelper.toastyNormal(this,err);
     }
 }

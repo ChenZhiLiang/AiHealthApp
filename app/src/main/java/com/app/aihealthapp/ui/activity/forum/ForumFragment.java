@@ -172,6 +172,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
                 //刷新 重载
                 webview.reload();
             }
+
         }
     };
 
@@ -179,7 +180,6 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     public void onDestroy() {
         super.onDestroy();
         mActivity.unregisterReceiver(mRefreshBroadcastReceiver);
-
     }
 
     @Override

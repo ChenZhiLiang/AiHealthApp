@@ -192,6 +192,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     private String city_id;
     private String area_id;
+    private int uid;
     public static HomeFragment getInstance(String title) {
         HomeFragment hf = new HomeFragment();
         hf.mTitle = title;
@@ -223,6 +224,11 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
         if (SharedPreferenceHelper.getDeviceInfo(mActivity)!=null){
             mDeviceInfoBean = SharedPreferenceHelper.getDeviceInfo(mActivity);
+        }
+        if (SharedPreferenceHelper.getUserInfo(mActivity)!=null){
+            uid = SharedPreferenceHelper.getUserInfo(mActivity).getId();
+        }else {
+            uid=0;
         }
         initLocation();
     }
@@ -265,12 +271,12 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                         break;
                 }
             }else if (action.equals("action.bind_device_success")){
-                mHomeViewMode.getHomeDatas(false,city_id,area_id);
+                mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
             }else if (action.equals("action.check.location")){
                 tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
                 //刷新 重载
-                mHomeViewMode.getHomeDatas(false,city_id,area_id);
+                mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
             }
         }
     };
@@ -297,13 +303,13 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 tv_location.setText(AppConfig.CITY_DEF);
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                mHomeViewMode.getHomeDatas(true,SharedPreferenceHelper.getCityId(mActivity),"0");
+                mHomeViewMode.getHomeDatas(true,SharedPreferenceHelper.getCityId(mActivity),"0",uid);
 
             }else {
-                tv_location.setText(SharedPreferenceHelper.getCityId(mActivity));
+                tv_location.setText(SharedPreferenceHelper.getCity(mActivity));
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                mHomeViewMode.getHomeDatas(true,city_id,area_id);
+                mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
             }
             city_id = SharedPreferenceHelper.getCityId(mActivity);
             area_id = SharedPreferenceHelper.getAreaId(mActivity);
@@ -322,8 +328,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     @Override
     public void initData() {
-
-
         initCity();
     }
     /*初始化定位参数*/
@@ -487,16 +491,16 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     protected void receiveEvent(Event event) {
         super.receiveEvent(event);
         if (event.getCode() == EventCode.Code.CONNECTED_SUCCESS) {
-            mHomeViewMode.getHomeDatas(false,city_id,area_id);
+            mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
         } else if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
-            mHomeViewMode.getHomeDatas(false,city_id,area_id);
+            mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
         } else if (event.getCode() == EventCode.Code.MEASURE_SUCCESS) {
-            mHomeViewMode.getHomeDatas(false,city_id,area_id);
+            mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
         } else if (event.getCode() == EventCode.Code.LOGOUT) {
-            mHomeViewMode.getHomeDatas(false,city_id,area_id);
+            mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
         }else if(event.getCode()== EventCode.Code.UN_BIND_DEVICE){
             AppContext.mBleDevice.disconnect();
-            mHomeViewMode.getHomeDatas(false,city_id,area_id);
+            mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
         }
     }
 
@@ -719,7 +723,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 tv_location.setText(aMapLocation.getCity());
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                mHomeViewMode.getHomeDatas(true,city_id,area_id);
+                mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"
@@ -732,7 +736,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 tv_location.setText(AppConfig.CITY_DEF);
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                mHomeViewMode.getHomeDatas(true,city_id,area_id);
+                mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
                 for (int i = 0; i < mCountryCityBean.size(); i++) {
                     if (AppConfig.PROVINCE_DEF.equals(mCountryCityBean.get(i).getName())){
                         for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){

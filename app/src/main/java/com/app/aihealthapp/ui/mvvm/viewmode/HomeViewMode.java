@@ -24,12 +24,15 @@ public class HomeViewMode {
         mBaseMode = new BaseMode();
     }
 
-    public void getHomeDatas(boolean isShow,String city_code,String area_code){
+    public void getHomeDatas(boolean isShow,String city_code,String area_code,int uid){
         if (isShow){
             mHomeView.showProgress();
         }
         String url = ApiUrl.HomeApi.Home;
         RequestParams params = new RequestParams();
+
+        params.put("uid",city_code);
+
         params.put("city_code",city_code);
         params.put("area_code",area_code);
         mBaseMode.GetRequest(url, params, new ResultCallback() {

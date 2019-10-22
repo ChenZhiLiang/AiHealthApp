@@ -170,6 +170,14 @@ public class SharedPreferenceHelper {
         return PreferenceHelper.readString(context, AppConfig.TOKEN_FILE_NAME, AppConfig.AREA);
 
     }
+
+    public static void setSelect(Context context,boolean isSelect){
+         PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME,AppConfig.isSelect,isSelect);
+    }
+
+    public static boolean getSelect(Context context){
+        return PreferenceHelper.readBoolean(context, AppConfig.TOKEN_FILE_NAME,AppConfig.isSelect,false);
+    }
     /**
      * 清除 Token
      *

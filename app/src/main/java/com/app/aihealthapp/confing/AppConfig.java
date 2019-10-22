@@ -17,6 +17,7 @@ public class AppConfig {
     public static final String CITY_ID_DEF = "450100";//默认城市id
     public static final String CITY_DEF = "南宁市";
     public static final String PROVINCE_DEF="广西壮族自治区";
+    public static final String AREA_ID_DEF = "450103";//
     public static final String AREA_DEF="青秀区";
 
 
@@ -29,6 +30,8 @@ public class AppConfig {
 
     public static final String AREA_ID = "area_id";
     public static final String AREA = "area";
+
+    public static final String isSelect = "select";
 
 
 

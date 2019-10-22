@@ -225,8 +225,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             mDeviceInfoBean = SharedPreferenceHelper.getDeviceInfo(mActivity);
         }
         initLocation();
-
-
     }
 
     private BroadcastReceiver mNotificationReceiver =new BroadcastReceiver() {
@@ -290,14 +288,36 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
             mLocationClient.startLocation();
         }else {
-            SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_ID);
-            SharedPreferenceHelper.setAreaId(mActivity,AppConfig.AREA_ID);
-            tv_location.setText(AppConfig.CITY_DEF);
+            if (!SharedPreferenceHelper.getSelect(mActivity)){
+                SharedPreferenceHelper.setProvince(mActivity,AppConfig.PROVINCE_DEF);
+                SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_ID_DEF);
+                SharedPreferenceHelper.setCity(mActivity,AppConfig.CITY_DEF);
+                SharedPreferenceHelper.setAreaId(mActivity,AppConfig.AREA_ID_DEF);
+                SharedPreferenceHelper.setArea(mActivity,AppConfig.AREA_DEF);
+                tv_location.setText(AppConfig.CITY_DEF);
+                city_id = SharedPreferenceHelper.getCityId(mActivity);
+                area_id = SharedPreferenceHelper.getAreaId(mActivity);
+                mHomeViewMode.getHomeDatas(true,SharedPreferenceHelper.getCityId(mActivity),"0");
+
+            }else {
+                tv_location.setText(SharedPreferenceHelper.getCityId(mActivity));
+                city_id = SharedPreferenceHelper.getCityId(mActivity);
+                area_id = SharedPreferenceHelper.getAreaId(mActivity);
+                mHomeViewMode.getHomeDatas(true,city_id,area_id);
+            }
             city_id = SharedPreferenceHelper.getCityId(mActivity);
             area_id = SharedPreferenceHelper.getAreaId(mActivity);
-            mHomeViewMode.getHomeDatas(true,city_id,area_id);
+            for (int i = 0; i < mCountryCityBean.size(); i++) {
+                if (AppConfig.PROVINCE_DEF.equals(mCountryCityBean.get(i).getName())){
+                    for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
+                        if (AppConfig.CITY_DEF.equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
+                            AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
+                            mGridviewAreaAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
         }
-
     }
 
     @Override
@@ -366,8 +386,10 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 tv_location.setText(AreaList.get(position).getName());
                 area_id = AreaList.get(position).getCode();
+                SharedPreferenceHelper.setSelect(mActivity,true);
                 SharedPreferenceHelper.setAreaId(mActivity,area_id);
                 SharedPreferenceHelper.setArea(mActivity,AreaList.get(position).getName());
 //                mHomeViewMode.getHomeDatas(true,city_id,area_id);

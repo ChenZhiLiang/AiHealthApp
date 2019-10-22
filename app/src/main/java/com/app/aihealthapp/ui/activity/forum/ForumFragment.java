@@ -131,6 +131,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
             if (SharedPreferenceHelper.getProvince(AppContext.getContext()).equals(mCountryCityBean.get(i).getName())){
                 for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
                     if (SharedPreferenceHelper.getCity(AppContext.getContext()).equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
+
                         AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
                         mGridviewAreaAdapter.notifyDataSetChanged();
                     }
@@ -142,6 +143,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tv_location.setText(AreaList.get(position).getName());
+                SharedPreferenceHelper.setSelect(mActivity,true);
                 SharedPreferenceHelper.setAreaId(mActivity,AreaList.get(position).getCode());
                 SharedPreferenceHelper.setArea(mActivity,AreaList.get(position).getName());
                 window_city.dismiss();
@@ -188,10 +190,10 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
         String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
         if (isLogin()){
-            String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code="+city_code+"area_code="+area_code;
+            String url = ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId();
             webview.loadUrl(url);//加载网址
         }else {
-            webview.loadUrl(ApiUrl.WebApi.Index+"?city_code="+city_code+"area_code="+area_code);//加载网址
+            webview.loadUrl(ApiUrl.WebApi.Index);//加载网址
         }
     }
 

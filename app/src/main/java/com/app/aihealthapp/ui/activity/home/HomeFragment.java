@@ -490,6 +490,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     @Override
     protected void receiveEvent(Event event) {
         super.receiveEvent(event);
+        uid = SharedPreferenceHelper.getUserInfo(mActivity).getId();
         if (event.getCode() == EventCode.Code.CONNECTED_SUCCESS) {
             mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
         } else if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {

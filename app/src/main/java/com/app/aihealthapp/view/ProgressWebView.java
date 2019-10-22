@@ -282,6 +282,7 @@ public class ProgressWebView extends WebView {
                     ||url.startsWith(ApiUrl.HOST+"index/shop/apply")){
                 if (UserHelper.getUserInfo()==null){
                     context.startActivity(new Intent(context, LoginActivity.class));
+//                    AppManager.getAppManager().finishActivity((Activity) context);
                     return true;
                 }
             }
@@ -322,15 +323,33 @@ public class ProgressWebView extends WebView {
             String mUrl;
             if (UserHelper.getUserInfo()!=null){
                 if (url.contains("uid")){
-                    if (url.contains("city_code")){
-                        mUrl = url ;
-                    }else {
+                    if (url.indexOf("uid=0")!=-1){
+                        String replaceUrl = url.replaceAll("uid=0","uid="+UserHelper.getUserInfo().getId());
                         if (isSlect){
-                            mUrl = url+"&city_code="+city_code+"&area_code="+area_code;
+                            mUrl = replaceUrl+"&city_code="+city_code+"&area_code="+area_code;
                         }else {
-                            mUrl = url+"&city_code="+city_code+"&area_code=0";
+                            mUrl = replaceUrl+"&city_code="+city_code+"&area_code=0";
+                        }
+                    }else {
+                        if (url.contains("city_code")){
+                            mUrl = url ;
+                        }else {
+                            if (isSlect){
+                                mUrl = url+"&city_code="+city_code+"&area_code="+area_code;
+                            }else {
+                                mUrl = url+"&city_code="+city_code+"&area_code=0";
+                            }
                         }
                     }
+//                    if (url.contains("city_code")){
+//                        mUrl = url ;
+//                    }else {
+//                        if (isSlect){
+//                            mUrl = url+"&city_code="+city_code+"&area_code="+area_code;
+//                        }else {
+//                            mUrl = url+"&city_code="+city_code+"&area_code=0";
+//                        }
+//                    }
                 }else if (url.contains("?")){
                     if (url.contains("city_code")){
                         mUrl = url+"&uid="+UserHelper.getUserInfo().getId();

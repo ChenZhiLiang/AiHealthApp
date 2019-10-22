@@ -269,12 +269,14 @@ public class FragmentProgressWebView extends WebView {
                 if (UserHelper.getUserInfo()==null){
                     context.startActivity(new Intent(context, LoginActivity.class));
                     return true;
+                }else {
+                    context.startActivity(new Intent(context, WebActyivity.class).putExtra("url", url));
+                    return true;
                 }
             }else {
                 context.startActivity(new Intent(context, WebActyivity.class).putExtra("url", url));
                 return true;
             }
-            return false;
         }
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -311,15 +313,24 @@ public class FragmentProgressWebView extends WebView {
             String mUrl;
             if (UserHelper.getUserInfo()!=null){
                 if (url.contains("uid")){
-                    if (url.contains("city_code")){
-                        mUrl = url ;
-                    }else {
+                    if (url.indexOf("uid=0")!=-1){
                         if (isSlect){
-                            mUrl = url+"&city_code="+city_code+"&area_code="+area_code;
+                            mUrl = url+"&uid="+UserHelper.getUserInfo().getId()+"&city_code="+city_code+"&area_code="+area_code;
                         }else {
-                            mUrl = url+"&city_code="+city_code+"&area_code=0";
+                            mUrl = url+"&uid="+UserHelper.getUserInfo().getId()+"&city_code="+city_code+"&area_code=0";
+                        }
+                    }else {
+                        if (url.contains("city_code")){
+                            mUrl = url ;
+                        }else {
+                            if (isSlect){
+                                mUrl = url+"&city_code="+city_code+"&area_code="+area_code;
+                            }else {
+                                mUrl = url+"&city_code="+city_code+"&area_code=0";
+                            }
                         }
                     }
+
                 }else if (url.contains("?")){
                     if (url.contains("city_code")){
                         mUrl = url+"&uid="+UserHelper.getUserInfo().getId();

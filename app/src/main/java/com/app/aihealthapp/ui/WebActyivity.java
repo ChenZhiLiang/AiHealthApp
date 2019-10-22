@@ -14,6 +14,8 @@ import android.webkit.WebView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
+import com.app.aihealthapp.core.eventbus.Event;
+import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
@@ -68,7 +70,21 @@ public class WebActyivity extends BaseActivity implements  WebTitleView {
 
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
 
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+//        int uid = SharedPreferenceHelper.getUserInfo(this).getId();
+        if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
+            //刷新 重载
+            webView.reload();
+//            mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
+        }
+    }
     @Override
     public void initData() {
 

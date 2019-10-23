@@ -185,8 +185,12 @@ public class SharedPreferenceHelper {
      */
     public static void clearShared(Context context) {
         //清除登录信息
+
+//        PreferenceHelper.clean(context, AppConfig.TOKEN_FILE_NAME);
         PreferenceHelper.remove(context, AppConfig.TOKEN_FILE_NAME, AppConfig.TOKEN_NAME);
         PreferenceHelper.remove(context, AppConfig.TOKEN_FILE_NAME, AppConfig.USER_INFO);
+        PreferenceHelper.remove(context, AppConfig.TOKEN_FILE_NAME, AppConfig.isSelect);
+
 
     }
 

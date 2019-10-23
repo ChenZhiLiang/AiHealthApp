@@ -4,12 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebStorage;
 import android.webkit.WebView;
 
 import com.app.aihealthapp.R;
@@ -21,7 +27,9 @@ import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
+import com.app.aihealthapp.util.UrlParseUtil;
 import com.app.aihealthapp.view.ProgressWebView;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -31,7 +39,7 @@ import butterknife.OnClick;
  * describe: Web
  * e_mail：chenzhiliang@guangxirenrenparking.com
  */
-public class WebActyivity extends BaseActivity implements  WebTitleView {
+public class WebActyivity extends BaseActivity implements WebTitleView {
 
 
     @BindView(R.id.webview)
@@ -59,13 +67,14 @@ public class WebActyivity extends BaseActivity implements  WebTitleView {
     @Override
     public void initView() {
 
-        IntentFilter intentFilter =new IntentFilter();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("action.pay.success");
         registerReceiver(mRefreshBroadcastReceiver, intentFilter);
 
         webView.setWebTitleView(this);
         webView.setFocusable(true);//设置有焦点
         webView.setFocusableInTouchMode(true);//设置可触摸
+
         webView.loadUrl(url);//加载网址
 
     }
@@ -78,13 +87,45 @@ public class WebActyivity extends BaseActivity implements  WebTitleView {
     @Override
     protected void receiveEvent(Event event) {
         super.receiveEvent(event);
-//        int uid = SharedPreferenceHelper.getUserInfo(this).getId();
         if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
-            //刷新 重载
-            webView.reload();
-//            mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
+            String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+            String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
+            boolean isSlect = SharedPreferenceHelper.getSelect(this);
+            if (UserHelper.getUserInfo() != null) {
+                String mUrl;
+                Uri uri = Uri.parse(url);
+                if (url.contains("uid")) {
+                    String uid = UrlParseUtil.getUriParam(uri, "uid");
+                    if (TextUtils.isEmpty(uid)) {
+                        String replaceUrl = url.replaceAll("uid=", "uid=" + UserHelper.getUserInfo().getId());
+                        if (isSlect) {
+                            mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=" + area_code;
+                        } else {
+                            mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=0";
+                        }
+                    } else {
+                        if (uid.equals(UserHelper.getUserInfo().getId())) {
+                            if (isSlect) {
+                                mUrl = url + "&city_code=" + city_code + "&area_code=" + area_code;
+                            } else {
+                                mUrl = url + "&city_code=" + city_code + "&area_code=0";
+                            }
+                        } else {
+                            String replaceUrl = url.replaceAll("uid=" + uid, "uid=" + UserHelper.getUserInfo().getId());
+                            if (isSlect) {
+                                mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=" + area_code;
+                            } else {
+                                mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=0";
+                            }
+                        }
+                    }
+                    webView.loadUrl(mUrl);
+                }
+            }
         }
     }
+
+
     @Override
     public void initData() {
 
@@ -120,19 +161,19 @@ public class WebActyivity extends BaseActivity implements  WebTitleView {
         setTitle(title);
     }
 
-    private BroadcastReceiver mRefreshBroadcastReceiver =new BroadcastReceiver() {
+    private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("action.pay.success")){
+            if (action.equals("action.pay.success")) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         ToastyHelper.toastyNormal(WebActyivity.this, "支付成功");
-                        startActivity(new Intent(WebActyivity.this, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder+UserHelper.getUserInfo().getId()));
+                        startActivity(new Intent(WebActyivity.this, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder + UserHelper.getUserInfo().getId()));
                         AppManager.getAppManager().finishActivity(WebActyivity.this);
                     }
-                },100);
+                }, 100);
 
             }
         }

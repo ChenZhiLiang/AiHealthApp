@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Handler;
 import android.support.design.widget.BottomSheetDialog;
@@ -39,6 +40,7 @@ import com.app.aihealthapp.ui.activity.mine.LoginActivity;
 import com.app.aihealthapp.ui.bean.PaymentBean;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 import com.app.aihealthapp.util.PayUtils;
+import com.app.aihealthapp.util.UrlParseUtil;
 import com.app.aihealthapp.wxapi.WXShareUtil;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 
@@ -312,21 +314,30 @@ public class FragmentProgressWebView extends WebView {
             boolean isSlect = SharedPreferenceHelper.getSelect(context);
             String mUrl;
             if (UserHelper.getUserInfo()!=null){
+                Uri uri = Uri.parse(url);
+
                 if (url.contains("uid")){
-                    if (url.indexOf("uid=0")!=-1){
+                    String uid = UrlParseUtil.getUriParam(uri,"uid");
+                    if (TextUtils.isEmpty(uid)){
+                        String replaceUrl = url.replaceAll("uid=","uid="+UserHelper.getUserInfo().getId());
                         if (isSlect){
-                            mUrl = url+"&uid="+UserHelper.getUserInfo().getId()+"&city_code="+city_code+"&area_code="+area_code;
+                            mUrl = replaceUrl+"&city_code="+city_code+"&area_code="+area_code;
                         }else {
-                            mUrl = url+"&uid="+UserHelper.getUserInfo().getId()+"&city_code="+city_code+"&area_code=0";
+                            mUrl = replaceUrl+"&city_code="+city_code+"&area_code=0";
                         }
                     }else {
-                        if (url.contains("city_code")){
-                            mUrl = url ;
-                        }else {
+                        if (uid.equals(UserHelper.getUserInfo().getId())){
                             if (isSlect){
                                 mUrl = url+"&city_code="+city_code+"&area_code="+area_code;
                             }else {
                                 mUrl = url+"&city_code="+city_code+"&area_code=0";
+                            }
+                        }else {
+                            String replaceUrl = url.replaceAll("uid="+uid,"uid="+UserHelper.getUserInfo().getId());
+                            if (isSlect){
+                                mUrl = replaceUrl+"&city_code="+city_code+"&area_code="+area_code;
+                            }else {
+                                mUrl = replaceUrl+"&city_code="+city_code+"&area_code=0";
                             }
                         }
                     }

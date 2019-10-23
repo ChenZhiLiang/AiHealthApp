@@ -30,7 +30,7 @@ public class HomeViewMode {
         }
         String url = ApiUrl.HomeApi.Home;
         RequestParams params = new RequestParams();
-        params.put("uid",String.valueOf(uid));
+        params.put("uid",uid==0?"":String.valueOf(uid));
         params.put("city_code",city_code);
         params.put("area_code",area_code);
         mBaseMode.GetRequest(url, params, new ResultCallback() {

@@ -207,7 +207,7 @@ public class SleepActivity extends Activity implements CRPSleepChangeListener, S
         if (ret==0){
             Log.e("sleep","睡眠监测上传成功");
         }else {
-            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+//            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
         }
     }
 

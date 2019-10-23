@@ -5,8 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
+import com.app.aihealthapp.core.eventbus.Event;
+import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
@@ -27,6 +31,7 @@ import com.app.aihealthapp.ui.AppManager;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.forum.ForumFragment;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
+import com.app.aihealthapp.util.UrlParseUtil;
 import com.app.aihealthapp.view.FragmentProgressWebView;
 import com.app.aihealthapp.view.ProgressWebView;
 import com.app.aihealthapp.view.WebViewProgressBar;
@@ -73,12 +78,72 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
     }
     @Override
     public void loadingData() {
-
+        boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
+        String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+        String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
         if (isLogin()){
-            String url = ApiUrl.WebApi.CONTROL_CENTER+"?uid="+UserHelper.getUserInfo().getId();
-            webview.loadUrl(url);//加载网址
+            if (isSlect) {
+                webview.loadUrl(ApiUrl.WebApi.CONTROL_CENTER+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=" + area_code);//加载网址
+            }else {
+                webview.loadUrl(ApiUrl.WebApi.CONTROL_CENTER+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=0");//加载网址
+            }
         }else {
-            webview.loadUrl(ApiUrl.WebApi.CONTROL_CENTER);//加载网址
+            if (isSlect) {
+                webview.loadUrl(ApiUrl.WebApi.CONTROL_CENTER + "?city_code=" + city_code + "&area_code=" + area_code);//加载网址
+            }else {
+                webview.loadUrl(ApiUrl.WebApi.CONTROL_CENTER + "?city_code=" + city_code + "&area_code=0");//加载网址
+            }
+        }
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+//        int uid = SharedPreferenceHelper.getUserInfo(this).getId();
+        if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
+            if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
+                if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
+                    String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+                    String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
+                    boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
+                    if (UserHelper.getUserInfo() != null) {
+                        String mUrl;
+                        Uri uri = Uri.parse(webview.getUrl());
+                        if (webview.getUrl().contains("uid")) {
+                            String uid = UrlParseUtil.getUriParam(uri, "uid");
+                            if (TextUtils.isEmpty(uid)) {
+                                String replaceUrl = webview.getUrl().replaceAll("uid=", "uid=" + UserHelper.getUserInfo().getId());
+                                if (isSlect) {
+                                    mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=" + area_code;
+                                } else {
+                                    mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=0";
+                                }
+                            } else {
+                                if (uid.equals(UserHelper.getUserInfo().getId())) {
+                                    if (isSlect) {
+                                        mUrl = webview.getUrl() + "&city_code=" + city_code + "&area_code=" + area_code;
+                                    } else {
+                                        mUrl = webview.getUrl() + "&city_code=" + city_code + "&area_code=0";
+                                    }
+                                } else {
+                                    String replaceUrl = webview.getUrl().replaceAll("uid=" + uid, "uid=" + UserHelper.getUserInfo().getId());
+                                    if (isSlect) {
+                                        mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=" + area_code;
+                                    } else {
+                                        mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=0";
+                                    }
+                                }
+                            }
+                            webview.loadUrl(mUrl);
+                        }
+                    }
+                }
+            }
         }
     }
     @Override

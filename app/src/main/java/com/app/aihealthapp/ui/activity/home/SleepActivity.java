@@ -186,11 +186,11 @@ public class SleepActivity extends Activity implements CRPSleepChangeListener, S
         // 深度睡眠时间大于等于1.75小时，睡眠质量为良；
         // 深度睡眠时间大于等于1.3小时，睡眠质量为中，
         // 深度睡眠时间小于1.3小时，睡眠质量为差
-        if (restfull_time>132){
+        if (restfull_time>=120){
             tv_sleep_quality.setText("优");
-        }else if (restfull_time>105&&restfull_time<=132){
+        }else if (restfull_time>=90&&restfull_time<120){
             tv_sleep_quality.setText("良");
-        }else if (restfull_time>78&&restfull_time<=105){
+        }else if (restfull_time>=60&&restfull_time<90){
             tv_sleep_quality.setText("中");
         }else {
             tv_sleep_quality.setText("差");

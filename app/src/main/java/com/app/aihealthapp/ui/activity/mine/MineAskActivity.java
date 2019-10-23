@@ -63,9 +63,13 @@ public class MineAskActivity extends BaseActivity implements ViewPager.OnPageCha
     public void initView() {
         mFragments = new ArrayList<>();
         if (UserHelper.getUserInfo().getKind_type()==1){
-            mFragments.add(SearchRecordFragment.getInstance(1));
+            tv_search_record.setText("问诊记录");
+            tv_interrogation_record.setText("咨询记录");
             mFragments.add(SearchRecordFragment.getInstance(0));
+            mFragments.add(SearchRecordFragment.getInstance(1));
         }else {
+            tv_search_record.setText("咨询记录");
+            tv_interrogation_record.setText("问诊记录");
             mFragments.add(InterrogationRecordFragment.getInstance(0));
             mFragments.add(InterrogationRecordFragment.getInstance(1));
         }

@@ -48,25 +48,6 @@ public class ShopFragment extends BaseFragment implements WebTitleView {
         return hf;
     }
 
-    private BroadcastReceiver mRefreshBroadcastReceiver =new BroadcastReceiver() {
-        @Override
-        public void onReceive(final Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals("action.pay.success")){
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastyHelper.toastyNormal(mActivity, "支付成功");
-//                        webView.loadUrl(ApiUrl.WebApi.MyOrder);
-                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder+UserHelper.getUserInfo().getId()));
-
-
-                    }
-                },100);
-
-            }
-        }
-    };
 
     @Override
     protected boolean isRegisterEventBus() {
@@ -119,7 +100,6 @@ public class ShopFragment extends BaseFragment implements WebTitleView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mActivity.unregisterReceiver(mRefreshBroadcastReceiver);
     }
 
     @Override
@@ -142,14 +122,6 @@ public class ShopFragment extends BaseFragment implements WebTitleView {
                 webview.loadUrl(ApiUrl.WebApi.Self_Support + "?city_code=" + city_code + "&area_code=0");//加载网址
             }
         }
-
-//        if (isLogin()){
-//            String url = ApiUrl.WebApi.Self_Support+"?uid="+ UserHelper.getUserInfo().getId();
-//            webview.loadUrl(url);//加载网址
-//        }else {
-//            webview.loadUrl(ApiUrl.WebApi.Self_Support);//加载网址
-//        }
-
     }
 
     @Override
@@ -162,9 +134,6 @@ public class ShopFragment extends BaseFragment implements WebTitleView {
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
-        IntentFilter intentFilter =new IntentFilter();
-        intentFilter.addAction("action.pay.success");
-        mActivity.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
 
     @Override

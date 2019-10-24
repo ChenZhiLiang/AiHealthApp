@@ -39,11 +39,13 @@ import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.PermissionHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.mine.LoginActivity;
+import com.app.aihealthapp.ui.activity.mine.OrderWebActyivity;
 import com.app.aihealthapp.ui.adapter.GridviewAreaAdapter;
 import com.app.aihealthapp.ui.adapter.HealthManageAdapter;
 import com.app.aihealthapp.ui.adapter.HealthShopAdapter;
@@ -453,9 +455,41 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         } else if (v == btn_inquiry) {
             startActivity(new Intent(getActivity(), DoctorListActivity.class).putExtra("cate_id",16));
         }  else if (v==btn_shop_index){
-            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index));
+            boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
+            String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+            String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
+            if(isLogin()){
+                if (isSlect){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=" + area_code));
+                }else {
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=0"));
+                }
+            }else {
+                if (isSlect){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index + "?city_code=" + city_code + "&area_code=" + area_code));
+                }else {
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index + "?city_code=" + city_code + "&area_code=0"));
+                }
+            }
+//            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index));
         }else if (v==btn_health_shop){
-            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Self_Support));
+            boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
+            String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+            String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
+            if(isLogin()){
+                if (isSlect){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Self_Support+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=" + area_code));
+                }else {
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Self_Support+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=0"));
+                }
+            }else {
+                if (isSlect){
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Self_Support + "?city_code=" + city_code + "&area_code=" + area_code));
+                }else {
+                    startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Self_Support + "?city_code=" + city_code + "&area_code=0"));
+                }
+            }
+
         }else {
             if (homeBean.getIs_bind_bracelet()==1) {
                 if (v == ll_sleep) {
@@ -537,7 +571,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             homeBean = GsonHelper.GsonToBean(data, HomeBean.class);
             if (homeBean.getIs_bind_bracelet() == 0) {//未绑定手环
                 rt_bind_device.setVisibility(View.VISIBLE);
-
             } else {//绑定手环
                 rt_bind_device.setVisibility(View.GONE);
                 tv_step.setText(homeBean.getRun_steps().getSteps());

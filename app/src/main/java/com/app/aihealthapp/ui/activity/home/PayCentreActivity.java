@@ -105,7 +105,7 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
         mPayUtil = new PayUtils(this);//初始化支付工具
 
         IntentFilter intentFilter =new IntentFilter();
-        intentFilter.addAction("action.pay.success");
+        intentFilter.addAction("action.pay.success1");
         registerReceiver(mRefreshBroadcastReceiver, intentFilter);
 
     }
@@ -179,7 +179,7 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("action.pay.success")){
+            if (action.equals("action.pay.success1")){
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

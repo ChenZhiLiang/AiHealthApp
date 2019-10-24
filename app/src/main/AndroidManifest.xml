@@ -73,6 +73,7 @@
         <activity android:name=".ui.activity.mine.AdvisoryDetailsActivity" />
         <activity android:name=".core.pictureviewer.ImagePagerActivity" />
         <activity android:name=".ui.activity.home.SleepActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.mine.OrderWebActyivity"/>
 
         <activity
             android:name="com.app.aihealthapp.core.permission.PermissionActivity"

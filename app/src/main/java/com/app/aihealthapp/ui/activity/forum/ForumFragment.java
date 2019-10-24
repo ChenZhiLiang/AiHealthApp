@@ -93,7 +93,6 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         webview.setFocusableInTouchMode(true);//设置可触摸
 
         IntentFilter intentFilter =new IntentFilter();
-        intentFilter.addAction("action.pay.success");
         intentFilter.addAction("action.check.location");
         mActivity.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
     }
@@ -214,17 +213,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         @Override
         public void onReceive(final Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("action.pay.success")){
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastyHelper.toastyNormal(mActivity, "支付成功");
-//                        webView.loadUrl(ApiUrl.WebApi.MyOrder);
-                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder+UserHelper.getUserInfo().getId()));
-                    }
-                },100);
-
-            }else if (action.equals("action.check.location")){
+            if (action.equals("action.check.location")){
                 tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
                 //刷新 重载
                 webview.reload();

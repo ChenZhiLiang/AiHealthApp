@@ -26,6 +26,7 @@ import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
+import com.app.aihealthapp.ui.activity.mine.OrderWebActyivity;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 import com.app.aihealthapp.util.UrlParseUtil;
 import com.app.aihealthapp.view.ProgressWebView;
@@ -174,7 +175,6 @@ public class WebActyivity extends BaseActivity implements WebTitleView {
                         AppManager.getAppManager().finishActivity(WebActyivity.this);
                     }
                 }, 100);
-
             }
         }
     };

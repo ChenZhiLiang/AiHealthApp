@@ -71,9 +71,6 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
 
-        IntentFilter intentFilter =new IntentFilter();
-        intentFilter.addAction("action.pay.success");
-        mActivity.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
 
     }
     @Override
@@ -150,30 +147,11 @@ public class ManageFragment extends BaseFragment implements  WebTitleView {
     public void initData() {
 
     }
-    private BroadcastReceiver mRefreshBroadcastReceiver =new BroadcastReceiver() {
-        @Override
-        public void onReceive(final Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals("action.pay.success")){
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastyHelper.toastyNormal(mActivity, "支付成功");
-//                        webView.loadUrl(ApiUrl.WebApi.MyOrder);
-                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.MyOrder+UserHelper.getUserInfo().getId()));
 
-
-                    }
-                },100);
-
-            }
-        }
-    };
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mActivity.unregisterReceiver(mRefreshBroadcastReceiver);
     }
 
     @Override

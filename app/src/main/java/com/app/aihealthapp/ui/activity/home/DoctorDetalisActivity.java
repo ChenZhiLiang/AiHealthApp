@@ -129,7 +129,8 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
                         .putExtra("advice_price",advice_price)
                         .putExtra("doctor_name",doctor_name));
             }else {
-                startActivity(new Intent(this, HealthAskActivity.class).putExtra("doctor_id",id));
+//                startActivity(new Intent(this, HealthAskActivity.class).putExtra("doctor_id",id));
+                startActivity(new Intent(this, HealthAskActivity.class).putExtra("doctor_id",id).putExtra("kind_type",1));
 
             }
         }else if (v==tv_home){

@@ -1,8 +1,6 @@
 package com.app.aihealthapp.ui.activity.mine;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +29,6 @@ import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
-import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
 import com.app.aihealthapp.ui.bean.UserInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineViewMode;
@@ -175,6 +172,8 @@ public class MineFragment extends BaseFragment implements MineView {
     public void onClick(View v){
 
         if (v==rt_about){
+
+//            startActivity(new Intent(mActivity, PickUpCarManagementActivity.class));
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.About));
         }else if (v==rt_feedback){
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Feedback));

@@ -273,7 +273,9 @@ public class ProgressWebView extends WebView {
         public boolean shouldOverrideUrlLoading(WebView view, final String url) {
 
             if (url.startsWith("navigation://question")){//立即咨询
-                context.startActivity(new Intent(context, HealthAskActivity.class));
+//                context.startActivity(new Intent(context, HealthAskActivity.class));
+                context.startActivity(new Intent(context, HealthAskActivity.class).putExtra("kind_type",0));
+
                 return true;
             }else if (url.startsWith("navigation://doctor?cate_id=16")){//中医问诊
                 context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16));

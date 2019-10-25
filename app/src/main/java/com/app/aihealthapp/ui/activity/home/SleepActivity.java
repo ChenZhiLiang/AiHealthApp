@@ -182,10 +182,10 @@ public class SleepActivity extends Activity implements CRPSleepChangeListener, S
         tv_sleep_sober_time.setText(utils.SleepTime(SleepActivity.this,sober));
 
         //睡眠质量分四个等级，主要参照深睡眠时间来确定睡眠质量：
-        // 深睡眠时间大于等于2.2小时，睡眠质量为优；
-        // 深度睡眠时间大于等于1.75小时，睡眠质量为良；
-        // 深度睡眠时间大于等于1.3小时，睡眠质量为中，
-        // 深度睡眠时间小于1.3小时，睡眠质量为差
+        // 深睡眠时间大于等于2小时，睡眠质量为优；
+        // 深度睡眠时间大于等于1.5小时，睡眠质量为良；
+        // 深度睡眠时间大于等于1小时，睡眠质量为中，
+        // 深度睡眠时间小于1小时，睡眠质量为差
         if (restfull_time>=120){
             tv_sleep_quality.setText("优");
         }else if (restfull_time>=90&&restfull_time<120){

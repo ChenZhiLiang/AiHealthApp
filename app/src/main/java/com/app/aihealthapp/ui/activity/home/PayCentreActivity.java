@@ -184,7 +184,8 @@ public class PayCentreActivity extends BaseActivity implements PayCentreView {
                     @Override
                     public void run() {
                         ToastyHelper.toastyNormal(PayCentreActivity.this, "支付成功");
-                        startActivity(new Intent(PayCentreActivity.this,HealthAskActivity.class).putExtra("doctor_id",doctor_id));
+                        startActivity(new Intent(PayCentreActivity.this, HealthAskActivity.class).putExtra("doctor_id",doctor_id).putExtra("kind_type",1));
+
                         finish();
                     }
                 },100);

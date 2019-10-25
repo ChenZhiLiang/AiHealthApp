@@ -66,6 +66,7 @@ public class HealthAskActivity extends BaseActivity implements HealthAskView {
 
     private int ClickType = 0;
     private  int doctor_id = 0;
+    private int kind_type;
     @Override
     public int getLayoutId() {
         return R.layout.activity_health_ask;
@@ -86,6 +87,7 @@ public class HealthAskActivity extends BaseActivity implements HealthAskView {
     @Override
     public void initView() {
         doctor_id = getIntent().getIntExtra("doctor_id",0);
+        kind_type = getIntent().getIntExtra("kind_type",0);
         mHealthAskViewMode = new HealthAskViewMode(this);
     }
 
@@ -112,7 +114,7 @@ public class HealthAskActivity extends BaseActivity implements HealthAskView {
 //                showLoadFailMsg("请上传其他照片");
 //            }
             else {
-                mHealthAskViewMode.question(doctor_id,edit_input_content.getText().toString(),doctor_id==0?0:1,checklist_pic,medical_pic,affected_part_pic,other_pic);
+                mHealthAskViewMode.question(doctor_id,edit_input_content.getText().toString(),kind_type,checklist_pic,medical_pic,affected_part_pic,other_pic);
             }
         }else {
             if (v==img_checklist){

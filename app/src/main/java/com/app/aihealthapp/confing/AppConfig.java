@@ -33,6 +33,7 @@ public class AppConfig {
 
     public static final String isSelect = "select";
 
+    public static final String UPLOADTYPE_IMAGE = "UploadType"; //商家入驻 调用js 方法 上传图片类型
 
 
     public static final String USER_NAME = "mobile";

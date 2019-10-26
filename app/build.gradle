@@ -77,7 +77,8 @@ dependencies {
     implementation "com.android.support:support-v13:28.0.0"
     implementation files('libs/Android_Map3D_SDK_V6.6.0_20181221.jar')
     implementation 'com.amap.api:location:latest.integration'
-
-
+    //仿京东地址选择器
+//    implementation 'com.smartTop:jd-address:1.0.3'
+//    implementation 'com.cool:cityselect:1.0.2'
 
 }

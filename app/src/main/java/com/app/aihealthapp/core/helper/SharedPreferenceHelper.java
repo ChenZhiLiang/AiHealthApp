@@ -178,6 +178,15 @@ public class SharedPreferenceHelper {
     public static boolean getSelect(Context context){
         return PreferenceHelper.readBoolean(context, AppConfig.TOKEN_FILE_NAME,AppConfig.isSelect,false);
     }
+
+    public static void setUploadType(Context context, int Type){
+        PreferenceHelper.write(context, AppConfig.TOKEN_FILE_NAME, AppConfig.UPLOADTYPE_IMAGE, Type);
+
+    }
+    public static int getUploadType(Context context){
+        return PreferenceHelper.readInt(context, AppConfig.TOKEN_FILE_NAME,AppConfig.UPLOADTYPE_IMAGE,0);
+
+    }
     /**
      * 清除 Token
      *

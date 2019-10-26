@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_10px"
-            android:text="帮你一起发现健康生活方式"
+            android:text="帮你精选全球健康好产品"
             android:textSize="@dimen/text_14px"
             android:textColor="@color/default_hint_color"/>
     </LinearLayout>

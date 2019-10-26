@@ -4,10 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -20,16 +24,27 @@ import android.webkit.WebView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
+import com.app.aihealthapp.core.base.BaseMode;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
+import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
+import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
+import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
 import com.app.aihealthapp.ui.activity.mine.OrderWebActyivity;
 import com.app.aihealthapp.ui.mvvm.view.WebTitleView;
 import com.app.aihealthapp.util.UrlParseUtil;
 import com.app.aihealthapp.view.ProgressWebView;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,6 +62,7 @@ public class WebActyivity extends BaseActivity implements WebTitleView {
     ProgressWebView webView;
 
     private String url;
+    private List<LocalMedia> selectList = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
@@ -184,5 +200,83 @@ public class WebActyivity extends BaseActivity implements WebTitleView {
         super.onDestroy();
         unregisterReceiver(mRefreshBroadcastReceiver);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片选择结果回调
+                    selectList = PictureSelector.obtainMultipleResult(data);
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                    // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                    for (LocalMedia media : selectList) {
+                        if (media.isCompressed()) {
+//                            loading_img = media.getCompressPath();
+                            File file = new File(media.getCompressPath());
+                            uploadHead(file);
+                        }
+                    }
+
+                    break;
+                case PictureConfig.REQUEST_CAMERA:
+                    // 图片选择结果回调
+                    selectList = PictureSelector.obtainMultipleResult(data);
+                    for (LocalMedia media : selectList) {
+                        if (media.isCompressed()) {
+//                            loading_img = media.getCompressPath();
+                            File file = new File(media.getCompressPath());
+                            uploadHead(file);
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    /**
+     * @author
+     * @time
+     * @describe 上传图片
+     */
+    public void uploadHead(File avatar) {
+        hud.show();
+        String url = ApiUrl.HomeApi.Upload;
+        RequestParams params = new RequestParams();
+        params.fileParams.put("pic", avatar);
+        new BaseMode().MultiPostRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                hud.dismiss();
+                int ret = GsonHelper.GsonToInt(result.toString(), "ret");
+                if (ret == 0) {
+                    String data = GsonHelper.GsonToData(result.toString(), "data").toString();
+                    final String url = GsonHelper.GsonToString(data, "url");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            int UploadType = SharedPreferenceHelper.getUploadType(WebActyivity.this);
+                            // 调用javascript的callJS()方法
+                            webView.loadUrl("javascript:androidUpload('"+UploadType+"','"+url+"')");
+                        }
+                    });
+
+                } else {
+                    ToastyHelper.toastyNormal(WebActyivity.this, GsonHelper.GsonToString(result.toString(), "msg"));
+
+                }
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                hud.dismiss();
+                ToastyHelper.toastyNormal(WebActyivity.this, result.toString());
+            }
+        });
     }
 }

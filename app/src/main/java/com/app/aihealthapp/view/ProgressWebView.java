@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Handler;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -28,13 +29,16 @@ import android.widget.LinearLayout;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseMode;
+import com.app.aihealthapp.core.helper.CircleDialogHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
+import com.app.aihealthapp.core.helper.PermissionHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
 import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
+import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.AppManager;
 import com.app.aihealthapp.ui.WebActyivity;
@@ -49,6 +53,9 @@ import com.app.aihealthapp.util.PayUtils;
 import com.app.aihealthapp.util.UrlParseUtil;
 import com.app.aihealthapp.view.toasty.Toasty;
 import com.app.aihealthapp.wxapi.WXShareUtil;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 
 import java.net.URISyntaxException;
@@ -103,6 +110,7 @@ public class ProgressWebView extends WebView {
         mSettings.setAllowFileAccess(true);//设置支持文件流
         mSettings.setSupportZoom(true);// 支持缩放
         mSettings.setBuiltInZoomControls(true);// 支持缩放
+        mSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         //不显示webview缩放按钮
         mSettings.setDisplayZoomControls(false);
         mSettings.setUseWideViewPort(true);// 调整到适合webview大小
@@ -179,6 +187,36 @@ public class ProgressWebView extends WebView {
             dialogs_share.show();
 
         }
+
+        @JavascriptInterface
+        public void  isCallTakePhotos(int UploadType){
+            SharedPreferenceHelper.setUploadType(context,UploadType);
+            CircleDialogHelper.ShowBottomDialog((AppCompatActivity) context, getResources().getStringArray(R.array.head_check), new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (i == 0) {
+                        // 获得摄像权限才能进入拍照界面
+                        if (new PermissionHelper().RequestPermisson(context, Permission.CAMERA)){
+                            PictureSelector.create((Activity) context)
+                                    .openCamera(PictureMimeType.ofImage())
+                                    .compress(true)
+                                    .forResult(PictureConfig.REQUEST_CAMERA);
+                        }
+                    } else {
+                        //获得访问外部存储权限才能访问相册
+                        if (new PermissionHelper().RequestPermisson(context, Permission.WRITE_EXTERNAL_STORAGE)){
+                            PictureSelector.create((Activity) context)
+                                    .openGallery(PictureMimeType.ofImage())
+                                    .compress(true)
+                                    .selectionMode(PictureConfig.SINGLE)// 多选 or 单选
+                                    .forResult(PictureConfig.CHOOSE_REQUEST);
+                        }
+                    }
+                }
+            });
+        }
+
+
 
         @JavascriptInterface
         public void jsCallPay(String order_no, final String pay_type,String pwd){
@@ -275,13 +313,16 @@ public class ProgressWebView extends WebView {
             if (url.startsWith("navigation://question")){//立即咨询
 //                context.startActivity(new Intent(context, HealthAskActivity.class));
                 context.startActivity(new Intent(context, HealthAskActivity.class).putExtra("kind_type",0));
-
                 return true;
             }else if (url.startsWith("navigation://doctor?cate_id=16")){//中医问诊
-                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16));
+//                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16));
+                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16).putExtra("kind_type",1));
+
                 return true;
             }else if (url.startsWith("navigation://doctor?cate_id=10")){//疑难杂症
-                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",10));
+//                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",10));
+                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16).putExtra("kind_type",2));
+
                 return true;
             }else if (url.startsWith(ApiUrl.HOST+"order/cart")
                     ||url.startsWith(ApiUrl.HOST+"order/submit")

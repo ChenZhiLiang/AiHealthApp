@@ -35,7 +35,11 @@ public class HealthAskViewMode {
         RequestParams params = new RequestParams();
         params.put("doctor_id",String.valueOf(doctor_id));
         params.put("info",info);
-        params.put("kind_type",String.valueOf(kind_type));
+        if (kind_type==1||kind_type==2){
+            params.put("kind_type",String.valueOf(1));
+        }else {
+            params.put("kind_type",String.valueOf(0));
+        }
         params.put("checklist_pic",checklist_pic);
         params.put("medical_pic",medical_pic);
         params.put("affected_part_pic",affected_part_pic);

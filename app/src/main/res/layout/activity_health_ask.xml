@@ -21,6 +21,7 @@
 
 
             <TextView
+                android:id="@+id/tv_top_tips"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:drawableLeft="@mipmap/management_zx_caveat"
@@ -60,7 +61,7 @@
                     android:padding="@dimen/dimen_10px"
                     android:gravity="top"
                     android:minLines="8"
-                    android:hint="请您详细描述您的症状、疾病、身体状况，否则可能无法获得医生的详细解答。请勿透露您的真实姓名和联系电话。"
+                    android:hint="请详细描述您的健康问题，否则可能无法获得健康专家的详细解答。"
                     android:textSize="@dimen/text_12px"/>
 
                 <TextView
@@ -118,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dimen_10px"
-                    android:text="请上传相关图片（检查单、病例、CT、患处、药品等），该图片只要您和当前医生可见，爱健康会确保您的隐私安全"
+                    android:text="请上传相关图片（检查单、病历、CT、患处、药品等可选填），该图片只有您和当前健康专家可见，健康密钥会确保您的隐私安全。"
                     android:textSize="@dimen/text_12px"
                     android:textColor="@color/default_hint_color"/>
             </LinearLayout>

@@ -176,7 +176,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_10px"
-                            android:text="睡眠测量"
+                            android:text="睡眠监测"
                             android:textColor="@color/text_color"
                             android:textSize="@dimen/text_14px" />
                     </LinearLayout>

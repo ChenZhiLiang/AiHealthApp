@@ -159,7 +159,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/frame_blue"
-            android:text="立即咨询"
+            android:text="立即问诊"
             android:textColor="@color/default_text_color"
             android:textSize="@dimen/text_12px"/>
     </RelativeLayout>

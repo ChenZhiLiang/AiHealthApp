@@ -47,7 +47,7 @@
             android:layout_below="@+id/tv_ask_title"
             android:layout_marginLeft="@dimen/dimen_10px"
             android:layout_marginTop="@dimen/dimen_8px"
-            android:text="每天3000个问题被专业医生解答"
+            android:text="每有健康疑惑找健康专家在线解答"
             android:textSize="@dimen/text_10px"
             android:textColor="@color/default_hint_color"/>
 
@@ -97,7 +97,7 @@
             android:layout_below="@+id/tv_inquiry_title"
             android:layout_marginLeft="@dimen/dimen_10px"
             android:layout_marginTop="@dimen/dimen_8px"
-            android:text="每天3000个问题被专业医生解答"
+            android:text="每天3000人次被执业中医问诊"
             android:textSize="@dimen/text_10px"
             android:textColor="@color/default_hint_color"/>
 

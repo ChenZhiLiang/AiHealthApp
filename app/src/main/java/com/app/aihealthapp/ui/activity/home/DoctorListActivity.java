@@ -58,6 +58,7 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
     private List<DoctorListBean> doctor_list = new ArrayList<>();
 
     private int cate_id;
+    private int kind_type;//1 / 立即问诊 2 疑难杂症
     @Override
     public int getLayoutId() {
         return R.layout.activity_doctor_list;
@@ -76,8 +77,12 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
 
     @Override
     public void initView() {
+
+        cate_id = getIntent().getIntExtra("cate_id",0);
+        kind_type = getIntent().getIntExtra("kind_type",0);
+
         mDoctorListViewMode = new DoctorListViewMode(this);
-        mDoctorListAdapter = new DoctorListAdapter(this,doctor_list);
+        mDoctorListAdapter = new DoctorListAdapter(this,doctor_list,kind_type);
         recy_doctor.setLayoutManager(new LinearLayoutManager(this));
         recy_doctor.setRefreshProgressStyle(ProgressStyle.BallPulse);
         recy_doctor.setLoadingMoreProgressStyle(ProgressStyle.BallBeat);
@@ -85,7 +90,6 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
         recy_doctor.setLoadingListener(this);
         recy_doctor.setAdapter(mDoctorListAdapter);
 
-        cate_id = getIntent().getIntExtra("cate_id",0);
     }
 
     @Override

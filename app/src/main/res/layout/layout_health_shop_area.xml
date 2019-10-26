@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_10px"
-            android:text="发表健康疑惑，寻找健康答案"
+            android:text="帮你寻找优质健康商家"
             android:textSize="@dimen/text_14px"
             android:textColor="@color/default_hint_color"/>
     </LinearLayout>

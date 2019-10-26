@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="@dimen/dimen_16px"
-            android:text="选择医生进行在线咨询"
+            android:text="选择医生进行在线问诊"
             android:textColor="@color/text_color"
             android:textSize="@dimen/text_14px"/>
 

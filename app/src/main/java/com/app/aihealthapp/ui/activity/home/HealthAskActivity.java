@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
@@ -42,6 +43,8 @@ import butterknife.OnClick;
  */
 public class HealthAskActivity extends BaseActivity implements HealthAskView {
 
+    @BindView(R.id.tv_top_tips)
+    TextView tv_top_tips;
     @BindView(R.id.edit_input_content)
     EditText edit_input_content;
     @BindView(R.id.img_checklist)
@@ -81,13 +84,28 @@ public class HealthAskActivity extends BaseActivity implements HealthAskView {
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
         initToolBar();
-        setTitle("健康提问");
+
     }
 
     @Override
     public void initView() {
         doctor_id = getIntent().getIntExtra("doctor_id",0);
         kind_type = getIntent().getIntExtra("kind_type",0);
+        if(kind_type==1){
+            setTitle("中医问诊");
+            tv_top_tips.setText("急重症不适合在线问诊，请立即到附近医院就诊！");
+            edit_input_content.setHint("请您详细描述您的症状、疾病、身体状况，否则可能无法获得医生的详细解答。");
+        }else if (kind_type==2){
+            setTitle("疑难杂症提问");
+            tv_top_tips.setText("急重症不适合在线问诊，请立即到附近医院就诊！");
+            edit_input_content.setHint("请您详细描述您的症状、疾病、身体状况，否则可能无法获得医生的详细解答。");
+            btn_submit.setText("提交问诊");
+        }else {
+            setTitle("健康提问");
+            tv_top_tips.setText("急重症不适合在线咨询，请立即到就近医院就诊！");
+            edit_input_content.setHint("请详细描述您的健康问题，否则可能无法获得健康专家的详细解答。");
+
+        }
         mHealthAskViewMode = new HealthAskViewMode(this);
     }
 
@@ -225,7 +243,7 @@ public class HealthAskActivity extends BaseActivity implements HealthAskView {
                 img_other.setImageBitmap(bm);
             }
         }else {
-            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),""));
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
         }
     }
 

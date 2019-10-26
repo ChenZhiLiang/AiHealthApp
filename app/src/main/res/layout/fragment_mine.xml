@@ -451,7 +451,7 @@
                     android:layout_marginLeft="@dimen/dimen_16px"
                     android:drawableLeft="@mipmap/mind_msn"
                     android:drawablePadding="@dimen/text_10px"
-                    android:text="我的代理商会员"
+                    android:text="我的联营用户圈"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_14px" />
 

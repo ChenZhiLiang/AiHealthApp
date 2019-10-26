@@ -34,9 +34,11 @@ import butterknife.BindView;
 public class DoctorListAdapter extends BaseXRecyclerViewAdapter<DoctorListBean> {
 
     private Activity mActivity;
-    public DoctorListAdapter(Activity mActivity,List<DoctorListBean> data) {
+    private int kind_type;
+    public DoctorListAdapter(Activity mActivity,List<DoctorListBean> data,int kind_type) {
         super(data);
         this.mActivity = mActivity;
+        this.kind_type = kind_type;
     }
 
     @Override
@@ -98,7 +100,7 @@ public class DoctorListAdapter extends BaseXRecyclerViewAdapter<DoctorListBean> 
                                 .putExtra("price_hek",data.getPrice_hek())
                                 .putExtra("doctor_name",data.getNickname()));
                     }else {
-                        mActivity.startActivity(new Intent(mActivity, HealthAskActivity.class).putExtra("doctor_id",data.getId()).putExtra("kind_type",1));
+                        mActivity.startActivity(new Intent(mActivity, HealthAskActivity.class).putExtra("doctor_id",data.getId()).putExtra("kind_type",kind_type));
 
                     }
 

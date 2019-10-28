@@ -414,7 +414,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_10px"
-                        android:text="付款码（可选填）"
+                        android:text="收款码（可选填）"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/text_14px"/>
 

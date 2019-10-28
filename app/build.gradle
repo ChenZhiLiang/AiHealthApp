@@ -21,8 +21,8 @@ android {
     }
     buildTypes {
         release {
-            shrinkResources true
-            minifyEnabled true//如果打正式带签名的包，这里 为true，开启混淆
+            shrinkResources false
+            minifyEnabled false//如果打正式带签名的包，这里 为true，开启混淆
             debuggable false //关闭日志调试
             proguardFiles getDefaultProguardFile ('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config

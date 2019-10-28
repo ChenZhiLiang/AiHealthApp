@@ -334,6 +334,16 @@ public class ProgressWebView extends WebView {
 //                    AppManager.getAppManager().finishActivity((Activity) context);
                     return true;
                 }
+            }else if (url.contains("tel:")){
+                if (new PermissionHelper().RequestPermisson(context, Permission.CALL_PHONE)) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    Uri data = Uri.parse(url);
+                    intent.setData(data);
+                    context.startActivity(intent);
+
+                }
+                return true;
+
             }
             return false;
         }

@@ -516,11 +516,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             if (homeBean.getIs_bind_bracelet()==1) {
                 if (v == ll_sleep) {
                     startActivity(new Intent(mActivity, SleepActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()));
-
-//                    ClickStep = true;
-//                    AppContext.mBleConnection.setStepChangeListener(HomeFragment.this);
-//                    //运动记步
-//                    AppContext.mBleConnection.syncStep();
                 }  else if (v == ll_blood_oxygen) {
                     //血压测量
                     startActivity(new Intent(mActivity, MeasureActivity.class).putExtra("Device_no", mDeviceInfoBean.getDevice_no()).putExtra("type", 2));
@@ -776,17 +771,12 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                         }
                     }
                 }*/
-                if (SharedPreferenceHelper.getSelect(mActivity)){
-                    tv_location.setText(SharedPreferenceHelper.getArea(mActivity));
-                    city_id = SharedPreferenceHelper.getCityId(mActivity);
-                    area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                    mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
-                    return;
-                }
-                SharedPreferenceHelper.setProvince(AppContext.getContext(),aMapLocation.getProvince());
-                SharedPreferenceHelper.setCity(AppContext.getContext(),aMapLocation.getCity());
-                SharedPreferenceHelper.setAreaId(AppContext.getContext(),aMapLocation.getAdCode());
-                SharedPreferenceHelper.setArea(AppContext.getContext(),aMapLocation.getDistrict());
+
+                SharedPreferenceHelper.setProvince(mActivity,aMapLocation.getProvince());
+                SharedPreferenceHelper.setCity(mActivity,aMapLocation.getCity());
+                SharedPreferenceHelper.setAreaId(mActivity,aMapLocation.getAdCode());
+                SharedPreferenceHelper.setArea(mActivity,aMapLocation.getDistrict());
+                SharedPreferenceHelper.setSelect(mActivity,false);
                 tv_location.setText(aMapLocation.getDistrict());
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
@@ -797,7 +787,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                         + aMapLocation.getErrorCode() + ", errInfo:"
                         + aMapLocation.getErrorInfo());
                 SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_ID_DEF);
-                SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_DEF);
+                SharedPreferenceHelper.setCity(mActivity,AppConfig.CITY_DEF);
                 SharedPreferenceHelper.setAreaId(AppContext.getContext(), AppConfig.CITY_ID_DEF);
                 SharedPreferenceHelper.setArea(AppContext.getContext(),AppConfig.AREA_DEF);
                 tv_location.setText(AppConfig.CITY_DEF);

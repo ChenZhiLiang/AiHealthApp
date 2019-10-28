@@ -28,6 +28,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--处理拨出电话，允许程序监视,修改或放弃播出电话-->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <application
         android:name=".ui.AppContext"
         android:allowBackup="true"

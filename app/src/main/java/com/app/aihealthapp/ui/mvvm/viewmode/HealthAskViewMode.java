@@ -35,10 +35,10 @@ public class HealthAskViewMode {
         RequestParams params = new RequestParams();
         params.put("doctor_id",String.valueOf(doctor_id));
         params.put("info",info);
-        if (kind_type==1||kind_type==2){
-            params.put("kind_type",String.valueOf(1));
-        }else {
+        if (kind_type==1||kind_type==2){//中医问诊、疑难症
             params.put("kind_type",String.valueOf(0));
+        }else {//我要咨询
+            params.put("kind_type",String.valueOf(1));
         }
         params.put("checklist_pic",checklist_pic);
         params.put("medical_pic",medical_pic);

@@ -123,8 +123,13 @@ public class SearchRecordFragment extends BaseFragment implements SearchRecordVi
                 mSearchRecordAdapter.addItem(SearchRecords);
                 mSearchRecordAdapter.notifyDataSetChanged();
             }else {
-                no_record_layout.setVisibility(View.VISIBLE);
-                recy_search_record.setVisibility(View.GONE);
+                if (page==1){
+                    no_record_layout.setVisibility(View.VISIBLE);
+                    recy_search_record.setVisibility(View.GONE);
+                }else {
+                    recy_search_record.setLoadingMoreEnabled(false);
+                }
+
             }
             recy_search_record.refreshComplete();
 

@@ -18,7 +18,9 @@ import com.app.aihealthapp.core.helper.CircleDialogHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.PermissionHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.permission.Permission;
+import com.app.aihealthapp.ui.activity.mine.MineAskActivity;
 import com.app.aihealthapp.ui.mvvm.view.HealthAskView;
 import com.app.aihealthapp.ui.mvvm.viewmode.HealthAskViewMode;
 import com.luck.picture.lib.PictureSelector;
@@ -214,6 +216,7 @@ public class HealthAskActivity extends BaseActivity implements HealthAskView {
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");
         if (ret==0){
             showLoadFailMsg("提交成功");
+            startActivity(new Intent(this, MineAskActivity.class).putExtra("kind_type",kind_type));
             finish();
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),""));

@@ -258,10 +258,12 @@ public class FragmentProgressWebView extends WebView {
                 context.startActivity(new Intent(context, HealthAskActivity.class).putExtra("kind_type",0));
                 return true;
             }else if (url.startsWith("navigation://doctor?cate_id=16")){//中医问诊
-                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16));
+                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",16).putExtra("kind_type",1));
+
                 return true;
             }else if (url.startsWith("navigation://doctor?cate_id=10")){//疑难杂症
-                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",10));
+                context.startActivity(new Intent(context, DoctorListActivity.class).putExtra("cate_id",10).putExtra("kind_type",1));
+
                 return true;
             }else if (url.startsWith(ApiUrl.HOST+"order/cart")
                     ||url.startsWith(ApiUrl.HOST+"order/submit")

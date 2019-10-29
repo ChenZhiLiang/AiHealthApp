@@ -17,6 +17,7 @@ import com.app.aihealthapp.core.base.BaseActivity;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.pictureviewer.ImagePagerActivity;
 import com.app.aihealthapp.ui.adapter.AdvisoryReplyAdapter;
 import com.app.aihealthapp.ui.bean.AdvisoryDetailsBean;
@@ -87,12 +88,21 @@ public class AdvisoryDetailsActivity extends BaseActivity implements AdvisoryDet
     public void initView() {
         id = getIntent().getStringExtra("id");
         kind_type = getIntent().getIntExtra("kind_type",0);
-        if (kind_type==0){
-            tv_reply_title.setText("我的提问");
-        }else {
-            tv_reply_title.setText("患者提问");
+        if (UserHelper.getUserInfo().getKind_type()==0){
+            if (kind_type==0){
+                tv_reply_title.setText("我的提问");
+            }else {
+                tv_reply_title.setText("患者提问");
 
+            }
+        }else {
+            if (kind_type==0){
+                tv_reply_title.setText("患者提问");
+            }else {
+                tv_reply_title.setText("我的提问");
+            }
         }
+
         recy_reply.setLayoutManager(new LinearLayoutManager(this));
         mAdvisoryReplyAdapter = new AdvisoryReplyAdapter(this,ReplyItem,kind_type);
         recy_reply.setAdapter(mAdvisoryReplyAdapter);

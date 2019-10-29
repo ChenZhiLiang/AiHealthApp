@@ -101,7 +101,6 @@ public class DoctorListAdapter extends BaseXRecyclerViewAdapter<DoctorListBean> 
                                 .putExtra("doctor_name",data.getNickname()));
                     }else {
                         mActivity.startActivity(new Intent(mActivity, HealthAskActivity.class).putExtra("doctor_id",data.getId()).putExtra("kind_type",kind_type));
-
                     }
 
                 }

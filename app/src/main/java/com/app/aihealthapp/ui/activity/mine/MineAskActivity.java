@@ -42,6 +42,7 @@ public class MineAskActivity extends BaseActivity implements ViewPager.OnPageCha
 
     private BaseFragmentPageAdapter mBaseFragmentPageAdapter;
     private ArrayList<Fragment> mFragments;
+    private int kind_type;
     @Override
     public int getLayoutId() {
         return R.layout.acticity_mine_ask;
@@ -61,6 +62,7 @@ public class MineAskActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void initView() {
+        kind_type = getIntent().getIntExtra("kind_type",0);
         mFragments = new ArrayList<>();
         if (UserHelper.getUserInfo().getKind_type()==1){
             tv_search_record.setText("问诊记录");
@@ -70,14 +72,19 @@ public class MineAskActivity extends BaseActivity implements ViewPager.OnPageCha
         }else {
             tv_search_record.setText("咨询记录");
             tv_interrogation_record.setText("问诊记录");
-            mFragments.add(InterrogationRecordFragment.getInstance(0));
             mFragments.add(InterrogationRecordFragment.getInstance(1));
+            mFragments.add(InterrogationRecordFragment.getInstance(0));
         }
         mBaseFragmentPageAdapter = new BaseFragmentPageAdapter(getSupportFragmentManager(), mFragments);
         viewpage_ask.setNoScroll(false);//设置viewpage 是否可以左右滑动
         viewpage_ask.setAdapter(mBaseFragmentPageAdapter);
         viewpage_ask.addOnPageChangeListener(this);
-        viewpage_ask.setCurrentItem(0);
+        if (kind_type==0){
+            viewpage_ask.setCurrentItem(0);
+        }else {
+            viewpage_ask.setCurrentItem(1);
+
+        }
     }
 
     @Override

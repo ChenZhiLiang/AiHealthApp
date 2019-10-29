@@ -620,7 +620,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (position == 0) {
-                        startActivity(new Intent(getActivity(), DoctorListActivity.class).putExtra("cate_id",16).putExtra("kind_type",2));
+                        startActivity(new Intent(getActivity(), DoctorListActivity.class).putExtra("cate_id",10).putExtra("kind_type",2));
                     }else {
                         ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
                         startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mArticleCateListBean.getUrl()));

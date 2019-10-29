@@ -72,7 +72,7 @@ public class InterrogationRecordAdapter extends BaseXRecyclerViewAdapter<Interro
         @Override
         public void setData(final InterrogationRecordBean data) {
 
-            if (data.getKind_type()==1){
+            if (data.getKind_type()==0){
                 rt_doctor_record.setVisibility(View.VISIBLE);
                 ll_interrogation_record.setVisibility(View.GONE);
                 GlideHelper.loadHeadImageView(context,data.getDoctor_avatar(),img_doctor_head);

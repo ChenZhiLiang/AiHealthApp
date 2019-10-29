@@ -114,8 +114,13 @@ public class InterrogationRecordFragment extends BaseFragment implements Interro
                 mInterrogationRecordAdapter.addItem(InterrogationRecords);
                 mInterrogationRecordAdapter.notifyDataSetChanged();
             }else {
-                no_record_layout.setVisibility(View.VISIBLE);
-                recy_interrogation_record.setVisibility(View.GONE);
+                if (page==1){
+                    no_record_layout.setVisibility(View.VISIBLE);
+                    recy_interrogation_record.setVisibility(View.GONE);
+                }else {
+                    recy_interrogation_record.setNoMore(true);
+                }
+
             }
             recy_interrogation_record.refreshComplete();
         }else {

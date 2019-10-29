@@ -70,7 +70,7 @@ public class SearchRecordAdapter extends BaseXRecyclerViewAdapter<SearchRecordBe
         @Override
         public void setData(final SearchRecordBean data) {
 
-            if (data.getKind_type()==1){
+            if (data.getKind_type()==0){
                 rt_doctor_record.setVisibility(View.VISIBLE);
                 ll_interrogation_record.setVisibility(View.GONE);
                 GlideHelper.loadHeadImageView(mActivity,data.getDoctor_avatar(),img_doctor_head);

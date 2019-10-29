@@ -60,19 +60,25 @@ public class AdvisoryReplyAdapter extends BaseXRecyclerViewAdapter<ReplyItemBean
         @Override
         public void setData(ReplyItemBean data) {
 
-            GlideHelper.loadHeadImageView(context,data.getUser_avatar(),image_head);
             if (kind_type==0){
                 if (data.getType()==1){
                     tv_reply_name.setText("我 回复 "+data.getDoctor_name()+":");
+                    GlideHelper.loadHeadImageView(context,data.getUser_avatar(),image_head);
+
                 }else {
                     tv_reply_name.setText(data.getDoctor_name()+" 回复");
+                    GlideHelper.loadHeadImageView(context,data.getDoctor_avatar(),image_head);
+
                 }
             }else {
                 if (data.getType()==1){
                     tv_reply_name.setText(data.getUser_name()+" 回复");
+                    GlideHelper.loadHeadImageView(context,data.getDoctor_avatar(),image_head);
 
                 }else {
                     tv_reply_name.setText("我 回复 "+data.getUser_name()+":");
+                    GlideHelper.loadHeadImageView(context,data.getUser_avatar(),image_head);
+
                 }
             }
 

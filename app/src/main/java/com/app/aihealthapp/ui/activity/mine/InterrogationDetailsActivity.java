@@ -76,7 +76,7 @@ public class InterrogationDetailsActivity extends BaseActivity implements Interr
         datas = (InterrogationRecordBean)getIntent().getSerializableExtra("datas");
         if (datas.getKind_type()==1){
             setTitle("咨询详情");
-            rt_send_msg.setVisibility(View.VISIBLE);
+            rt_send_msg.setVisibility(View.GONE);
 
         }else {
             setTitle("问诊详情");

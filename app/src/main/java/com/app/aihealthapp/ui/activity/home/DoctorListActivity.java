@@ -98,6 +98,12 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mDoctorListViewMode.getDoctorList(page,keyword,cate_id,false);
+    }
+
+    @Override
     public void DoctorListResult(Object result) {
 
         int ret = GsonHelper.GsonToInt(result.toString(),"ret");

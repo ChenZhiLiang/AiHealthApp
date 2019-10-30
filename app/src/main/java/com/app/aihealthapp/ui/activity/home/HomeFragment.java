@@ -771,12 +771,17 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                         }
                     }
                 }*/
-
-                SharedPreferenceHelper.setProvince(mActivity,aMapLocation.getProvince());
-                SharedPreferenceHelper.setCity(mActivity,aMapLocation.getCity());
-                SharedPreferenceHelper.setAreaId(mActivity,aMapLocation.getAdCode());
-                SharedPreferenceHelper.setArea(mActivity,aMapLocation.getDistrict());
-                SharedPreferenceHelper.setSelect(mActivity,false);
+//                if (SharedPreferenceHelper.getSelect(mActivity)){
+//                    tv_location.setText(SharedPreferenceHelper.getArea(mActivity));
+//                    city_id = SharedPreferenceHelper.getCityId(mActivity);
+//                    area_id = SharedPreferenceHelper.getAreaId(mActivity);
+//                    mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
+//                    return;
+//                }
+                SharedPreferenceHelper.setProvince(AppContext.getContext(),aMapLocation.getProvince());
+                SharedPreferenceHelper.setCity(AppContext.getContext(),aMapLocation.getCity());
+                SharedPreferenceHelper.setAreaId(AppContext.getContext(),aMapLocation.getAdCode());
+                SharedPreferenceHelper.setArea(AppContext.getContext(),aMapLocation.getDistrict());
                 tv_location.setText(aMapLocation.getDistrict());
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);

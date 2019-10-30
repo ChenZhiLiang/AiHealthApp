@@ -12,9 +12,14 @@ import android.widget.TextView;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
+import com.app.aihealthapp.core.base.BaseMode;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.network.api.ApiUrl;
+import com.app.aihealthapp.core.network.okhttp.callback.ResultCallback;
+import com.app.aihealthapp.core.network.okhttp.request.RequestParams;
+import com.app.aihealthapp.ui.bean.AdvisoryDetailsBean;
 import com.app.aihealthapp.ui.bean.InterrogationRecordBean;
 import com.app.aihealthapp.ui.mvvm.view.InterrogationDetailsView;
 import com.app.aihealthapp.ui.mvvm.viewmode.InterrogationDetailsViewMode;
@@ -53,6 +58,7 @@ public class InterrogationDetailsActivity extends BaseActivity implements Interr
     @BindView(R.id.btn_send)
     Button btn_send;
     private InterrogationRecordBean datas;
+    private  AdvisoryDetailsBean mAdvisoryDetailsBean;
 
     private InterrogationDetailsViewMode mInterrogationDetailsViewMode;
     @Override
@@ -99,8 +105,10 @@ public class InterrogationDetailsActivity extends BaseActivity implements Interr
         mInterrogationDetailsViewMode = new InterrogationDetailsViewMode(this);
     }
 
+
     @Override
     public void initData() {
+        mInterrogationDetailsViewMode.getAdvisoryDetails(String.valueOf(datas.getId()),true);
 
     }
 
@@ -119,6 +127,40 @@ public class InterrogationDetailsActivity extends BaseActivity implements Interr
         if (ret==0){
 
         }else{
+            showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
+        }
+    }
+
+    @Override
+    public void AdvisoryDetailsResult(Object result) {
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            String data = GsonHelper.GsonToData(result.toString(),"data").toString();
+            mAdvisoryDetailsBean = GsonHelper.GsonToBean(data, AdvisoryDetailsBean.class);
+            tv_my_question.setText(mAdvisoryDetailsBean.getInfo());
+            GlideHelper.loadImageView(this,mAdvisoryDetailsBean.getChecklist_pic(),image_checklist_pic);
+            GlideHelper.loadImageView(this,mAdvisoryDetailsBean.getMedical_pic(),image_medical_pic);
+            GlideHelper.loadImageView(this,mAdvisoryDetailsBean.getAffected_part_pic(),image_affected_part_pic);
+            GlideHelper.loadImageView(this,mAdvisoryDetailsBean.getOther_pic(),image_other_pic);
+
+            if (mAdvisoryDetailsBean.getReply_item().size()>0){
+                ll_doctor_reply.setVisibility(View.VISIBLE);
+                tv_reply_content.setText(datas.getReply_info());
+            }else {
+                ll_doctor_reply.setVisibility(View.GONE);
+            }
+//            if (mAdvisoryDetailsBean.getReply_item().size()>0){
+//                recy_reply.setVisibility(View.VISIBLE);
+//                if (mAdvisoryReplyAdapter!=null){
+//                    mAdvisoryReplyAdapter.clear();
+//                }
+//                ReplyItem = mAdvisoryDetailsBean.getReply_item();
+//                mAdvisoryReplyAdapter.addItem(ReplyItem);
+//                mAdvisoryReplyAdapter.notifyDataSetChanged();
+//            }else {
+//                recy_reply.setVisibility(View.GONE);
+//            }
+        }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),"msg"));
         }
     }

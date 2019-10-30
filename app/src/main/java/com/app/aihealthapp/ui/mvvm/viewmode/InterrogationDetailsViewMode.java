@@ -39,4 +39,24 @@ public class InterrogationDetailsViewMode {
         });
 
     }
+    public void getAdvisoryDetails(String id,boolean isShow){
+        mInterrogationDetailsView.showProgress();
+        String url = ApiUrl.UserApi.AdviceDetail;
+        RequestParams params = new RequestParams();
+        params.put("id",id);
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mInterrogationDetailsView.AdvisoryDetailsResult(result);
+                mInterrogationDetailsView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+
+                mInterrogationDetailsView.hideProgress();
+                mInterrogationDetailsView.showLoadFailMsg(result.toString());
+            }
+        });
+    }
 }

@@ -68,6 +68,10 @@ dependencies {
 
     implementation project(':picture_library')
     implementation files('libs/alipaySdk-20180403.jar')
+    implementation files('libs/library.jar')
+    implementation files('libs/pinyin4android1.0.jar')
+    implementation files('libs/pinyin4j-2.5.0.jar')
+
 
     implementation(name: 'crpblelib-1.3.7', ext: 'aar')
 //    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
@@ -77,6 +81,9 @@ dependencies {
     implementation "com.android.support:support-v13:28.0.0"
     implementation files('libs/Android_Map3D_SDK_V6.6.0_20181221.jar')
     implementation 'com.amap.api:location:latest.integration'
+
+//    implementation 'com.zaaach:citypicker:2.0.3'	//必选
+//    implementation 'com.android.support:recyclerview-v7:27.1.1'	//必选
     //仿京东地址选择器
 //    implementation 'com.smartTop:jd-address:1.0.3'
 //    implementation 'com.cool:cityselect:1.0.2'

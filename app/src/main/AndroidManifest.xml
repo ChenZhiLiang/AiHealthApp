@@ -75,6 +75,7 @@
         <activity android:name=".core.pictureviewer.ImagePagerActivity" />
         <activity android:name=".ui.activity.home.SleepActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.mine.OrderWebActyivity"/>
+        <activity android:name=".ContactList.Activity01"/>
 
         <activity
             android:name="com.app.aihealthapp.core.permission.PermissionActivity"

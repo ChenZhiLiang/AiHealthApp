@@ -263,16 +263,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/checkbox"
-                android:padding="@dimen/dimen_10px"
-                android:text="同意用户协议！"
+                android:paddingLeft="@dimen/dimen_10px"
+                android:text="登录、注册表示同意"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_12px"
                 android:clickable="true"/>
             <TextView
-                android:id="@+id/tv_protocol"
+                android:id="@+id/tv_user_protocol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="点击阅读《健康密钥app用户协议》"
+                android:text="“用户协议”"
+                android:textColor="@color/default_text_color"
+                android:textSize="@dimen/text_12px"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="和"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_12px"/>
+            <TextView
+                android:id="@+id/tv_privacy_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="“隐私政策”"
                 android:textColor="@color/default_text_color"
                 android:textSize="@dimen/text_12px"/>
         </LinearLayout>

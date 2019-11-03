@@ -28,6 +28,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.app.aihealthapp.ContactList.Activity01;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseFragment;
@@ -434,6 +435,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     public void onClick(View v) {
 
         if (v==ll_location){
+//            startActivity(new Intent(mActivity, Activity01.class));
                dialog.show();
             /*Android N上Popwindow显示位置不正确问题*/
 //            if (Build.VERSION.SDK_INT >= 24) {
@@ -619,12 +621,31 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             grid_health_manage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == 0) {
-                        startActivity(new Intent(getActivity(), DoctorListActivity.class).putExtra("cate_id",10).putExtra("kind_type",2));
-                    }else {
-                        ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
-                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mArticleCateListBean.getUrl()));
+
+                    switch (position){
+                        case 0://疑难杂症
+                            startActivity(new Intent(getActivity(), DoctorListActivity.class).putExtra("cate_id",10).putExtra("kind_type",2));
+                            break;
+                        case 1://健康知识
+                            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.headline_list+"?cate_id=11"));
+                            break;
+                        case 2://健康论坛
+                            ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
+                            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mArticleCateListBean.getUrl()));
+                            break;
+                        case 3://养生保健
+                            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.headline_list+"?cate_id=13"));
+                            break;
+                        case 4://运动健康
+                            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.headline_list+"?cate_id=14"));
+                            break;
                     }
+//                    if (position == 0) {
+//                        startActivity(new Intent(getActivity(), DoctorListActivity.class).putExtra("cate_id",10).putExtra("kind_type",2));
+//                    }else {
+//                        ArticleCateListBean mArticleCateListBean = homeBean.getArticle_cate_list().get(position);
+//                        startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mArticleCateListBean.getUrl()));
+//                    }
 
                 }
             });

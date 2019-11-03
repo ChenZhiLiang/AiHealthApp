@@ -8,7 +8,7 @@ package com.app.aihealthapp.core.network.api;
 public final class ApiUrl {
 
     // dev = 0 测试 dev=1 生产
-    public static final int dev = 0;
+    public static final int dev = 1;
     public static final String HOST =dev==0?"http://aijiankang.cacpo.com/":"https://api.jiankangkey.com/";
 
 
@@ -81,6 +81,8 @@ public final class ApiUrl {
 
         public static final String UserProtocol = HOST +"article/item/49.html";//用户协议
         public static final String PrivacyProtocol = HOST +"article/item/53.html";//隐私协议
+
+        public static final String headline_list = HOST + "wap/headline_list.html";//健康知识、健康论坛、养生保健
 
       }
 

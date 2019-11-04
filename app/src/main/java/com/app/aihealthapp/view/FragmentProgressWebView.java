@@ -101,7 +101,7 @@ public class FragmentProgressWebView extends WebView {
         mSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         //提高网页加载速度，暂时阻塞图片加载，然后网页加载好了，在进行加载图片
         mSettings.setBlockNetworkImage(true);
-        mSettings.setAppCacheEnabled(true);//开启缓存机制
+        mSettings.setAppCacheEnabled(false);//开启缓存机制
 
         mSettings.setAllowFileAccessFromFileURLs(true);
         mSettings.setAllowUniversalAccessFromFileURLs(true);

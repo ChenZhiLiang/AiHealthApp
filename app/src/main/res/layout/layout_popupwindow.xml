@@ -36,7 +36,7 @@
             android:drawableRight="@mipmap/down"
             android:layout_centerVertical="true"
             android:drawablePadding="8dp"
-            android:text="选择县区"
+            android:text="切换省市"
             android:textColor="@color/default_hint_color"
             android:textSize="@dimen/text_14px"/>
     </RelativeLayout>

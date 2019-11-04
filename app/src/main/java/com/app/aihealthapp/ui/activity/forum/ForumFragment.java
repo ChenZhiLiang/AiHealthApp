@@ -96,45 +96,40 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     public void initView(View view, Bundle savedInstanceState) {
 
         ll_location.setVisibility(View.VISIBLE);
-        if (SharedPreferenceHelper.getSelect(mActivity)){
-            tv_location.setText(SharedPreferenceHelper.getArea(mActivity));
-        }else {
-            tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
-        }
+
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
 
-        IntentFilter intentFilter =new IntentFilter();
-        intentFilter.addAction("action.check.location");
-        mActivity.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+
     }
 
     @Override
     public void initData() {
-
     }
     /*
      * 初始化城市
      * */
-//    private void initCity(){
-//        mGridviewAreaAdapter = new GridviewAreaAdapter(mActivity,AreaList);
-//
-//        mCountryCityBean = GsonHelper.GsonToList(utils.InitAssetsData(mActivity,"city.json"),CountryCityBean.class,"city");
-//        popView = getLayoutInflater().inflate(R.layout.layout_popupwindow, null);
-//        view_empty = popView.findViewById(R.id.view_empty);
-//        tvPresentCity = popView.findViewById(R.id.tv_present_city);
-//        tvCheckArea = popView.findViewById(R.id.tv_check_area);
-//        mGridView = popView.findViewById(R.id.gridview_area);
-//        view_empty.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                window_city.dismiss();
-//            }
-//        });
-//        tvCheckArea.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+    private void initCity(){
+        mGridviewAreaAdapter = new GridviewAreaAdapter(mActivity,AreaList);
+
+        mCountryCityBean = GsonHelper.GsonToList(utils.InitAssetsData(mActivity,"city.json"),CountryCityBean.class,"city");
+        popView = getLayoutInflater().inflate(R.layout.layout_popupwindow, null);
+        view_empty = popView.findViewById(R.id.view_empty);
+        tvPresentCity = popView.findViewById(R.id.tv_present_city);
+        tvCheckArea = popView.findViewById(R.id.tv_check_area);
+        mGridView = popView.findViewById(R.id.gridview_area);
+        view_empty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                window_city.dismiss();
+            }
+        });
+        tvCheckArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                window_city.dismiss();
+                dialog.show();
 //                if (isShowArea){
 //                    isShowArea = false;
 //                    mGridView.setVisibility(View.GONE);
@@ -142,36 +137,36 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
 //                    isShowArea = true;
 //                    mGridView.setVisibility(View.VISIBLE);
 //                }
-//            }
-//        });
-//        for (int i = 0; i < mCountryCityBean.size(); i++) {
-//            if (SharedPreferenceHelper.getProvince(AppContext.getContext()).equals(mCountryCityBean.get(i).getName())){
-//                for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
-//                    if (SharedPreferenceHelper.getCity(AppContext.getContext()).equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
-//
-//                        AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
-//                        mGridviewAreaAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//            }
-//        }
-//        mGridView.setAdapter(mGridviewAreaAdapter);
-//        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                tv_location.setText(AreaList.get(position).getName());
-//                SharedPreferenceHelper.setSelect(mActivity,true);
-//                SharedPreferenceHelper.setAreaId(mActivity,AreaList.get(position).getCode());
-//                SharedPreferenceHelper.setArea(mActivity,AreaList.get(position).getName());
-//                window_city.dismiss();
-//
-//                Intent intent =new Intent();
-//                intent.setAction("action.check.location");
-//                mActivity.sendBroadcast(intent);
-//            }
-//        });
-//        window_city = new MyPopWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-//    }
+            }
+        });
+        for (int i = 0; i < mCountryCityBean.size(); i++) {
+            if (SharedPreferenceHelper.getProvince(AppContext.getContext()).equals(mCountryCityBean.get(i).getName())){
+                for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
+                    if (SharedPreferenceHelper.getCity(AppContext.getContext()).equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
+
+                        AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
+                        mGridviewAreaAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }
+        mGridView.setAdapter(mGridviewAreaAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                tv_location.setText(AreaList.get(position).getName());
+                SharedPreferenceHelper.setSelect(mActivity,true);
+                SharedPreferenceHelper.setAreaId(mActivity,AreaList.get(position).getCode());
+                SharedPreferenceHelper.setArea(mActivity,AreaList.get(position).getName());
+                window_city.dismiss();
+
+                Intent intent =new Intent();
+                intent.setAction("action.check.location");
+                mActivity.sendBroadcast(intent);
+            }
+        });
+        window_city = new MyPopWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+    }
 
     @Override
     protected boolean isRegisterEventBus() {
@@ -227,6 +222,22 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         public void onReceive(final Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals("action.check.location")){
+
+                tvPresentCity.setText("您正在看："+SharedPreferenceHelper.getCity(mActivity));
+
+                for (int i = 0; i < mCountryCityBean.size(); i++) {
+
+                    if (SharedPreferenceHelper.getProvince(AppContext.getContext()).equals(mCountryCityBean.get(i).getName())){
+                        for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
+                            if (SharedPreferenceHelper.getCity(AppContext.getContext()).equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
+                                AreaList.clear();
+                                AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
+                                mGridviewAreaAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                }
+
                 tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
                 //刷新 重载
                 webview.reload();
@@ -243,7 +254,18 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
 
     @Override
     public void loadingData() {
-//        initCity();
+        IntentFilter intentFilter =new IntentFilter();
+        intentFilter.addAction("action.check.location");
+        mActivity.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+        if (SharedPreferenceHelper.getSelect(mActivity)){
+            tv_location.setText(SharedPreferenceHelper.getArea(mActivity));
+        }else {
+            tv_location.setText(SharedPreferenceHelper.getCity(mActivity));
+        }
+        initCity();
+
+        tvPresentCity.setText("您正在看："+SharedPreferenceHelper.getCity(mActivity));
+
 
         boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
         String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
@@ -268,12 +290,16 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
                     @Override
                     public void onSelect(Province province, Province.City city, Province.Area area) {
                         Log.e("399",province + "  " + city + "  " + area);
-//                        Toast.makeText(mActivity,province.name + "  " + city.name + "  " + area.name,Toast.LENGTH_SHORT).show();
+//
+                        tvPresentCity.setText("您正在看："+city.name);
+
                         tv_location.setText(area.getName());
+                        SharedPreferenceHelper.setProvince(mActivity,province.name);
+                        SharedPreferenceHelper.setCity(mActivity,city.name);
+                        SharedPreferenceHelper.setCityId(mActivity,city.code);
                         SharedPreferenceHelper.setSelect(mActivity,true);
                         SharedPreferenceHelper.setAreaId(mActivity,area.code);
                         SharedPreferenceHelper.setArea(mActivity,area.getName());
-//                            window_city.dismiss();
 
                         Intent intent =new Intent();
                         intent.setAction("action.check.location");
@@ -286,16 +312,15 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     public void onClick(View v){
         if (v==ll_location){
             /*Android N上Popwindow显示位置不正确问题*/
-//            if (Build.VERSION.SDK_INT >= 24) {
-//                Rect visibleFrame = new Rect();
-//                toolbar.getGlobalVisibleRect(visibleFrame);
-//                int height = toolbar.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
-//                window_city.setHeight(height);
-//                window_city.showAsDropDown(toolbar, 0, 0);
-//            } else {
-//                window_city.showAsDropDown(toolbar, 0, 0);
-//            }
-            dialog.show();
+            if (Build.VERSION.SDK_INT >= 24) {
+                Rect visibleFrame = new Rect();
+                toolbar.getGlobalVisibleRect(visibleFrame);
+                int height = toolbar.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
+                window_city.setHeight(height);
+                window_city.showAsDropDown(toolbar, 0, 0);
+            } else {
+                window_city.showAsDropDown(toolbar, 0, 0);
+            }
         }
     }
     @Override

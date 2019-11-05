@@ -237,10 +237,30 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
                         }
                     }
                 }
-
-                tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+                if (TextUtils.isEmpty(SharedPreferenceHelper.getArea(AppContext.getContext()))){
+                    tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
+                }else {
+                    tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+                }
+//                tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
                 //刷新 重载
-                webview.reload();
+                boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
+                String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+                String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
+                if (isLogin()){
+                    if (isSlect) {
+                        webview.loadUrl(ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=" + area_code);//加载网址
+                    }else {
+                        webview.loadUrl(ApiUrl.WebApi.Index+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=0");//加载网址
+                    }
+                }else {
+                    if (isSlect) {
+                        webview.loadUrl(ApiUrl.WebApi.Index + "?city_code=" + city_code + "&area_code=" + area_code);//加载网址
+                    }else {
+                        webview.loadUrl(ApiUrl.WebApi.Index + "?city_code=" + city_code + "&area_code=0");//加载网址
+                    }
+                }
+//                webview.reload();
             }
 
         }
@@ -288,18 +308,18 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
                 .setMainColor(Color.RED)
                 .listener(new CitySelect.OnSelectListener() {
                     @Override
-                    public void onSelect(Province province, Province.City city, Province.Area area) {
-                        Log.e("399",province + "  " + city + "  " + area);
+                    public void onSelect(Province province, Province.City city) {
+//                        Log.e("399",province + "  " + city + "  " + area);
 //
                         tvPresentCity.setText("您正在看："+city.name);
 
-                        tv_location.setText(area.getName());
+                        tv_location.setText(city.name);
                         SharedPreferenceHelper.setProvince(mActivity,province.name);
                         SharedPreferenceHelper.setCity(mActivity,city.name);
                         SharedPreferenceHelper.setCityId(mActivity,city.code);
                         SharedPreferenceHelper.setSelect(mActivity,true);
-                        SharedPreferenceHelper.setAreaId(mActivity,area.code);
-                        SharedPreferenceHelper.setArea(mActivity,area.getName());
+                        SharedPreferenceHelper.setAreaId(mActivity,"");
+                        SharedPreferenceHelper.setArea(mActivity,"");
 
                         Intent intent =new Intent();
                         intent.setAction("action.check.location");

@@ -52,7 +52,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
     private View itemView;
     private TextView mProvinceTextView;
     private TextView mCityTextView;
-    private TextView mAreaTextView;
+//    private TextView mAreaTextView;
     private View mIndicatorView;
     private ListView mListView;
     private List<Province> mProvinces;
@@ -102,13 +102,13 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
         itemView = mLayoutInflater.inflate(R.layout.layout_city_select, null);
         mProvinceTextView = itemView.findViewById(R.id.tv_province);
         mCityTextView = itemView.findViewById(R.id.tv_city);
-        mAreaTextView = itemView.findViewById(R.id.tv_area);
+//        mAreaTextView = itemView.findViewById(R.id.tv_area);
         mIndicatorView = itemView.findViewById(R.id.indicator);
         mListView = itemView.findViewById(R.id.lv_list);
 
         mProvinceTextView.setOnClickListener(this);
         mCityTextView.setOnClickListener(this);
-        mAreaTextView.setOnClickListener(this);
+//        mAreaTextView.setOnClickListener(this);
         mProvinceTextView.measure(0, 0);
         ViewGroup.LayoutParams layoutParams = mIndicatorView.getLayoutParams();
         layoutParams.width = mProvinceTextView.getMeasuredWidth();
@@ -158,7 +158,8 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
             mSelectAdapter.notifyDataSetChanged();
             selectCityTab();
             doIndicatorAnim(mCityTextView);
-        } else if (v.getId() == R.id.tv_area) {//区
+        }
+        /*else if (v.getId() == R.id.tv_area) {//区
             if (tabSelect == TAB_AREA) {
                 return;
             }
@@ -174,7 +175,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
             mSelectAdapter.notifyDataSetChanged();
             selectAreaTab();
             doIndicatorAnim(mAreaTextView);
-        }
+        }*/
     }
 
     @Override
@@ -189,7 +190,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
                 mProvinceTextView.setText(provinceName);
                 mCityTextView.setVisibility(View.VISIBLE);
                 mCityTextView.setText("请选择");
-                mAreaTextView.setVisibility(View.INVISIBLE);
+//                mAreaTextView.setVisibility(View.INVISIBLE);
                 selectCityTab();
                 fillCityData();
                 tabSelect = TAB_CITY;
@@ -201,14 +202,23 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
                 city = mCities.get(position);
                 String cityName = city.name;
                 mCityTextView.setText(cityName);
-                mAreaTextView.setVisibility(View.VISIBLE);
-                mAreaTextView.setText("请选择");
+//                mAreaTextView.setVisibility(View.VISIBLE);
+//                mAreaTextView.setText("请选择");
                 selectAreaTab();
                 fillAreaData();
                 tabSelect = TAB_AREA;
-                doIndicatorAnim(mAreaTextView);
+                Province provinceString = mProvinceData.get(provinceSelectIndex);
+                Province.City cityString = mCityData.get(citySelectIndex);
+                if (mDialog != null) {
+                    mDialog.dismiss();
+                }
+                if (onSelectListener != null) {
+
+                    onSelectListener.onSelect(provinceString, city);
+                }
+//                doIndicatorAnim(mAreaTextView);
                 break;
-            case TAB_AREA://区
+           /* case TAB_AREA://区
                 areaSelectIndex = position;
                 String area = mAreaData.get(position).name;
                 mAreaTextView.setText(area);
@@ -223,7 +233,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
                 if (onSelectListener != null) {
                     onSelectListener.onSelect(provinceString, cityString, areaString);
                 }
-                break;
+                break;*/
         }
     }
 
@@ -296,7 +306,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
     private void selectAreaTab() {
         mProvinceTextView.setTextColor(Color.BLACK);
         mCityTextView.setTextColor(Color.BLACK);
-        mAreaTextView.setTextColor(mainColor);
+//        mAreaTextView.setTextColor(mainColor);
     }
 
     /**
@@ -305,7 +315,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
     private void selectCityTab() {
         mProvinceTextView.setTextColor(Color.BLACK);
         mCityTextView.setTextColor(mainColor);
-        mAreaTextView.setTextColor(Color.BLACK);
+//        mAreaTextView.setTextColor(Color.BLACK);
     }
 
     /**
@@ -314,7 +324,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
     private void selectProvinceTab() {
         mProvinceTextView.setTextColor(mainColor);
         mCityTextView.setTextColor(Color.BLACK);
-        mAreaTextView.setTextColor(Color.BLACK);
+//        mAreaTextView.setTextColor(Color.BLACK);
     }
 
     /**
@@ -423,7 +433,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
     }
 
     public interface OnSelectListener {
-        void onSelect(Province province, Province.City city, Province.Area area);
+        void onSelect(Province province, Province.City city);
     }
 
 

@@ -50,7 +50,7 @@ public final class ApiUrl {
         public static final String Bloodoxygen = HOST+"api/measure/bloodoxygen";
         public static final String Heartrate = HOST+"api/measure/heartrate";
         public static final String Bloodpressure = HOST+"api/measure/bloodpressure";
-        public static final String UnBind W= HOST +"api/un/bind";//解绑
+        public static final String UnBind= HOST +"api/un/bind";//解绑
 
         public static final String MeasureSleep = HOST +"api/measure/sleep";//上传睡眠监测时间
         public static final String MeasureCheckSleep = HOST +"api/measure/check/sleep";//睡眠监测时间 查询

@@ -281,8 +281,13 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
                 tvPresentCity.setText("您正在看："+SharedPreferenceHelper.getCity(mActivity));
 
-                tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
+                if (TextUtils.isEmpty(area_id)){
+                    tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
+                }else {
+                    tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+                }
                 //刷新 重载
                 mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
 
@@ -352,17 +357,17 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 .setMainColor(Color.RED)
                 .listener(new CitySelect.OnSelectListener() {
                     @Override
-                    public void onSelect(Province province, Province.City city, Province.Area area) {
-                        Log.e("399",province + "  " + city + "  " + area);
+                    public void onSelect(Province province, Province.City city) {
+//                        Log.e("399",province + "  " + city + "  " + area);
                         tvPresentCity.setText("您正在看："+city.name);
-                        tv_location.setText(area.getName());
-                        area_id = area.getCode();
+                        tv_location.setText(city.name);
+                        area_id = "";
                         SharedPreferenceHelper.setProvince(mActivity,province.name);
                         SharedPreferenceHelper.setCity(mActivity,city.name);
                         SharedPreferenceHelper.setCityId(mActivity,city.code);
                         SharedPreferenceHelper.setSelect(mActivity,true);
                         SharedPreferenceHelper.setAreaId(mActivity,area_id);
-                        SharedPreferenceHelper.setArea(mActivity,area.getName());
+                        SharedPreferenceHelper.setArea(mActivity,"");
                         Intent intent =new Intent();
                         intent.setAction("action.check.location");
                         mActivity.sendBroadcast(intent);
@@ -394,6 +399,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         mLocationOption.setMockEnable(false);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
+
     }
 
     /*
@@ -416,18 +422,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         tvCheckArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 window_city.dismiss();
-
-//                startActivity(new Intent(mActivity,CheckCityActivity.class));
                 dialog.show();
-//                if (isShowArea){
-//                    isShowArea = false;
-//                    mGridView.setVisibility(View.GONE);
-//                }else {
-//                    isShowArea = true;
-//                    mGridView.setVisibility(View.VISIBLE);
-//                }
             }
         });
         mGridviewAreaAdapter = new GridviewAreaAdapter(mActivity,AreaList);
@@ -441,9 +437,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 SharedPreferenceHelper.setSelect(mActivity,true);
                 SharedPreferenceHelper.setAreaId(mActivity,area_id);
                 SharedPreferenceHelper.setArea(mActivity,AreaList.get(position).getName());
-//                mHomeViewMode.getHomeDatas(true,city_id,area_id);
                 window_city.dismiss();
-
                 Intent intent =new Intent();
                 intent.setAction("action.check.location");
                 mActivity.sendBroadcast(intent);
@@ -456,8 +450,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     public void onClick(View v) {
 
         if (v==ll_location){
-//            startActivity(new Intent(mActivity, Activity01.class));
-//               dialog.show();
             /*Android N上Popwindow显示位置不正确问题*/
             if (Build.VERSION.SDK_INT >= 24) {
                 Rect visibleFrame = new Rect();

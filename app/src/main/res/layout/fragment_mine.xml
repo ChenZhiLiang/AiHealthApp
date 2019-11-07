@@ -441,7 +441,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50px"
                 android:background="@drawable/selector_onclick"
-                android:visibility="gone"
+                android:visibility="visible"
                 >
 
                 <TextView
@@ -449,7 +449,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_16px"
-                    android:drawableLeft="@mipmap/mind_msn"
+                    android:drawableLeft="@mipmap/mind_pool"
                     android:drawablePadding="@dimen/text_10px"
                     android:text="我的联营用户圈"
                     android:textColor="@color/text_color"

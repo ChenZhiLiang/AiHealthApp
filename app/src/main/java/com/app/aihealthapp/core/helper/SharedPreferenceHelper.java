@@ -198,8 +198,7 @@ public class SharedPreferenceHelper {
 //        PreferenceHelper.clean(context, AppConfig.TOKEN_FILE_NAME);
         PreferenceHelper.remove(context, AppConfig.TOKEN_FILE_NAME, AppConfig.TOKEN_NAME);
         PreferenceHelper.remove(context, AppConfig.TOKEN_FILE_NAME, AppConfig.USER_INFO);
-        PreferenceHelper.remove(context, AppConfig.TOKEN_FILE_NAME, AppConfig.isSelect);
-
+//        PreferenceHelper.remove(context, AppConfig.TOKEN_FILE_NAME, AppConfig.isSelect);
 
     }
 

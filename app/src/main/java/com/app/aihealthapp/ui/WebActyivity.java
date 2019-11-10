@@ -165,7 +165,7 @@ public class WebActyivity extends BaseActivity implements WebTitleView {
                 webView.goBack();//返回上一页面
                 return true;
             } else {
-                AppManager.getAppManager().finishActivity(this);
+                finish();
                 return true;
             }
         }

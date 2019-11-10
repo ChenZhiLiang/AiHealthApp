@@ -57,44 +57,8 @@ public class ShopFragment extends BaseFragment implements WebTitleView {
     @Override
     protected void receiveEvent(Event event) {
         super.receiveEvent(event);
-//        int uid = SharedPreferenceHelper.getUserInfo(this).getId();
         if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
-            if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
-                String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
-                String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
-                boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
-                if (UserHelper.getUserInfo() != null) {
-                    String mUrl;
-                    Uri uri = Uri.parse(webview.getUrl());
-                    if (webview.getUrl().contains("uid")) {
-                        String uid = UrlParseUtil.getUriParam(uri, "uid");
-                        if (TextUtils.isEmpty(uid)) {
-                            String replaceUrl = webview.getUrl().replaceAll("uid=", "uid=" + UserHelper.getUserInfo().getId());
-                            if (isSlect) {
-                                mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=" + area_code;
-                            } else {
-                                mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=0";
-                            }
-                        } else {
-                            if (uid.equals(UserHelper.getUserInfo().getId())) {
-                                if (isSlect) {
-                                    mUrl = webview.getUrl() + "&city_code=" + city_code + "&area_code=" + area_code;
-                                } else {
-                                    mUrl = webview.getUrl() + "&city_code=" + city_code + "&area_code=0";
-                                }
-                            } else {
-                                String replaceUrl = webview.getUrl().replaceAll("uid=" + uid, "uid=" + UserHelper.getUserInfo().getId());
-                                if (isSlect) {
-                                    mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=" + area_code;
-                                } else {
-                                    mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=0";
-                                }
-                            }
-                        }
-                        webview.loadUrl(mUrl);
-                    }
-                }
-            }
+            WebLoadUrl();
         }
     }
     @Override
@@ -106,22 +70,7 @@ public class ShopFragment extends BaseFragment implements WebTitleView {
     public void loadingData() {
 
 
-        boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
-        String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
-        String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
-        if (isLogin()){
-            if (isSlect) {
-                webview.loadUrl(ApiUrl.WebApi.Self_Support+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=" + area_code);//加载网址
-            }else {
-                webview.loadUrl(ApiUrl.WebApi.Self_Support+"?uid="+ UserHelper.getUserInfo().getId()+"&city_code=" + city_code + "&area_code=0");//加载网址
-            }
-        }else {
-            if (isSlect) {
-                webview.loadUrl(ApiUrl.WebApi.Self_Support + "?city_code=" + city_code + "&area_code=" + area_code);//加载网址
-            }else {
-                webview.loadUrl(ApiUrl.WebApi.Self_Support + "?city_code=" + city_code + "&area_code=0");//加载网址
-            }
-        }
+        WebLoadUrl();
     }
 
     @Override
@@ -134,6 +83,30 @@ public class ShopFragment extends BaseFragment implements WebTitleView {
         webview.setWebTitleView(this);
         webview.setFocusable(true);//设置有焦点
         webview.setFocusableInTouchMode(true);//设置可触摸
+    }
+    private void WebLoadUrl() {
+
+        boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
+        String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
+        String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
+        //post访问需要提交的参数
+        String postDate;
+        if (isLogin()) {
+            if (isSlect) {
+                postDate = "?uid=" + UserHelper.getUserInfo().getId() + "&city_code=" + city_code + "&area_code=" + area_code;
+            } else {
+                postDate = "?uid=" + UserHelper.getUserInfo().getId() + "&city_code=" + city_code + "&area_code=" + 0;
+            }
+        } else {
+            if (isSlect) {
+                postDate = "?city_code=" + city_code + "&area_code=" + area_code;
+            } else {
+                postDate = "?city_code=" + city_code + "&area_code=" + area_code;
+            }
+        }
+        webview.loadUrl(ApiUrl.WebApi.Self_Support+postDate);
+//        webview.postUrl(ApiUrl.WebApi.CONTROL_CENTER, EncodingUtils.getBytes(postDate, "BASE64"));
+
     }
 
     @Override

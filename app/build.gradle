@@ -87,5 +87,5 @@ dependencies {
     //仿京东地址选择器
 //    implementation 'com.smartTop:jd-address:1.0.3'
 //    implementation 'com.cool:cityselect:1.0.2'
-
+    implementation 'org.apache.httpcomponents:httpcore:4.4.4'
 }

@@ -102,6 +102,7 @@ public class FragmentProgressWebView extends WebView {
         //提高网页加载速度，暂时阻塞图片加载，然后网页加载好了，在进行加载图片
         mSettings.setBlockNetworkImage(true);
         mSettings.setAppCacheEnabled(false);//开启缓存机制
+//        mSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         mSettings.setAllowFileAccessFromFileURLs(true);
         mSettings.setAllowUniversalAccessFromFileURLs(true);
@@ -278,6 +279,7 @@ public class FragmentProgressWebView extends WebView {
                     return true;
                 }
             }else {
+
                 context.startActivity(new Intent(context, WebActyivity.class).putExtra("url", url));
                 return true;
             }
@@ -314,12 +316,12 @@ public class FragmentProgressWebView extends WebView {
             String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
             String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
             boolean isSlect = SharedPreferenceHelper.getSelect(context);
+            Uri uri = Uri.parse(url);
             String mUrl;
             if (UserHelper.getUserInfo()!=null){
-                Uri uri = Uri.parse(url);
+                String uid = UrlParseUtil.getUriParam(uri,"uid");
 
                 if (url.contains("uid")){
-                    String uid = UrlParseUtil.getUriParam(uri,"uid");
                     if (TextUtils.isEmpty(uid)){
                         String replaceUrl = url.replaceAll("uid=","uid="+UserHelper.getUserInfo().getId());
                         if (isSlect){
@@ -346,7 +348,21 @@ public class FragmentProgressWebView extends WebView {
 
                 }else if (url.contains("?")){
                     if (url.contains("city_code")){
-                        mUrl = url+"&uid="+UserHelper.getUserInfo().getId();
+                        String city = UrlParseUtil.getUriParam(uri,"city_code");
+                        String area = UrlParseUtil.getUriParam(uri,"area_code");
+
+                        // 判断城市id 乡镇id  是否跟本地一样
+                        if (city.equals(city_code)&&area.equals(area_code)){
+                            mUrl = url+"&uid="+UserHelper.getUserInfo().getId();
+                        }else if (!city.equals(city_code)){
+                            String replaceCityUrl = url.replaceAll(city,city_code);
+                            String replaceAreaUrl = replaceCityUrl.replaceAll(area,area_code);
+                            mUrl = replaceAreaUrl+"&uid="+UserHelper.getUserInfo().getId();
+                        }else {
+                            String replaceAreaUrl = url.replaceAll(area,area_code);
+                            mUrl = replaceAreaUrl+"&uid="+UserHelper.getUserInfo().getId();
+                        }
+
                     }else {
                         if (isSlect){
                             mUrl = url+"&uid="+UserHelper.getUserInfo().getId()+"&city_code="+city_code+"&area_code="+area_code;
@@ -367,7 +383,22 @@ public class FragmentProgressWebView extends WebView {
                 }
             }else {
                 if (url.contains("city_code")){
-                    mUrl = url ;
+//                    mUrl = url ;
+                    String city = UrlParseUtil.getUriParam(uri,"city_code");
+                    String area = UrlParseUtil.getUriParam(uri,"area_code");
+
+                    // 判断城市id 乡镇id  是否跟本地一样
+                    if (city.equals(city_code)&&area.equals(area_code)){
+                        mUrl = url;
+                    }else if (!city.equals(city_code)){
+                        String replaceCityUrl = url.replaceAll(city,city_code);
+                        String replaceAreaUrl = replaceCityUrl.replaceAll(area,area_code);
+                        mUrl = replaceAreaUrl;
+                    }else {
+                        String replaceAreaUrl = url.replaceAll(area,area_code);
+                        mUrl = replaceAreaUrl;
+                    }
+
                 }else {
                     if (isSlect){
                         mUrl = url+"?city_code="+city_code+"&area_code="+area_code;

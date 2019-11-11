@@ -329,7 +329,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
                 mHomeViewMode.getHomeDatas(true,SharedPreferenceHelper.getCityId(mActivity),"0",uid);
-
             }else {
                 tv_location.setText(SharedPreferenceHelper.getArea(mActivity));
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
@@ -810,10 +809,16 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 SharedPreferenceHelper.setCity(AppContext.getContext(),aMapLocation.getCity());
                 SharedPreferenceHelper.setAreaId(AppContext.getContext(),aMapLocation.getAdCode());
                 SharedPreferenceHelper.setArea(AppContext.getContext(),aMapLocation.getDistrict());
-                tv_location.setText(aMapLocation.getDistrict());
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
+                if (SharedPreferenceHelper.getSelect(mActivity)){
+                    tv_location.setText(aMapLocation.getDistrict());
+                    mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
+
+                }else {
+                    tv_location.setText(aMapLocation.getCity());
+                    mHomeViewMode.getHomeDatas(true,city_id,"0",uid);
+                }
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"

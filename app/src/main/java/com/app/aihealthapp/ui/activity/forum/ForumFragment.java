@@ -231,7 +231,6 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
                         }
                     }
                 }
-
                 WebLoadUrl();
             }
         }
@@ -276,10 +275,11 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     private void WebLoadUrl() {
 
         tvPresentCity.setText("您正在看：" + SharedPreferenceHelper.getCity(mActivity));
-        if (TextUtils.isEmpty(SharedPreferenceHelper.getArea(AppContext.getContext()))) {
-            tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
-        } else {
+        if (SharedPreferenceHelper.getSelect(AppContext.getContext())) {
             tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+
+        } else {
+            tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
         }
         boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
         String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());

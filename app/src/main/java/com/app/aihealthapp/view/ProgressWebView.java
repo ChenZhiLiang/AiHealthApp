@@ -331,7 +331,6 @@ public class ProgressWebView extends WebView {
                     ||url.startsWith(ApiUrl.HOST+"index/shop/apply")){
                 if (UserHelper.getUserInfo()==null){
                     context.startActivity(new Intent(context, LoginActivity.class));
-//                    AppManager.getAppManager().finishActivity((Activity) context);
                     return true;
                 }
             }else if (url.contains("tel:")){

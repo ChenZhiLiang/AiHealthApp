@@ -57,7 +57,7 @@ public class MineAskActivity extends BaseActivity implements ViewPager.OnPageCha
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
         initToolBar();
-        setTitle("我的咨询");
+        setTitle("我的咨询问诊");
     }
 
     @Override

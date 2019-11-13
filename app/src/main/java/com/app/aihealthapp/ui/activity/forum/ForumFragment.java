@@ -276,7 +276,11 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
 
         tvPresentCity.setText("您正在看：" + SharedPreferenceHelper.getCity(mActivity));
         if (SharedPreferenceHelper.getSelect(AppContext.getContext())) {
-            tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+            if (TextUtils.isEmpty(SharedPreferenceHelper.getArea(AppContext.getContext()).trim())){
+                tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
+            }else {
+                tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+            }
 
         } else {
             tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));

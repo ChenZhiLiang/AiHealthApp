@@ -49,7 +49,7 @@ import butterknife.OnClick;
 
 /**
  * @Name：AiHealth
- * @Description：我的健康设备
+ * @Description：我的健康手环
  * @Author：Chen
  * @Date：2019/7/26 21:53
  * 修改人：Chen
@@ -98,7 +98,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
     protected void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
         initToolBar();
-        setTitle("我的健康设备");
+        setTitle("我的健康手环");
     }
 
     @Override

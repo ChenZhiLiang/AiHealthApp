@@ -47,7 +47,7 @@
             android:layout_below="@+id/tv_ask_title"
             android:layout_marginLeft="@dimen/dimen_10px"
             android:layout_marginTop="@dimen/dimen_8px"
-            android:text="每有健康疑惑找健康专家在线解答"
+            android:text="有健康疑惑找健康专家在线解答"
             android:textSize="@dimen/text_10px"
             android:textColor="@color/default_hint_color"/>
 
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/image_jkglzx_wz"
             android:layout_marginLeft="@dimen/dimen_10px"
-            android:text="中医问诊"
+            android:text="中医名家"
             android:textSize="@dimen/text_14px"
             android:textColor="@color/text_color"/>
         <TextView
@@ -97,7 +97,7 @@
             android:layout_below="@+id/tv_inquiry_title"
             android:layout_marginLeft="@dimen/dimen_10px"
             android:layout_marginTop="@dimen/dimen_8px"
-            android:text="每天3000人次被执业中医问诊"
+            android:text="每天3000人次被中医名家问诊"
             android:textSize="@dimen/text_10px"
             android:textColor="@color/default_hint_color"/>
 

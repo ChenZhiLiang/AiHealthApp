@@ -24,6 +24,8 @@ import com.crrepa.ble.conn.type.CRPBleMessageType;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by Administrator on 2017-11-02.
  */
@@ -60,6 +62,8 @@ public class AppContext extends BaseApplication {
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
 
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
 

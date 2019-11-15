@@ -4,8 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseActivity;
@@ -21,6 +24,9 @@ import com.app.aihealthapp.ui.activity.mine.MineFragment;
 import com.app.aihealthapp.ui.activity.shop.ShopFragment;
 import com.app.aihealthapp.ui.bean.TabEntityBean;
 import com.app.aihealthapp.view.NoScrollViewPager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -44,7 +50,8 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
             R.mipmap.home_icon_select, R.mipmap.management_icon_select,
             R.mipmap.mall_icon_select,R.mipmap.forum_icon_select,
             R.mipmap.mind_icon_select};
-
+    //极光推送
+    public static boolean isForeground = false;
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -61,9 +68,18 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
         mTabEntities = new ArrayList<>();
 
         IntentFilter intentFilter =new IntentFilter();
+        intentFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         intentFilter.addAction("action.intent_home");
         intentFilter.addAction("action.intent_mine");
         registerReceiver(mRefreshBroadcastReceiver, intentFilter);
+
+        Bundle bundle = getIntent().getBundleExtra("EXTRA_BUNDLE");
+        if(bundle != null){
+            //如果bundle存在，取出其中的参数，启动DetailActivity
+            String url = bundle.getString("url");
+            String title = bundle.getString("title");
+            startActivity(new Intent(this,WebActyivity.class).putExtra("url",url).putExtra("title",title));
+        }
 
     }
     @Override
@@ -153,5 +169,20 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mRefreshBroadcastReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        isForeground = true;
+
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        isForeground = false;
+
+        super.onPause();
     }
 }

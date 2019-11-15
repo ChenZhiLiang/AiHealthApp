@@ -78,7 +78,12 @@ public class SplashActivity extends AppCompatActivity {
      * 进入主界面
      */
     private void goMain(){
-        startActivity(new Intent(this,MainActivity.class));
+        //将参数取出，传递到MainActivity中
+        Intent intent = new Intent(this,MainActivity.class);
+        if(getIntent().getBundleExtra("EXTRA_BUNDLE") != null){
+            intent.putExtra("EXTRA_BUNDLE", getIntent().getBundleExtra("EXTRA_BUNDLE"));
+        }
+        startActivity(intent);
         finish();
     }
 

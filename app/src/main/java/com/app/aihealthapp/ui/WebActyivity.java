@@ -62,6 +62,7 @@ public class WebActyivity extends BaseActivity implements WebTitleView {
     ProgressWebView webView;
 
     private String url;
+    private String mTitle;
     private List<LocalMedia> selectList = new ArrayList<>();
 
     @Override
@@ -74,6 +75,7 @@ public class WebActyivity extends BaseActivity implements WebTitleView {
         super.init(savedInstanceState);
         initToolBar();
         url = getIntent().getStringExtra("url");
+        mTitle = getIntent().getStringExtra("title");
     }
 
     @Override
@@ -175,7 +177,12 @@ public class WebActyivity extends BaseActivity implements WebTitleView {
 
     @Override
     public void onTitleResult(String title) {
-        setTitle(title);
+
+        if (TextUtils.isEmpty(mTitle)){
+            setTitle(title);
+        }else {
+            setTitle(mTitle);
+        }
     }
 
     private BroadcastReceiver mRefreshBroadcastReceiver = new BroadcastReceiver() {

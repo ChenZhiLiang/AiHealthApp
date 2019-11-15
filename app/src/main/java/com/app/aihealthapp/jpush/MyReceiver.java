@@ -4,11 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.app.aihealthapp.ui.MainActivity;
+import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.util.ALog;
+import com.app.aihealthapp.util.utils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Iterator;
@@ -37,26 +42,49 @@ public class MyReceiver extends BroadcastReceiver {
 
 			} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
-//				processCustomMessage(context, bundle);
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
 				int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
 				Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
-//				int UserType = SharedPreferenceHelper.getUserType(context);
-				//播放语音
-//				PlayVoiceUtils.playVoice(context,UserType);
-
 			} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+				String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+				String title = null;
+				String url = null;
+				if (!TextUtils.isEmpty(extras)) {
+					try {
+						JSONObject extraJson = new JSONObject(extras);
+						if (extraJson.length() > 0) {
+							 title = extraJson.optString("title");
+							 url = extraJson.optString("url");
+							}
+					} catch (JSONException e) {
 
-				//打开自定义的Activity
-				Intent i = new Intent(context, MainActivity.class);
-				i.putExtras(bundle);
-				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-				context.startActivity(i);
-
+					}
+				}
+				//判断app进程是否存活
+				if(utils.isAppRunning(context, "com.app.aihealthapp")){
+					Intent mainIntent = new Intent(context, MainActivity.class);
+					//将MainAtivity的launchMode设置成SingleTask, 或者在下面flag中加上Intent.FLAG_CLEAR_TOP,
+					//如果Task栈中有MainActivity的实例，就会把它移到栈顶，把在它之上的Activity都清理出栈，
+					//如果Task栈不存在MainActivity实例，则在栈顶创建
+					mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					Intent detailIntent = new Intent(context, WebActyivity.class);
+					detailIntent.putExtra("url", url);
+					detailIntent.putExtra("title", title);
+					Intent[] intents = {mainIntent, detailIntent};
+					context.startActivities(intents);
+				}else {
+					Intent launchIntent = context.getPackageManager().
+							getLaunchIntentForPackage("com.app.aihealthapp");
+					launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+					Bundle args = new Bundle();
+					args.putString("url", url);
+					args.putString("title", title);
+					launchIntent.putExtra("EXTRA_BUNDLE", args);
+					context.startActivity(launchIntent);
+				}
 			} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
 				//在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
@@ -106,26 +134,4 @@ public class MyReceiver extends BroadcastReceiver {
 		}
 		return sb.toString();
 	}
-	
-	//send msg to MainActivity
-//	private void processCustomMessage(Context context, Bundle bundle) {
-//		if (MainActivity.isForeground) {
-//			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-//			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-//			Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
-//			msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
-//			if (!TextUtils.isEmpty(extras)) {
-//				try {
-//					JSONObject extraJson = new JSONObject(extras);
-//					if (extraJson.length() > 0) {
-//						msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
-//					}
-//				} catch (JSONException e) {
-//
-//				}
-//
-//			}
-//			LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
-//		}
-//	}
 }

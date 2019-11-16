@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.app.aihealthapp.R;
@@ -52,7 +53,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     TextView tv_register;
     @BindView(R.id.btn_login)
     Button btn_login;
-
+    @BindView(R.id.checkbox_agreed)
+    CheckBox checkbox_agreed;
+    @BindView(R.id.tv_user_protocol)
+    TextView tv_user_protocol;
+    @BindView(R.id.tv_privacy_protocol)
+    TextView tv_privacy_protocol;
     private LoginViewMode mLoginViewMode;
     public KProgressHUD hud;
 
@@ -86,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
         mLoginViewMode = new LoginViewMode(this);
     }
-    @OnClick({R.id.tv_register,R.id.btn_login,R.id.tv_forget_password})
+    @OnClick({R.id.tv_register,R.id.btn_login,R.id.tv_forget_password,R.id.tv_user_protocol,R.id.tv_privacy_protocol})
     public void onClick(View v){
         if (v==tv_register){
             startActivity(new Intent(this,RegisterActivity.class));
@@ -95,11 +101,19 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 ToastyHelper.toastyNormal(this,"请输入手机号");
             }else if (TextUtils.isEmpty(edit_input_pass.getText().toString())){
                 ToastyHelper.toastyNormal(this,"请输入密码");
+            }else if (!checkbox_agreed.isChecked()){
+                showLoadFailMsg("请同意用户协议");
+
             }else {
                 mLoginViewMode.Login(edit_input_phone.getText().toString(),edit_input_pass.getText().toString());
             }
         }else if (v==tv_forget_password){
             startActivity(new Intent(this, WebActyivity.class).putExtra("url", ApiUrl.WebApi.FORGET_PASSWORD));
+        }else if (v==tv_user_protocol){
+            startActivity(new Intent(this, WebActyivity.class).putExtra("url", ApiUrl.WebApi.UserProtocol));
+        }else if (v==tv_privacy_protocol){
+            startActivity(new Intent(this, WebActyivity.class).putExtra("url", ApiUrl.WebApi.PrivacyProtocol));
+
         }
     }
 

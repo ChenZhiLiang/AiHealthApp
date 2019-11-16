@@ -69,15 +69,54 @@
         android:layout_marginTop="@dimen/dimen_8px"
         android:layout_marginLeft="@dimen/dimen_32px"
         android:layout_marginRight="@dimen/dimen_32px"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="@dimen/dimen_32px"
+
+        >
+        <CheckBox
+            android:id="@+id/checkbox_agreed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox"
+            android:paddingLeft="@dimen/dimen_10px"
+            android:text="登录、注册表示同意"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12px"
+            android:clickable="true"/>
+        <TextView
+            android:id="@+id/tv_user_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="“用户协议”"
+            android:textColor="@color/default_text_color"
+            android:textSize="@dimen/text_12px"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="和"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_12px"/>
+        <TextView
+            android:id="@+id/tv_privacy_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="“隐私政策”"
+            android:textColor="@color/default_text_color"
+            android:textSize="@dimen/text_12px"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40px"
         android:background="@drawable/frame_blue_true"
-        android:layout_marginTop="32dp"
         android:layout_marginRight="@dimen/dimen_32px"
         android:layout_marginLeft="@dimen/dimen_32px"
+        android:layout_marginTop="@dimen/dimen_10px"
         android:text="登录"
         android:textColor="@color/white"
         android:textSize="@dimen/text_14px"

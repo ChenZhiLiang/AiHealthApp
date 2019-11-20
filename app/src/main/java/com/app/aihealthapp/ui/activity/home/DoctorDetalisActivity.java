@@ -127,6 +127,7 @@ public class DoctorDetalisActivity extends BaseActivity implements DoctorDetalis
             if (Is_valid==0){
                 startActivity(new Intent(this, PayCentreActivity.class).putExtra("doctor_id",id)
                         .putExtra("advice_price",advice_price)
+                        .putExtra("price_hek",price_hek)
                         .putExtra("doctor_name",doctor_name));
             }else {
 //                startActivity(new Intent(this, HealthAskActivity.class).putExtra("doctor_id",id));

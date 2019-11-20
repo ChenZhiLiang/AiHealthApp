@@ -1,18 +1,12 @@
 package com.app.aihealthapp.wxapi;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.confing.AppConfig;
-import com.app.aihealthapp.core.eventbus.Event;
-import com.app.aihealthapp.core.eventbus.EventCode;
-import com.app.aihealthapp.core.helper.EventBusHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
-import com.app.aihealthapp.ui.activity.home.HealthAskActivity;
-import com.app.aihealthapp.ui.activity.home.PayCentreActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;

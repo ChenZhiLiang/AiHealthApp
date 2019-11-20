@@ -24,6 +24,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
+import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
+import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -64,6 +70,7 @@ import com.app.aihealthapp.ui.bean.HomeBean;
 import com.app.aihealthapp.ui.bean.ShopListBean;
 import com.app.aihealthapp.ui.mvvm.view.HomeView;
 import com.app.aihealthapp.ui.mvvm.viewmode.HomeViewMode;
+import com.app.aihealthapp.util.AppUpdateVersionUtils;
 import com.app.aihealthapp.util.utils;
 import com.app.aihealthapp.view.MyGridView;
 import com.app.aihealthapp.view.MyPopWindow;
@@ -197,6 +204,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     private Dialog dialog;
 
+    private AppUpdateVersionUtils mAppUpdateVersionUtils;
     public static HomeFragment getInstance(String title) {
         HomeFragment hf = new HomeFragment();
         hf.mTitle = title;
@@ -234,7 +242,10 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         }else {
             uid=0;
         }
+        //每次进来默认 没选择市区
+        SharedPreferenceHelper.setSelect(mActivity,false);
         initLocation();
+
     }
 
     private BroadcastReceiver mNotificationReceiver =new BroadcastReceiver() {
@@ -373,6 +384,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                     }
                 }).dialog();
         initCity();
+        mAppUpdateVersionUtils = new AppUpdateVersionUtils();
+        mAppUpdateVersionUtils.UpdateVersion(getActivity());
     }
     /*初始化定位参数*/
     private void initLocation() {
@@ -750,6 +763,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     }
 
 
+
     @Override
     public void showProgress() {
 
@@ -810,6 +824,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 SharedPreferenceHelper.setAreaId(AppContext.getContext(),aMapLocation.getAdCode());
                 SharedPreferenceHelper.setArea(AppContext.getContext(),aMapLocation.getDistrict());
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
+
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
                 if (SharedPreferenceHelper.getSelect(mActivity)){
                     tv_location.setText(aMapLocation.getDistrict());

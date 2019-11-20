@@ -32,6 +32,7 @@ import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.bean.UserInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineViewMode;
+import com.app.aihealthapp.util.AppUpdateVersionUtils;
 import com.app.aihealthapp.wxapi.WXShareUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -98,6 +99,10 @@ public class MineFragment extends BaseFragment implements MineView {
     @BindView(R.id.rt_feedback)
     RelativeLayout rt_feedback;//帮助与反馈
 
+    @BindView(R.id.rt_problem)
+    RelativeLayout rt_problem;//常见问题
+    @BindView(R.id.rt_version_update)
+    RelativeLayout rt_version_update;//版本更新
     @BindView(R.id.rt_editpaw)
     RelativeLayout rt_editpaw;
     @BindView(R.id.btn_logout)
@@ -140,7 +145,7 @@ public class MineFragment extends BaseFragment implements MineView {
             tv_invite_code.setText("邀请码："+UserHelper.getUserInfo().getInvite_code());
             if (UserHelper.getUserInfo().getIs_auth()==0){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
-                btn_authentication.setText("实名认证");
+                btn_authentication.setText("去实名认证");
             }else {
                 tv_user_name.setText(UserHelper.getUserInfo().getOauth_nickname());
                 btn_authentication.setText("已认证");
@@ -168,7 +173,8 @@ public class MineFragment extends BaseFragment implements MineView {
     }
 
     @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,R.id.rt_healthy_report,
-            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_share_friend,R.id.rt_my_members,R.id.rt_feedback,R.id.rt_editpaw,R.id.rt_cash_details,R.id.btn_logout})
+            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_share_friend,R.id.rt_my_members,
+            R.id.rt_feedback,R.id.rt_editpaw,R.id.rt_cash_details,R.id.btn_logout,R.id.rt_problem,R.id.rt_version_update})
     public void onClick(View v){
 
         if (v==rt_about){
@@ -177,6 +183,12 @@ public class MineFragment extends BaseFragment implements MineView {
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.About));
         }else if (v==rt_feedback){
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Feedback));
+        }else if (v==rt_problem){
+            showLoadFailMsg("常见问题");
+        }else if (v==rt_version_update){
+//            showLoadFailMsg("版本更新");
+            new AppUpdateVersionUtils().UpdateVersion(getActivity());
+
         }else {
             if (isLogin()){
                 if (v==image_head){
@@ -274,7 +286,7 @@ public class MineFragment extends BaseFragment implements MineView {
             GlideHelper.loadHeadImageView(mActivity,UserHelper.getUserInfo().getAvatar(),image_head);
             if (TextUtils.isEmpty(UserHelper.getUserInfo().getNickname())){
                 tv_user_name.setText(UserHelper.getUserInfo().getMobile());
-                btn_authentication.setText("实名认证");
+                btn_authentication.setText("去实名认证");
             }else {
                 tv_user_name.setText(UserHelper.getUserInfo().getOauth_nickname());
                 btn_authentication.setText("已认证");

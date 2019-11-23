@@ -25,11 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.allenliu.versionchecklib.v2.AllenVersionChecker;
-import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
-import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
-import com.allenliu.versionchecklib.v2.builder.UIData;
-import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -68,6 +65,7 @@ import com.app.aihealthapp.ui.bean.GoodsCateListBean;
 import com.app.aihealthapp.ui.bean.GoodsListBean;
 import com.app.aihealthapp.ui.bean.HomeBean;
 import com.app.aihealthapp.ui.bean.ShopListBean;
+import com.app.aihealthapp.ui.bean.VersionInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.HomeView;
 import com.app.aihealthapp.ui.mvvm.viewmode.HomeViewMode;
 import com.app.aihealthapp.util.AppUpdateVersionUtils;
@@ -113,6 +111,10 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     BGABanner banner_home_adv;
     @BindView(R.id.tv_title_bar)
     TextView tv_title_bar;
+    @BindView(R.id.image_news)
+    ImageView image_news;
+    @BindView(R.id.image_red_dot)
+    ImageView image_red_dot;
     @BindView(R.id.rt_bind_device)
     RelativeLayout rt_bind_device;
 
@@ -220,6 +222,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     public void initView(View view, Bundle savedInstanceState) {
         ll_location.setVisibility(View.VISIBLE);
         tv_title_bar.setText("首页");
+        image_news.setVisibility(View.VISIBLE);
         banner_home_adv.setAdapter(this);
         banner_home_adv.setDelegate(this);
         mHomeViewMode = new HomeViewMode(this);
@@ -325,6 +328,13 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
+
+    }
+
+    @Override
     public void loadingData() {
 
         if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
@@ -384,8 +394,9 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                     }
                 }).dialog();
         initCity();
-        mAppUpdateVersionUtils = new AppUpdateVersionUtils();
-        mAppUpdateVersionUtils.UpdateVersion(getActivity());
+
+        mHomeViewMode.GetVersionInfo();
+
     }
     /*初始化定位参数*/
     private void initLocation() {
@@ -458,7 +469,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         window_city = new MyPopWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
     }
     @OnClick({R.id.ll_location,R.id.btn_add_wristband, R.id.ll_sleep, R.id.ll_blood_pressure, R.id.ll_heart_rate, R.id.ll_blood_oxygen, R.id.btn_look_report, R.id.btn_ask,
-            R.id.btn_inquiry,R.id.btn_shop_index,R.id.btn_health_shop})
+            R.id.btn_inquiry,R.id.btn_shop_index,R.id.btn_health_shop,R.id.image_news})
     public void onClick(View v) {
 
         if (v==ll_location){
@@ -472,7 +483,13 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             } else {
                 window_city.showAsDropDown(toolbar, 0, 0);
             }
-        } else if (v == btn_add_wristband) {
+        }else if (v==image_news){
+            if (isLogin()){
+                startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.msg_list));
+            }else {
+                startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        }else if (v == btn_add_wristband) {
             if (isLogin()) {
                 if (!mCRPBleClient.isBluetoothEnable()) {
                     Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -613,6 +630,11 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         if (ret == 0) {
             String data = GsonHelper.GsonToData(result.toString(), "data").toString();
             homeBean = GsonHelper.GsonToBean(data, HomeBean.class);
+            if (homeBean.getMsg_count()>0){
+                image_red_dot.setVisibility(View.VISIBLE);
+            }else {
+                image_red_dot.setVisibility(View.INVISIBLE);
+            }
             if (homeBean.getIs_bind_bracelet() == 0) {//未绑定手环
                 rt_bind_device.setVisibility(View.VISIBLE);
             } else {//绑定手环
@@ -762,6 +784,19 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         }
     }
 
+    @Override
+    public void versionInfoResult(Object result) {
+
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            JSONObject resp = JSONObject.parseObject(result.toString());
+            VersionInfoBean mData = JSON.parseObject(resp.getString("data"), VersionInfoBean.class);
+            new AppUpdateVersionUtils().UpdateVersion(getActivity(),mData);
+
+        }else {
+            Log.i("getVersion_err", "获取版本信息失败");
+        }
+    }
 
 
     @Override

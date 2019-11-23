@@ -89,4 +89,22 @@ public class HomeViewMode {
             }
         });
     }
+
+    public void GetVersionInfo(){
+        String url = ApiUrl.UserApi.UpdateVersion;
+        RequestParams params = new RequestParams();
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mHomeView.versionInfoResult(result);
+                mHomeView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                mHomeView.showLoadFailMsg(result.toString());
+                mHomeView.hideProgress();
+            }
+        });
+    }
 }

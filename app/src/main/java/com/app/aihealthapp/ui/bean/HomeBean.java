@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class HomeBean {
 
+    int msg_count;
     int is_bind_bracelet;
     List<AdvListBean> adv_list;
     RunStepsBean run_steps;
@@ -22,6 +23,14 @@ public class HomeBean {
     List<ShopListBean>shop_list;
 
     List<GoodsListBean>goods_list;
+
+    public int getMsg_count() {
+        return msg_count;
+    }
+
+    public void setMsg_count(int msg_count) {
+        this.msg_count = msg_count;
+    }
 
     public int getIs_bind_bracelet() {
         return is_bind_bracelet;

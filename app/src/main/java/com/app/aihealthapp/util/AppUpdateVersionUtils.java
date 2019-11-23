@@ -8,6 +8,7 @@ import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
 import com.allenliu.versionchecklib.v2.builder.UIData;
 import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
 import com.app.aihealthapp.R;
+import com.app.aihealthapp.ui.bean.VersionInfoBean;
 
 /**
  * @Name：AiHealthApp
@@ -20,19 +21,19 @@ import com.app.aihealthapp.R;
 public class AppUpdateVersionUtils {
     private DownloadBuilder builder;
 
-    public void UpdateVersion(final Activity mActivity){
-        if (2 > utils.getVersionCode(mActivity)) {
+    public void UpdateVersion(final Activity mActivity, VersionInfoBean mVersionInfoBean){
+        if (Integer.parseInt(mVersionInfoBean.getVersionCode()) > utils.getVersionCode(mActivity)) {
             UIData uiData = UIData.create();
-            uiData.setTitle("版本更新");
-            uiData.setDownloadUrl("");
-            uiData.setContent("你有新的版本更新");
+            uiData.setTitle(mVersionInfoBean.getChangeLog());
+            uiData.setDownloadUrl(mVersionInfoBean.getApkUrl());
+            uiData.setContent(mVersionInfoBean.getUpdateTips());
             builder = AllenVersionChecker
                     .getInstance()
                     .downloadOnly(uiData);
             builder.setForceRedownload(true); //默认false 下载忽略本地缓存
             builder.setShowNotification(true); // 默认true 是否显示通知栏
             builder.setNotificationBuilder(createCustomNotification());
-            if (false) {//强制更新，关闭界面
+            if (mVersionInfoBean.isForceUpgrade()) {//强制更新，关闭界面
                 builder.setShowDownloadingDialog(true);
                 builder.setForceUpdateListener(new ForceUpdateListener() {
                     @Override
@@ -44,7 +45,6 @@ public class AppUpdateVersionUtils {
             //设置是否显示下载对话框
             builder.setShowDownloadingDialog(false);
             builder.executeMission(mActivity);
-
         }
     }
 

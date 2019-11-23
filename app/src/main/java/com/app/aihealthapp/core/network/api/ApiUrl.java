@@ -37,7 +37,7 @@ public final class ApiUrl {
         public static final String AdviceComment = HOST +"api/advice/comment";//会员评论咨询回复问题
         public static final String ReplyList = HOST +"api/advice/reply/list";//咨询医生回复记录
         public static final String AdviceReply = HOST +"api/advice/reply";//医生回复咨询问题
-
+        public static final String UpdateVersion = HOST +"api/app/update?platform=android";//版本更新
 
     }
 
@@ -83,6 +83,8 @@ public final class ApiUrl {
         public static final String PrivacyProtocol = HOST +"article/item/53.html";//隐私协议
 
         public static final String headline_list = HOST + "wap/headline_list.html";//健康知识、健康论坛、养生保健
+        public static final String common_problem = HOST + "article/category/22";//常见问题
+        public static final String msg_list = HOST + "wap/msg_list.html";//消息列表
 
       }
 

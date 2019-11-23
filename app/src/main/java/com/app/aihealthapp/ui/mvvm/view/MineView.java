@@ -15,4 +15,5 @@ public interface MineView extends BaseView {
     void UesrInfoResult(Object result);
     void uploadResult(Object result);
     void UpdateProfileResult(Object result);
+    void versionInfoResult(Object result);
 }

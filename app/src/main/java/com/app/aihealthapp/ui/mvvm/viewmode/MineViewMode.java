@@ -90,4 +90,24 @@ public class MineViewMode {
         });
 
     }
+
+    public void GetVersionInfo(){
+        mMineView.showProgress();
+
+        String url = ApiUrl.UserApi.UpdateVersion;
+        RequestParams params = new RequestParams();
+        mBaseMode.GetRequest(url, params, new ResultCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                mMineView.versionInfoResult(result);
+                mMineView.hideProgress();
+            }
+
+            @Override
+            public void onFailure(Object result) {
+                mMineView.showLoadFailMsg(result.toString());
+                mMineView.hideProgress();
+            }
+        });
+    }
 }

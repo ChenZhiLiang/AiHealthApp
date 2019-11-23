@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.core.base.BaseFragment;
 import com.app.aihealthapp.core.eventbus.Event;
@@ -30,9 +33,11 @@ import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.ui.AppContext;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.bean.UserInfoBean;
+import com.app.aihealthapp.ui.bean.VersionInfoBean;
 import com.app.aihealthapp.ui.mvvm.view.MineView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineViewMode;
 import com.app.aihealthapp.util.AppUpdateVersionUtils;
+import com.app.aihealthapp.util.utils;
 import com.app.aihealthapp.wxapi.WXShareUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -184,10 +189,10 @@ public class MineFragment extends BaseFragment implements MineView {
         }else if (v==rt_feedback){
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Feedback));
         }else if (v==rt_problem){
-            showLoadFailMsg("常见问题");
+            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.common_problem));
         }else if (v==rt_version_update){
 //            showLoadFailMsg("版本更新");
-            new AppUpdateVersionUtils().UpdateVersion(getActivity());
+            mMineViewMode.GetVersionInfo();
 
         }else {
             if (isLogin()){
@@ -324,6 +329,23 @@ public class MineFragment extends BaseFragment implements MineView {
         }else {
             showLoadFailMsg(GsonHelper.GsonToString(result.toString(),""));
 
+        }
+    }
+
+    @Override
+    public void versionInfoResult(Object result) {
+        int ret = GsonHelper.GsonToInt(result.toString(),"ret");
+        if (ret==0){
+            JSONObject resp = JSONObject.parseObject(result.toString());
+            VersionInfoBean mData = JSON.parseObject(resp.getString("data"), VersionInfoBean.class);
+
+            if (Integer.parseInt(mData.getVersionCode()) > utils.getVersionCode(mActivity)) {
+                new AppUpdateVersionUtils().UpdateVersion(getActivity(),mData);
+            }else {
+                showLoadFailMsg("已是最新版本");
+            }
+        }else {
+            Log.i("getVersion_err", "获取版本信息失败");
         }
     }
 

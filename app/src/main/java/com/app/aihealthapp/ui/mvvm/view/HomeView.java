@@ -17,4 +17,6 @@ public interface HomeView extends BaseView {
     void MineDeviceInfo(Object result);
 
     void runStepsResult(Object result);
+
+    void versionInfoResult(Object result);
 }

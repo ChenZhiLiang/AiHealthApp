@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.aihealthapp.R;
+import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseFragment;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
@@ -33,6 +34,7 @@ import com.app.aihealthapp.core.network.api.ApiUrl;
 import com.app.aihealthapp.core.selectlibrary.CitySelect;
 import com.app.aihealthapp.core.selectlibrary.Province;
 import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.MainActivity;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.adapter.GridviewAreaAdapter;
 import com.app.aihealthapp.ui.bean.CountryCityBean;
@@ -52,7 +54,7 @@ import butterknife.OnClick;
 
 /**
  * @Name：AiHealth
- * @Description：健康询问
+ * @Description：健康商圈
  * @Author：Chen
  * @Date：2019/7/24 22:07
  * 修改人：Chen
@@ -81,7 +83,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     private List<CountryCityBean.CityListBean.AreaListBean> AreaList = new ArrayList<>();
     private GridviewAreaAdapter mGridviewAreaAdapter;
 
-    private Dialog dialog;
+//    private Dialog dialog;
 
     public static ForumFragment getInstance(String title) {
         ForumFragment hf = new ForumFragment();
@@ -132,7 +134,8 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
             @Override
             public void onClick(View v) {
                 window_city.dismiss();
-                dialog.show();
+                ((MainActivity)getActivity()).getDialog().show();
+//                dialog.show();
             }
         });
         for (int i = 0; i < mCountryCityBean.size(); i++) {
@@ -172,42 +175,10 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
     protected void receiveEvent(Event event) {
         super.receiveEvent(event);
         if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
-
-//            String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
-//            String area_code = SharedPreferenceHelper.getAreaId(AppContext.getContext());
-//            boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
-//            if (UserHelper.getUserInfo() != null) {
-//                String mUrl;
-//                Uri uri = Uri.parse(webview.getUrl());
-//                if (webview.getUrl().contains("uid")) {
-//                    String uid = UrlParseUtil.getUriParam(uri, "uid");
-//                    if (TextUtils.isEmpty(uid)) {
-//                        String replaceUrl = webview.getUrl().replaceAll("uid=", "uid=" + UserHelper.getUserInfo().getId());
-//                        if (isSlect) {
-//                            mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=" + area_code;
-//                        } else {
-//                            mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=0";
-//                        }
-//                    } else {
-//                        if (uid.equals(UserHelper.getUserInfo().getId())) {
-//                            if (isSlect) {
-//                                mUrl = webview.getUrl() + "&city_code=" + city_code + "&area_code=" + area_code;
-//                            } else {
-//                                mUrl = webview.getUrl() + "&city_code=" + city_code + "&area_code=0";
-//                            }
-//                        } else {
-//                            String replaceUrl = webview.getUrl().replaceAll("uid=" + uid, "uid=" + UserHelper.getUserInfo().getId());
-//                            if (isSlect) {
-//                                mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=" + area_code;
-//                            } else {
-//                                mUrl = replaceUrl + "&city_code=" + city_code + "&area_code=0";
-//                            }
-//                        }
-//                    }
-//                    webview.loadUrl(mUrl);
-//                }
-//            }
-
+            tv_location.setText(AppConfig.CITY_DEF);
+            tvPresentCity.setText("您正在看："+AppConfig.CITY_DEF);
+            AreaList.clear();
+            mGridviewAreaAdapter.notifyDataSetChanged();
             WebLoadUrl();
         }
     }
@@ -217,10 +188,14 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         public void onReceive(final Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals("action.check.location")) {
-
-
+                tvPresentCity.setText("您正在看："+SharedPreferenceHelper.getCity(mActivity));
+                String area_id = SharedPreferenceHelper.getAreaId(mActivity);
+                if (TextUtils.equals(area_id,AppConfig.AREA_ID_DEF)){
+                    tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
+                }else {
+                    tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
+                }
                 for (int i = 0; i < mCountryCityBean.size(); i++) {
-
                     if (SharedPreferenceHelper.getProvince(AppContext.getContext()).equals(mCountryCityBean.get(i).getName())) {
                         for (int j = 0; j < mCountryCityBean.get(i).getCityList().size(); j++) {
                             if (SharedPreferenceHelper.getCity(AppContext.getContext()).equals(mCountryCityBean.get(i).getCityList().get(j).getName())) {
@@ -249,26 +224,30 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
         mActivity.registerReceiver(mRefreshBroadcastReceiver, intentFilter);
         initCity();
         WebLoadUrl();
-        dialog = new CitySelect(mActivity)
-                .setMainColor(Color.RED)
-                .listener(new CitySelect.OnSelectListener() {
-                    @Override
-                    public void onSelect(Province province, Province.City city) {
-                        tvPresentCity.setText("您正在看：" + city.name);
-
-                        tv_location.setText(city.name);
-                        SharedPreferenceHelper.setProvince(mActivity, province.name);
-                        SharedPreferenceHelper.setCity(mActivity, city.name);
-                        SharedPreferenceHelper.setCityId(mActivity, city.code);
-                        SharedPreferenceHelper.setSelect(mActivity, true);
-                        SharedPreferenceHelper.setAreaId(mActivity, "");
-                        SharedPreferenceHelper.setArea(mActivity, "");
-
-                        Intent intent = new Intent();
-                        intent.setAction("action.check.location");
-                        mActivity.sendBroadcast(intent);
-                    }
-                }).dialog();
+//        dialog = new CitySelect(mActivity)
+//                .setMainColor(Color.RED)
+//                .listener(new CitySelect.OnSelectListener() {
+//                    @Override
+//                    public void onSelect(Province province, Province.City city,Province.Area area) {
+//                        tvPresentCity.setText("您正在看：" + city.name);
+//                        if (area!=null){
+//                            tv_location.setText(area.name);
+//                            SharedPreferenceHelper.setAreaId(mActivity, area.code);
+//                            SharedPreferenceHelper.setArea(mActivity,area.name);
+//                        }else {
+//                            tv_location.setText(city.name);
+//                            SharedPreferenceHelper.setAreaId(mActivity, AppConfig.AREA_ID_DEF);
+//                            SharedPreferenceHelper.setArea(mActivity,"");
+//                        }
+//                        SharedPreferenceHelper.setProvince(mActivity, province.name);
+//                        SharedPreferenceHelper.setCity(mActivity, city.name);
+//                        SharedPreferenceHelper.setCityId(mActivity, city.code);
+//                        SharedPreferenceHelper.setSelect(mActivity, true);
+//                        Intent intent = new Intent();
+//                        intent.setAction("action.check.location");
+//                        mActivity.sendBroadcast(intent);
+//                    }
+//                }).dialog();
     }
 
 
@@ -276,7 +255,7 @@ public class ForumFragment extends BaseFragment implements WebTitleView {
 
         tvPresentCity.setText("您正在看：" + SharedPreferenceHelper.getCity(mActivity));
         if (SharedPreferenceHelper.getSelect(AppContext.getContext())) {
-            if (TextUtils.isEmpty(SharedPreferenceHelper.getArea(AppContext.getContext()).trim())){
+            if (TextUtils.equals(SharedPreferenceHelper.getAreaId(AppContext.getContext()),AppConfig.AREA_ID_DEF)){
                 tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
             }else {
                 tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));

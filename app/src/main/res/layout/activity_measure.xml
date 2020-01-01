@@ -212,41 +212,6 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tv_blood_oxygen"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textColor="@color/default_hint_color"
-                                android:textSize="@dimen/text_14px" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_4px"
-                                android:textColor="@color/default_hint_color" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_4px"
-                                android:text="血氧"
-                                android:textColor="@color/default_text_color"
-                                android:textSize="@dimen/text_14px" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="0.5dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/default_text_color" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
                                 android:id="@+id/tv_heart_rate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -266,6 +231,41 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dimen_4px"
                                 android:text="心率"
+                                android:textColor="@color/default_text_color"
+                                android:textSize="@dimen/text_14px" />
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/default_text_color" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_blood_oxygen"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/default_hint_color"
+                                android:textSize="@dimen/text_14px" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_4px"
+                                android:textColor="@color/default_hint_color" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_4px"
+                                android:text="血氧"
                                 android:textColor="@color/default_text_color"
                                 android:textSize="@dimen/text_14px" />
                         </LinearLayout>

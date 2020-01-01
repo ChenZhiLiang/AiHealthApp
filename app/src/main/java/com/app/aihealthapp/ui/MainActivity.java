@@ -1,9 +1,11 @@
 package com.app.aihealthapp.ui;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,9 +13,13 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.app.aihealthapp.R;
+import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseActivity;
 import com.app.aihealthapp.core.base.BaseFragmentPageAdapter;
+import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
+import com.app.aihealthapp.core.selectlibrary.CitySelect;
+import com.app.aihealthapp.core.selectlibrary.Province;
 import com.app.aihealthapp.core.tablayout.CommonTabLayout;
 import com.app.aihealthapp.core.tablayout.listener.CustomTabEntity;
 import com.app.aihealthapp.core.tablayout.listener.OnTabSelectListener;
@@ -52,6 +58,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
             R.mipmap.mind_icon_select};
     //极光推送
     public static boolean isForeground = false;
+    private  Dialog dialog;
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -102,6 +109,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
         tabMain.setOnTabSelectListener(this);
         vpageMain.addOnPageChangeListener(this);
         vpageMain.setCurrentItem(0);
+        initCitySelect();
     }
 
     @Override
@@ -124,6 +132,46 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, V
     public void onPageSelected(int position) {
         tabMain.setCurrentTab(position);
 
+    }
+
+    private void initCitySelect(){
+        dialog = new CitySelect(this)
+                .setMainColor(Color.RED)
+                .listener(new CitySelect.OnSelectListener() {
+                    @Override
+                    public void onSelect(Province province, Province.City city, Province.Area area) {
+//                        Log.e("399",province + "  " + city + "  " + area);
+//                        tvPresentCity.setText("您正在看："+city.name);
+//                        String area_id;
+//                        if (area!=null){
+//                            area_id = area.code;
+////                            tv_location.setText(area.name);
+//                            SharedPreferenceHelper.setArea(mContext,area.name);
+//                        }else {
+//                            area_id = AppConfig.AREA_ID_DEF;
+////                            tv_location.setText(city.name);
+//                            SharedPreferenceHelper.setArea(mContext,"");
+//                        }
+
+                        SharedPreferenceHelper.setProvince(mContext,province.name);
+                        SharedPreferenceHelper.setCity(mContext,city.name);
+                        SharedPreferenceHelper.setCityId(mContext,city.code);
+                        SharedPreferenceHelper.setSelect(mContext,true);
+                        SharedPreferenceHelper.setAreaId(mContext,area==null?AppConfig.AREA_ID_DEF:area.code);
+                        SharedPreferenceHelper.setArea(mContext,area==null?"":area.name);
+
+                        Intent intent =new Intent();
+                        intent.setAction("action.check.location");
+                        sendBroadcast(intent);
+                    }
+                }).dialog();
+    }
+
+    public Dialog getDialog(){
+        if (dialog==null){
+            initCitySelect();
+        }
+        return dialog;
     }
 
     @Override

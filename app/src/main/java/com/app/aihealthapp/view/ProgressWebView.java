@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
@@ -120,10 +121,15 @@ public class ProgressWebView extends WebView {
         //提高网页加载速度，暂时阻塞图片加载，然后网页加载好了，在进行加载图片
         mSettings.setBlockNetworkImage(true);
         mSettings.setAppCacheEnabled(false);//开启缓存机制
-
+        mSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         mSettings.setAllowFileAccessFromFileURLs(true);
         mSettings.setAllowUniversalAccessFromFileURLs(true);
-
+        //webView  加载视频
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            }
+        }
         setWebViewClient(new MyWebClient());
         setWebChromeClient(new MyWebChromeClient());
         addJavascriptInterface(new WebAppInterface(), "jsAndroid");

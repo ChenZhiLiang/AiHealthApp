@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:textStyle="bold"
-            android:text="您正在看：南宁"
+            android:text="您正在看：全国"
             android:textColor="@color/black"
             android:textSize="@dimen/text_16px"
             />

@@ -27,10 +27,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.base.BaseFragment;
@@ -41,15 +37,14 @@ import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.CircleDialogHelper;
 import com.app.aihealthapp.core.helper.GlideHelper;
 import com.app.aihealthapp.core.helper.GsonHelper;
-import com.app.aihealthapp.core.helper.PermissionHelper;
 import com.app.aihealthapp.core.helper.SharedPreferenceHelper;
 import com.app.aihealthapp.core.helper.ToastyHelper;
 import com.app.aihealthapp.core.helper.UserHelper;
 import com.app.aihealthapp.core.network.api.ApiUrl;
-import com.app.aihealthapp.core.permission.Permission;
 import com.app.aihealthapp.core.selectlibrary.CitySelect;
 import com.app.aihealthapp.core.selectlibrary.Province;
 import com.app.aihealthapp.ui.AppContext;
+import com.app.aihealthapp.ui.MainActivity;
 import com.app.aihealthapp.ui.WebActyivity;
 import com.app.aihealthapp.ui.activity.mine.LoginActivity;
 import com.app.aihealthapp.ui.adapter.GridviewAreaAdapter;
@@ -99,7 +94,7 @@ import static com.app.aihealthapp.ui.activity.service.ComeWxMessage.WX;
  * 修改时间：2019/7/22 22:57
  */
 public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Adapter<ImageView, AdvListBean>,
-        BGABanner.Delegate<ImageView, AdvListBean>, CRPStepChangeListener , AMapLocationListener{
+        BGABanner.Delegate<ImageView, AdvListBean>, CRPStepChangeListener {
 
     @BindView(R.id.toolbar)
     RelativeLayout toolbar;
@@ -171,8 +166,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
 
     private CRPBleClient mCRPBleClient;
-//    private CRPBleDevice mBleDevice;
-//    private CRPBleConnection mBleConnection;
 
     private HomeViewMode mHomeViewMode;
     private HealthManageAdapter mHealthManageAdapter;
@@ -185,9 +178,9 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     private HomeBean homeBean;
 
     //声明AMapLocationClient类对象，定位发起端
-    private AMapLocationClient mLocationClient = null;
+//    private AMapLocationClient mLocationClient = null;
     //声明mLocationOption对象，定位参数
-    public AMapLocationClientOption mLocationOption = null;
+//    public AMapLocationClientOption mLocationOption = null;
 
     private MyPopWindow window_city;
     private View popView;
@@ -204,7 +197,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     private String area_id;
     private int uid;
 
-    private Dialog dialog;
+//    private Dialog dialog;
 
     private AppUpdateVersionUtils mAppUpdateVersionUtils;
     public static HomeFragment getInstance(String title) {
@@ -247,7 +240,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         }
         //每次进来默认 没选择市区
         SharedPreferenceHelper.setSelect(mActivity,false);
-        initLocation();
+//        initLocation();
 
     }
 
@@ -292,12 +285,9 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
             }else if (action.equals("action.check.location")){
 
-
                 tvPresentCity.setText("您正在看："+SharedPreferenceHelper.getCity(mActivity));
-
-
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                if (TextUtils.isEmpty(area_id)){
+                if (TextUtils.equals(area_id,AppConfig.AREA_ID_DEF)){
                     tv_location.setText(SharedPreferenceHelper.getCity(AppContext.getContext()));
                 }else {
                     tv_location.setText(SharedPreferenceHelper.getArea(AppContext.getContext()));
@@ -334,10 +324,9 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     }
 
-    @Override
-    public void loadingData() {
 
-        if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
+
+        /*if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
             mLocationClient.startLocation();
         }else {
             if (!SharedPreferenceHelper.getSelect(mActivity)){
@@ -346,7 +335,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 SharedPreferenceHelper.setCity(mActivity,AppConfig.CITY_DEF);
                 SharedPreferenceHelper.setAreaId(mActivity,AppConfig.AREA_ID_DEF);
                 SharedPreferenceHelper.setArea(mActivity,AppConfig.AREA_DEF);
-                tv_location.setText(AppConfig.CITY_DEF);
+//                tv_location.setText(AppConfig.CITY_DEF);
+                tv_location.setText("全国");
                 city_id = SharedPreferenceHelper.getCityId(mActivity);
                 area_id = SharedPreferenceHelper.getAreaId(mActivity);
                 mHomeViewMode.getHomeDatas(true,SharedPreferenceHelper.getCityId(mActivity),"0",uid);
@@ -369,37 +359,44 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 }
             }
         }
-    }
+    }*/
 
     @Override
     public void initData() {
-        dialog =  new CitySelect(mActivity)
+      /*  Dialog dialog =  new CitySelect(mActivity)
                 .setMainColor(Color.RED)
                 .listener(new CitySelect.OnSelectListener() {
                     @Override
-                    public void onSelect(Province province, Province.City city) {
+                    public void onSelect(Province province, Province.City city,Province.Area area) {
 //                        Log.e("399",province + "  " + city + "  " + area);
                         tvPresentCity.setText("您正在看："+city.name);
-                        tv_location.setText(city.name);
-                        area_id = "";
+                        if (area!=null){
+                            area_id = area.code;
+                            tv_location.setText(area.name);
+                            SharedPreferenceHelper.setArea(mActivity,area.name);
+                        }else {
+                            area_id = AppConfig.AREA_ID_DEF;
+                            tv_location.setText(city.name);
+                            SharedPreferenceHelper.setArea(mActivity,"");
+                        }
                         SharedPreferenceHelper.setProvince(mActivity,province.name);
                         SharedPreferenceHelper.setCity(mActivity,city.name);
                         SharedPreferenceHelper.setCityId(mActivity,city.code);
                         SharedPreferenceHelper.setSelect(mActivity,true);
                         SharedPreferenceHelper.setAreaId(mActivity,area_id);
-                        SharedPreferenceHelper.setArea(mActivity,"");
                         Intent intent =new Intent();
                         intent.setAction("action.check.location");
                         mActivity.sendBroadcast(intent);
                     }
-                }).dialog();
+                }).dialog();*/
         initCity();
-
         mHomeViewMode.GetVersionInfo();
 
     }
+
+
     /*初始化定位参数*/
-    private void initLocation() {
+  /*  private void initLocation() {
         //初始化定位
         mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
         //设置定位回调监听
@@ -423,7 +420,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
 
-    }
+    }*/
 
     /*
     * 初始化城市
@@ -446,7 +443,8 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             @Override
             public void onClick(View v) {
                 window_city.dismiss();
-                dialog.show();
+                ((MainActivity) getActivity()).getDialog().show();
+//                ShowCitySelect();
             }
         });
         mGridviewAreaAdapter = new GridviewAreaAdapter(mActivity,AreaList);
@@ -468,6 +466,36 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         });
         window_city = new MyPopWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
     }
+
+    @Override
+    public void loadingData() {
+
+        if (!SharedPreferenceHelper.getSelect(mActivity)){
+            SharedPreferenceHelper.setProvince(mActivity,AppConfig.PROVINCE_DEF);
+            SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_ID_DEF);
+            SharedPreferenceHelper.setCity(mActivity,AppConfig.CITY_DEF);
+            SharedPreferenceHelper.setAreaId(mActivity,AppConfig.AREA_ID_DEF);
+            SharedPreferenceHelper.setArea(mActivity,AppConfig.AREA_DEF);
+            tv_location.setText(AppConfig.CITY_DEF);
+        }else {
+            tv_location.setText(SharedPreferenceHelper.getArea(mActivity));
+        }
+        city_id = SharedPreferenceHelper.getCityId(mActivity);
+        area_id = SharedPreferenceHelper.getAreaId(mActivity);
+        mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
+
+//        for (int i = 0; i < mCountryCityBean.size(); i++) {
+//            if (AppConfig.PROVINCE_DEF.equals(mCountryCityBean.get(i).getName())){
+//                for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
+//                    if (AppConfig.CITY_DEF.equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
+//                        AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
+//                        mGridviewAreaAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//            }
+//        }
+    }
+
     @OnClick({R.id.ll_location,R.id.btn_add_wristband, R.id.ll_sleep, R.id.ll_blood_pressure, R.id.ll_heart_rate, R.id.ll_blood_oxygen, R.id.btn_look_report, R.id.btn_ask,
             R.id.btn_inquiry,R.id.btn_shop_index,R.id.btn_health_shop,R.id.image_news})
     public void onClick(View v) {
@@ -593,6 +621,12 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         if (event.getCode() == EventCode.Code.CONNECTED_SUCCESS) {
             mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
         } else if (event.getCode() == EventCode.Code.LOGIN_SUCCESS) {
+            tv_location.setText(AppConfig.CITY_DEF);
+            city_id = SharedPreferenceHelper.getCityId(mActivity);
+            area_id = SharedPreferenceHelper.getAreaId(mActivity);
+            tvPresentCity.setText("您正在看："+AppConfig.CITY_DEF);
+            AreaList.clear();
+            mGridviewAreaAdapter.notifyDataSetChanged();
             mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
         } else if (event.getCode() == EventCode.Code.MEASURE_SUCCESS) {
             mHomeViewMode.getHomeDatas(false,city_id,area_id,uid);
@@ -829,11 +863,11 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     }
 
-    @Override
+    /*@Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null) {
             if (aMapLocation.getErrorCode() == 0) {
-                /*发送定位成功事件，保存获取定位到的信息*/
+                *//*发送定位成功事件，保存获取定位到的信息*//*
                 Log.e("aaaaa", aMapLocation.getAdCode());
                 for (int i = 0; i < mCountryCityBean.size(); i++) {
                     if (aMapLocation.getProvince().equals(mCountryCityBean.get(i).getName())){
@@ -867,6 +901,7 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
                 }else {
                     tv_location.setText(aMapLocation.getCity());
+//                    tv_location.setText("全国");
                     mHomeViewMode.getHomeDatas(true,city_id,"0",uid);
                 }
             } else {
@@ -894,5 +929,5 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 }
             }
         }
-    }
+    }*/
 }

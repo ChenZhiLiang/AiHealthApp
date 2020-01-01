@@ -79,7 +79,9 @@
         <activity android:name=".ui.activity.home.BindDeviceActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.home.MeasureActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.home.DoctorListActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.WebActyivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.WebActyivity"
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"/>
         <activity android:name=".ui.activity.home.DoctorDetalisActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.mine.MineAskActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.mine.SearchRecordDetailsActivity" android:screenOrientation="portrait" />

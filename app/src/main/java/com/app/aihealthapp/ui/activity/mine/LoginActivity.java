@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.app.aihealthapp.R;
+import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.core.eventbus.Event;
 import com.app.aihealthapp.core.eventbus.EventCode;
 import com.app.aihealthapp.core.helper.EventBusHelper;
@@ -128,6 +129,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
             UserInfoBean mUserInfo = GsonHelper.GsonToBean(user,UserInfoBean.class);
             SharedPreferenceHelper.setUserInfo(AppContext.getContext(),mUserInfo);
+            //登录成功重新设置地区当前默认选中
+            SharedPreferenceHelper.setProvince(AppContext.getContext(), AppConfig.PROVINCE_DEF);
+            SharedPreferenceHelper.setCityId(AppContext.getContext(),AppConfig.CITY_ID_DEF);
+            SharedPreferenceHelper.setCity(AppContext.getContext(),AppConfig.CITY_DEF);
+            SharedPreferenceHelper.setAreaId(AppContext.getContext(),AppConfig.AREA_ID_DEF);
+            SharedPreferenceHelper.setArea(AppContext.getContext(),AppConfig.AREA_DEF);
             EventBusHelper.sendEvent(new Event(EventCode.Code.LOGIN_SUCCESS));
             showLoadFailMsg("登录成功");
             finish();

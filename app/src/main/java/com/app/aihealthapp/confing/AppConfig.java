@@ -14,10 +14,10 @@ public class AppConfig {
     public static final String TOKEN_FILE_NAME = "ut_data";
     public static final String USER_INFO = "user_info";
     public static final String DEVICE_INFO = "device_info";
-    public static final String CITY_ID_DEF = "450100";//默认城市id
-    public static final String CITY_DEF = "南宁市";
+    public static final String CITY_ID_DEF = "000000";//默认全国
+    public static final String CITY_DEF = "全国";
     public static final String PROVINCE_DEF="广西壮族自治区";
-    public static final String AREA_ID_DEF = "450103";//
+    public static final String AREA_ID_DEF = "0";//
     public static final String AREA_DEF="青秀区";
 
 

@@ -383,6 +383,7 @@ public class MineFragment extends BaseFragment implements MineView {
             btn_authentication.setVisibility(View.GONE);
             tv_invite_code.setVisibility(View.GONE);
             btn_logout.setVisibility(View.GONE);
+
         }
     }
 

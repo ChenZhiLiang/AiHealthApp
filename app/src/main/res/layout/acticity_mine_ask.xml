@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
-    android:fitsSystemWindows="true"
+xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@color/white"
+android:fitsSystemWindows="true"
     >
 
-    <include layout="@layout/include_toolbar"/>
+<include layout="@layout/include_toolbar"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tv_search_record"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="咨询记录"
-                android:textColor="@color/default_text_color"
-                android:textSize="@dimen/text_16px" />
-
-            <View
-                android:id="@+id/view_search_record_line"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2px"
-                android:layout_alignParentBottom="true"
-                android:background="@color/default_text_color" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tv_interrogation_record"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="问诊记录"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/text_16px" />
-
-            <View
-                android:id="@+id/view_interrogation_record_line"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2px"
-                android:layout_alignParentBottom="true"
-                android:background="@color/view_line" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_8px"
-        android:background="#f9f9f9"/>
-    <com.app.aihealthapp.view.NoScrollViewPager
-        android:id="@+id/viewpage_ask"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@color/white"/>
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_search_record"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="咨询记录"
+            android:textColor="@color/default_text_color"
+            android:textSize="@dimen/text_16px" />
+
+        <View
+            android:id="@+id/view_search_record_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/default_text_color" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_interrogation_record"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="问诊记录"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_16px" />
+
+        <View
+            android:id="@+id/view_interrogation_record_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/view_line" />
+    </RelativeLayout>
+</LinearLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_8px"
+    android:background="#f9f9f9"/>
+<com.app.aihealthapp.view.NoScrollViewPager
+    android:id="@+id/viewpage_ask"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"/>
 </LinearLayout>

@@ -214,26 +214,26 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
                 }
                 if (onSelectListener != null) {
 
-                    onSelectListener.onSelect(provinceString, city);
+                    onSelectListener.onSelect(provinceString, city,null);
                 }
 //                doIndicatorAnim(mAreaTextView);
                 break;
-           /* case TAB_AREA://区
+            case TAB_AREA://区
                 areaSelectIndex = position;
                 String area = mAreaData.get(position).name;
-                mAreaTextView.setText(area);
-                Province provinceString = mProvinceData.get(provinceSelectIndex);
-                Province.City cityString = mCityData.get(citySelectIndex);
+//                mAreaTextView.setText(area);
+                Province provinceString1 = mProvinceData.get(provinceSelectIndex);
+                Province.City cityString1 = mCityData.get(citySelectIndex);
                 Province.Area areaString = mAreaData.get(areaSelectIndex);
-                doIndicatorAnim(mAreaTextView);
+//                doIndicatorAnim(mAreaTextView);
                 mSelectAdapter.notifyDataSetChanged();
                 if (mDialog != null) {
                     mDialog.dismiss();
                 }
                 if (onSelectListener != null) {
-                    onSelectListener.onSelect(provinceString, cityString, areaString);
+                    onSelectListener.onSelect(provinceString1, cityString1, areaString);
                 }
-                break;*/
+                break;
         }
     }
 
@@ -253,6 +253,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
             mData.add(bean);
         }
 //        mData.addAll(mProvinceData);
+
         mSelectAdapter.notifyDataSetChanged();
     }
 
@@ -433,7 +434,7 @@ public class CitySelect implements View.OnClickListener, AdapterView.OnItemClick
     }
 
     public interface OnSelectListener {
-        void onSelect(Province province, Province.City city);
+        void onSelect(Province province, Province.City city,Province.Area area);
     }
 
 

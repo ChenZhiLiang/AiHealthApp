@@ -205,8 +205,24 @@ public class WebActyivity extends BaseActivity implements WebTitleView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        webView.destroy();
+        webView = null;
         unregisterReceiver(mRefreshBroadcastReceiver);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        webView.onPause();
+        webView.pauseTimers();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webView.resumeTimers();
+        webView.onResume();
     }
 
     @Override

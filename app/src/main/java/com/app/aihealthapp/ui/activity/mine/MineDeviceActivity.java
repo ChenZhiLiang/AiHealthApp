@@ -157,7 +157,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
                     }
                 }
             }else {
-                CircleDialogHelper.ShowDialog(this,"温馨提示","确定解除绑定该设备(Qs-05)?","确定","取消", new View.OnClickListener() {
+                CircleDialogHelper.ShowDialog(this,"温馨提示","确定解除绑定该设备?","确定","取消", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 //                        mBleDevice = mCRPBleClient.getBleDevice(mDeviceInfoBean.getDevice_no());
@@ -294,7 +294,7 @@ public class MineDeviceActivity extends BaseActivity implements MineDeviceView{
                     check_open_wx.setBackgroundResource(R.mipmap.car_off);
                     ToastyHelper.toastyNormal(MineDeviceActivity.this,"已绑定的设备不存在，请重新绑定！");
                 }else {
-                    tv_device_name.setText("已绑定设备(Qs-05)");
+                    tv_device_name.setText("已绑定设备");
                     btn_bind.setText("解除绑定");
                     id = mDeviceInfoBean.getId();
                     if (mDeviceInfoBean.getIs_open_phone()==0){

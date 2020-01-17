@@ -190,7 +190,7 @@ public class BindDeviceActivity extends BaseActivity implements CRPScanCallback,
     public void onScanning(CRPScanDevice crpScanDevice) {
 
         CRPBleDevice bleDevice = mCRPBleClient.getBleDevice(crpScanDevice.getDevice().getAddress());
-        if (!TextUtils.isEmpty(bleDevice.getName())&&bleDevice.getName().equals("Qs-05")){
+        if (!TextUtils.isEmpty(bleDevice.getName())&&("Qs-05".equals(bleDevice.getName()) || "C114".equals(bleDevice.getName()))){
             devicelList.add(bleDevice);
             mDeviceListAdapter.notifyDataSetChanged();
         }

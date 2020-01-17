@@ -127,8 +127,13 @@ public class DoctorListActivity extends BaseActivity implements DoctorListView, 
                 mDoctorListAdapter.addItem(datas);
                 mDoctorListAdapter.notifyDataSetChanged();
             }else {
-                no_record_layout.setVisibility(View.VISIBLE);
-                recy_doctor.setVisibility(View.GONE);
+                if (page==1){
+                    no_record_layout.setVisibility(View.VISIBLE);
+                    recy_doctor.setVisibility(View.GONE);
+                }else {
+                    recy_doctor.setNoMore(true);
+                    recy_doctor.setLoadingMoreEnabled(false);
+                }
             }
             recy_doctor.refreshComplete();
 

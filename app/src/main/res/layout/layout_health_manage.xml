@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/image_jkglzx_wz"
             android:layout_marginLeft="@dimen/dimen_10px"
-            android:text="中医名家"
+            android:text="中医问诊"
             android:textSize="@dimen/text_14px"
             android:textColor="@color/text_color"/>
         <TextView

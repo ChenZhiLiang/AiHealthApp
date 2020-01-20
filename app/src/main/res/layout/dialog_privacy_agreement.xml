@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/dimen_10px"
+        android:text="服务协议和隐私政策"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16px" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10px"
+        android:layout_marginRight="@dimen/dimen_10px"
+        android:layout_marginBottom="@dimen/dimen_10px"
+        android:lineSpacingExtra="@dimen/dimen_4px"
+        android:text="请您务必谨慎阅读、充分理解“服务协议”和“隐私政策“各条款，包括但不限于: 为了向你提供即时通讯，内容分享等服务，我们需要收集你的设备信息、操作日记等个人信息。你可以在“设置”中查看、变更、删除个人信息并管理你的授权。
+你可阅读《服务协议》和《隐私政策》了解详细信息。如你同意，请点击“同意”开始接受我们的服务。"
+        android:textColor="#666666"
+        android:textSize="@dimen/text_14px"/>
+
+
+</LinearLayout>

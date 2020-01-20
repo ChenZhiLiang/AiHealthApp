@@ -20,6 +20,11 @@ public class AppConfig {
     public static final String AREA_ID_DEF = "0";//
     public static final String AREA_DEF="青秀区";
 
+    /**
+     * 存储是否第一启动信息
+     */
+    public static final String SHARE_FIRST_NAME = "ut_first_app";
+    public static final String FIRSTIN_NAME = "isFirstIn";
 
     public static final String TOKEN_NAME = "token";
     public static final String WALLET_TOKEN = "wallet_token";

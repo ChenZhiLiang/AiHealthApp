@@ -1,5 +1,6 @@
 package com.app.aihealthapp.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.view.WindowManager;
 import com.app.aihealthapp.R;
 import com.app.aihealthapp.confing.AppConfig;
 import com.app.aihealthapp.util.StatusBarUtil;
+import com.app.aihealthapp.view.PrivacyAgreementDialog;
 
 /**
  * 欢迎页Activity
@@ -35,6 +37,9 @@ public class SplashActivity extends AppCompatActivity {
             switch (msg.what) {
                 case GO_HOME:
                     goMain();
+                    break;
+                case GO_GUIDE:
+                    showPrivacyAgreementDialog();
                     break;
             }
             super.handleMessage(msg);
@@ -71,8 +76,36 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initAPP() {
-        mHandler.sendEmptyMessageDelayed(GO_HOME, SPLASH_DELAY_MILLIS);
 
+        SharedPreferences preferences = getSharedPreferences(AppConfig.SHARE_FIRST_NAME, MODE_PRIVATE);
+
+        // 取得相应的值，如果没有该值，说明还未写入，用true作为默认值
+        isFirstIn = preferences.getBoolean(AppConfig.FIRSTIN_NAME, true);
+        // 判断程序与第几次运行，如果是第一次运行则跳转到引导界面，否则跳转到主界面
+        if (!isFirstIn) {
+            // 使用Handler的postDelayed方法，3秒后执行跳转到MainActivity
+            mHandler.sendEmptyMessageDelayed(GO_HOME, SPLASH_DELAY_MILLIS);
+        } else {
+            mHandler.sendEmptyMessageDelayed(GO_GUIDE, SPLASH_DELAY_MILLIS);
+        }
+    }
+
+    private void showPrivacyAgreementDialog(){
+        PrivacyAgreementDialog dialog = new PrivacyAgreementDialog(this, new PrivacyAgreementDialog.OnAgreeInterface() {
+            @Override
+            public void isAgree(boolean b) {
+                if (b){
+                    SharedPreferences preferences = getSharedPreferences(AppConfig.SHARE_FIRST_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean(AppConfig.FIRSTIN_NAME, false);
+                    editor.apply();
+                    goMain();
+                }else {
+                    finish();
+                }
+            }
+        });
+        dialog.show();
     }
     /**
      * 进入主界面

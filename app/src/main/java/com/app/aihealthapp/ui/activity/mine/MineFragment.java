@@ -38,6 +38,7 @@ import com.app.aihealthapp.ui.mvvm.view.MineView;
 import com.app.aihealthapp.ui.mvvm.viewmode.MineViewMode;
 import com.app.aihealthapp.util.AppUpdateVersionUtils;
 import com.app.aihealthapp.util.utils;
+import com.app.aihealthapp.view.PrivacyAgreementDialog;
 import com.app.aihealthapp.wxapi.WXShareUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -183,8 +184,6 @@ public class MineFragment extends BaseFragment implements MineView {
     public void onClick(View v){
 
         if (v==rt_about){
-
-//            startActivity(new Intent(mActivity, PickUpCarManagementActivity.class));
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.About));
         }else if (v==rt_feedback){
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Feedback));

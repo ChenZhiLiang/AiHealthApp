@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_corner_white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_10px">
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,19 +13,49 @@
         android:layout_margin="@dimen/dimen_10px"
         android:text="服务协议和隐私政策"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_16px" />
+        android:textSize="@dimen/text_16px"
+        android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/tv_privacy_protocol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_10px"
         android:layout_marginRight="@dimen/dimen_10px"
         android:layout_marginBottom="@dimen/dimen_10px"
         android:lineSpacingExtra="@dimen/dimen_4px"
-        android:text="请您务必谨慎阅读、充分理解“服务协议”和“隐私政策“各条款，包括但不限于: 为了向你提供即时通讯，内容分享等服务，我们需要收集你的设备信息、操作日记等个人信息。你可以在“设置”中查看、变更、删除个人信息并管理你的授权。
-你可阅读《服务协议》和《隐私政策》了解详细信息。如你同意，请点击“同意”开始接受我们的服务。"
-        android:textColor="#666666"
-        android:textSize="@dimen/text_14px"/>
+        android:text="@string/privacy_agreement_hint"
+        android:textColor="@color/default_hint_color"
+        android:textSize="@dimen/text_12px"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/dimen_10px">
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_32px"
+            android:layout_marginRight="@dimen/dimen_10px"
+            android:layout_marginLeft="@dimen/dimen_16px"
+            android:layout_weight="1"
+            android:text="暂不使用"
+            android:textSize="@dimen/text_14px"
+            android:textColor="#666666"
+            android:background="@drawable/frame_white_10"/>
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_32px"
+            android:layout_marginRight="@dimen/dimen_16px"
+            android:layout_marginLeft="@dimen/dimen_10px"
+            android:layout_weight="1"
+            android:text="同意"
+            android:textSize="@dimen/text_14px"
+            android:textColor="@color/white"
+            android:background="@drawable/frame_blue_10"/>
+    </LinearLayout>
 
 
 </LinearLayout>

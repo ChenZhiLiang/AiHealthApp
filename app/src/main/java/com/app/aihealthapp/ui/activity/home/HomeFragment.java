@@ -174,21 +174,13 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     private HomeShopAdapter mHomeShopAdapter;
 
     private DeviceInfoBean mDeviceInfoBean = null;
-//    private boolean ClickStep = false;//判断是否点击运动记rt_health_data步
     private HomeBean homeBean;
-
-    //声明AMapLocationClient类对象，定位发起端
-//    private AMapLocationClient mLocationClient = null;
-    //声明mLocationOption对象，定位参数
-//    public AMapLocationClientOption mLocationOption = null;
-
     private MyPopWindow window_city;
     private View popView;
     private View view_empty;
     TextView tvPresentCity;
     TextView tvCheckArea;
     GridView mGridView;
-    private boolean isShowArea = false;
     private List<CountryCityBean> mCountryCityBean;
     private  List<CountryCityBean.CityListBean.AreaListBean> AreaList = new ArrayList<>();
     private GridviewAreaAdapter mGridviewAreaAdapter;
@@ -197,9 +189,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
     private String area_id;
     private int uid;
 
-//    private Dialog dialog;
-
-    private AppUpdateVersionUtils mAppUpdateVersionUtils;
     public static HomeFragment getInstance(String title) {
         HomeFragment hf = new HomeFragment();
         hf.mTitle = title;
@@ -240,7 +229,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         }
         //每次进来默认 没选择市区
         SharedPreferenceHelper.setSelect(mActivity,false);
-//        initLocation();
 
     }
 
@@ -324,103 +312,12 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     }
 
-
-
-        /*if (new PermissionHelper().RequestPermisson(mActivity, Permission.Group.LOCATION)) {
-            mLocationClient.startLocation();
-        }else {
-            if (!SharedPreferenceHelper.getSelect(mActivity)){
-                SharedPreferenceHelper.setProvince(mActivity,AppConfig.PROVINCE_DEF);
-                SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_ID_DEF);
-                SharedPreferenceHelper.setCity(mActivity,AppConfig.CITY_DEF);
-                SharedPreferenceHelper.setAreaId(mActivity,AppConfig.AREA_ID_DEF);
-                SharedPreferenceHelper.setArea(mActivity,AppConfig.AREA_DEF);
-//                tv_location.setText(AppConfig.CITY_DEF);
-                tv_location.setText("全国");
-                city_id = SharedPreferenceHelper.getCityId(mActivity);
-                area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                mHomeViewMode.getHomeDatas(true,SharedPreferenceHelper.getCityId(mActivity),"0",uid);
-            }else {
-                tv_location.setText(SharedPreferenceHelper.getArea(mActivity));
-                city_id = SharedPreferenceHelper.getCityId(mActivity);
-                area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
-            }
-            city_id = SharedPreferenceHelper.getCityId(mActivity);
-            area_id = SharedPreferenceHelper.getAreaId(mActivity);
-            for (int i = 0; i < mCountryCityBean.size(); i++) {
-                if (AppConfig.PROVINCE_DEF.equals(mCountryCityBean.get(i).getName())){
-                    for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
-                        if (AppConfig.CITY_DEF.equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
-                            AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
-                            mGridviewAreaAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-            }
-        }
-    }*/
-
     @Override
     public void initData() {
-      /*  Dialog dialog =  new CitySelect(mActivity)
-                .setMainColor(Color.RED)
-                .listener(new CitySelect.OnSelectListener() {
-                    @Override
-                    public void onSelect(Province province, Province.City city,Province.Area area) {
-//                        Log.e("399",province + "  " + city + "  " + area);
-                        tvPresentCity.setText("您正在看："+city.name);
-                        if (area!=null){
-                            area_id = area.code;
-                            tv_location.setText(area.name);
-                            SharedPreferenceHelper.setArea(mActivity,area.name);
-                        }else {
-                            area_id = AppConfig.AREA_ID_DEF;
-                            tv_location.setText(city.name);
-                            SharedPreferenceHelper.setArea(mActivity,"");
-                        }
-                        SharedPreferenceHelper.setProvince(mActivity,province.name);
-                        SharedPreferenceHelper.setCity(mActivity,city.name);
-                        SharedPreferenceHelper.setCityId(mActivity,city.code);
-                        SharedPreferenceHelper.setSelect(mActivity,true);
-                        SharedPreferenceHelper.setAreaId(mActivity,area_id);
-                        Intent intent =new Intent();
-                        intent.setAction("action.check.location");
-                        mActivity.sendBroadcast(intent);
-                    }
-                }).dialog();*/
         initCity();
         mHomeViewMode.GetVersionInfo();
 
     }
-
-
-    /*初始化定位参数*/
-  /*  private void initLocation() {
-        //初始化定位
-        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
-        //设置定位回调监听
-        mLocationClient.setLocationListener(this);
-        //初始化定位参数
-        mLocationOption = new AMapLocationClientOption();
-        //设置定位模式为Hight_Accuracy高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        //设置是否返回地址信息（默认返回地址信息）
-        mLocationOption.setNeedAddress(true);
-        //设置是否只定位一次,默认为false
-        mLocationOption.setOnceLocation(true);
-//        mLocationOption.setOnceLocationLatest(true);
-
-        //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(2000);
-        //设置是否强制刷新WIFI，默认为强制刷新
-        mLocationOption.setWifiActiveScan(true);
-        //设置是否允许模拟位置,默认为false，不允许模拟位置
-        mLocationOption.setMockEnable(false);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
-
-    }*/
 
     /*
     * 初始化城市
@@ -444,7 +341,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
             public void onClick(View v) {
                 window_city.dismiss();
                 ((MainActivity) getActivity()).getDialog().show();
-//                ShowCitySelect();
             }
         });
         mGridviewAreaAdapter = new GridviewAreaAdapter(mActivity,AreaList);
@@ -469,7 +365,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     @Override
     public void loadingData() {
-
         if (!SharedPreferenceHelper.getSelect(mActivity)){
             SharedPreferenceHelper.setProvince(mActivity,AppConfig.PROVINCE_DEF);
             SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_ID_DEF);
@@ -483,23 +378,11 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
         city_id = SharedPreferenceHelper.getCityId(mActivity);
         area_id = SharedPreferenceHelper.getAreaId(mActivity);
         mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
-
-//        for (int i = 0; i < mCountryCityBean.size(); i++) {
-//            if (AppConfig.PROVINCE_DEF.equals(mCountryCityBean.get(i).getName())){
-//                for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
-//                    if (AppConfig.CITY_DEF.equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
-//                        AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
-//                        mGridviewAreaAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//            }
-//        }
     }
 
     @OnClick({R.id.ll_location,R.id.btn_add_wristband, R.id.ll_sleep, R.id.ll_blood_pressure, R.id.ll_heart_rate, R.id.ll_blood_oxygen, R.id.btn_look_report, R.id.btn_ask,
             R.id.btn_inquiry,R.id.btn_shop_index,R.id.btn_health_shop,R.id.image_news})
     public void onClick(View v) {
-
         if (v==ll_location){
             /*Android N上Popwindow显示位置不正确问题*/
             if (Build.VERSION.SDK_INT >= 24) {
@@ -565,7 +448,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                     startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index + "?city_code=" + city_code + "&area_code=0"));
                 }
             }
-//            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Index));
         }else if (v==btn_health_shop){
             boolean isSlect = SharedPreferenceHelper.getSelect(mActivity);
             String city_code = SharedPreferenceHelper.getCityId(AppContext.getContext());
@@ -754,7 +636,6 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     GoodsListBean mGoodsListBean = homeBean.getGoods_list().get(position);
                     startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", mGoodsListBean.getUrl()));
-
                 }
             });
         } else {
@@ -847,87 +728,17 @@ public class HomeFragment extends BaseFragment implements HomeView, BGABanner.Ad
 
     @Override
     public void showLoadFailMsg(String err) {
-
         ToastyHelper.toastyNormal(mActivity, err);
     }
 
     @Override
     public void onBannerItemClick(BGABanner banner, ImageView itemView, AdvListBean model, int position) {
-//        showLoadFailMsg("点击");
 
     }
 
     @Override
     public void fillBannerItem(BGABanner banner, ImageView itemView, AdvListBean model, int position) {
         GlideHelper.loadImageView(mActivity, model.getPic(), itemView);
-
     }
 
-    /*@Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
-        if (aMapLocation != null) {
-            if (aMapLocation.getErrorCode() == 0) {
-                *//*发送定位成功事件，保存获取定位到的信息*//*
-                Log.e("aaaaa", aMapLocation.getAdCode());
-                for (int i = 0; i < mCountryCityBean.size(); i++) {
-                    if (aMapLocation.getProvince().equals(mCountryCityBean.get(i).getName())){
-                        for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
-                            if (aMapLocation.getCity().equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
-                                SharedPreferenceHelper.setCityId(mActivity,mCountryCityBean.get(i).getCityList().get(j).getCode());
-                                AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
-                                mGridviewAreaAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
-                }
-//                if (SharedPreferenceHelper.getSelect(mActivity)){
-//                    tv_location.setText(SharedPreferenceHelper.getArea(mActivity));
-//                    city_id = SharedPreferenceHelper.getCityId(mActivity);
-//                    area_id = SharedPreferenceHelper.getAreaId(mActivity);
-//                    mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
-//                    return;
-//                }
-                tvPresentCity.setText("您正在看："+aMapLocation.getCity());
-                SharedPreferenceHelper.setProvince(AppContext.getContext(),aMapLocation.getProvince());
-                SharedPreferenceHelper.setCity(AppContext.getContext(),aMapLocation.getCity());
-                SharedPreferenceHelper.setAreaId(AppContext.getContext(),aMapLocation.getAdCode());
-                SharedPreferenceHelper.setArea(AppContext.getContext(),aMapLocation.getDistrict());
-                city_id = SharedPreferenceHelper.getCityId(mActivity);
-
-                area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                if (SharedPreferenceHelper.getSelect(mActivity)){
-                    tv_location.setText(aMapLocation.getDistrict());
-                    mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
-
-                }else {
-                    tv_location.setText(aMapLocation.getCity());
-//                    tv_location.setText("全国");
-                    mHomeViewMode.getHomeDatas(true,city_id,"0",uid);
-                }
-            } else {
-                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-                Log.e("AmapError", "location Error, ErrCode:"
-                        + aMapLocation.getErrorCode() + ", errInfo:"
-                        + aMapLocation.getErrorInfo());
-                SharedPreferenceHelper.setCityId(mActivity,AppConfig.CITY_ID_DEF);
-                SharedPreferenceHelper.setCity(mActivity,AppConfig.CITY_DEF);
-                SharedPreferenceHelper.setAreaId(AppContext.getContext(), AppConfig.CITY_ID_DEF);
-                SharedPreferenceHelper.setArea(AppContext.getContext(),AppConfig.AREA_DEF);
-                tv_location.setText(AppConfig.CITY_DEF);
-                city_id = SharedPreferenceHelper.getCityId(mActivity);
-                area_id = SharedPreferenceHelper.getAreaId(mActivity);
-                mHomeViewMode.getHomeDatas(true,city_id,area_id,uid);
-                for (int i = 0; i < mCountryCityBean.size(); i++) {
-                    if (AppConfig.PROVINCE_DEF.equals(mCountryCityBean.get(i).getName())){
-                        for(int j=0;j<mCountryCityBean.get(i).getCityList().size();j++){
-                            if (AppConfig.CITY_DEF.equals(mCountryCityBean.get(i).getCityList().get(j).getName())){
-                                AreaList.addAll(mCountryCityBean.get(i).getCityList().get(j).getAreaList());
-                                mGridviewAreaAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }*/
 }

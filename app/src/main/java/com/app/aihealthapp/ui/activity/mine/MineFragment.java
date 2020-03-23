@@ -102,6 +102,11 @@ public class MineFragment extends BaseFragment implements MineView {
     @BindView(R.id.rt_about)
     RelativeLayout rt_about;//关于健康秘钥
 
+    @BindView(R.id.rt_agreement)
+    RelativeLayout rt_agreement;
+    @BindView(R.id.rt_privacy_policy)
+    RelativeLayout rt_privacy_policy;
+
     @BindView(R.id.rt_feedback)
     RelativeLayout rt_feedback;//帮助与反馈
 
@@ -179,12 +184,18 @@ public class MineFragment extends BaseFragment implements MineView {
     }
 
     @OnClick({R.id.image_head,R.id.tv_user_name,R.id.btn_authentication,R.id.rt_my_key,R.id.rt_mine_device,R.id.rt_mine_ask,R.id.rt_medical_report,R.id.rt_healthy_report,
-            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_share_friend,R.id.rt_my_members,
+            R.id.rt_myorder,R.id.rt_address,R.id.rt_health_plan,R.id.rt_myfriend_list, R.id.rt_about,R.id.rt_agreement,R.id.rt_privacy_policy,R.id.rt_share_friend,R.id.rt_my_members,
             R.id.rt_feedback,R.id.rt_editpaw,R.id.rt_cash_details,R.id.btn_logout,R.id.rt_problem,R.id.rt_version_update})
     public void onClick(View v){
 
         if (v==rt_about){
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.About));
+        }else if (v==rt_agreement){
+            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.UserProtocol));
+
+        }else if (v==rt_privacy_policy){
+            startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.PrivacyProtocol));
+
         }else if (v==rt_feedback){
             startActivity(new Intent(mActivity, WebActyivity.class).putExtra("url", ApiUrl.WebApi.Feedback));
         }else if (v==rt_problem){
